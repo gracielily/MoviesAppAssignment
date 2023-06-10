@@ -25,7 +25,7 @@ const styles = {
 };
 
 export default function FilterMoviesCard(props) {
-  const [genres, setGenres] = useState([{ id: "0", name: "All" }]);
+  const [genres, setGenres] = useState([{ id: 0, name: "All" }]);
 
   useEffect(() => {
     fetch(
@@ -44,9 +44,9 @@ export default function FilterMoviesCard(props) {
   }, []);
 
   const handleChange = (e, type, value) => {
-    e.preventDefault();
-    // Completed later
-  };
+    e.preventDefault()
+    props.onUserInput(type, value)
+  }
 
   const handleTextChange = (e) => {
     handleChange(e, "title", e.target.value);
@@ -55,7 +55,10 @@ export default function FilterMoviesCard(props) {
   const handleGenreChange = (e) => {
     handleChange(e, "genre", e.target.value);
   };
-
+  
+  const genreOptions = genres.map((g) => (
+    <MenuItem value={g.id}>{g.name}</MenuItem>
+  ));
   return (
     <>
       <Card sx={styles.root} variant="outlined">
@@ -80,7 +83,7 @@ export default function FilterMoviesCard(props) {
               id="genre-select"
               value={props.genreFilter}
               onChange={handleGenreChange}
-            ></Select>
+            >{genreOptions}</Select>
           </FormControl>
         </CardContent>
       </Card>
