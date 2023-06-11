@@ -45,7 +45,7 @@ function MovieListPageTemplate({ movies, title, action }) {
           <Header title={title} />
         </Grid>
         <Grid item container spacing={5}>
-          <MovieList action={action} movies={movies} />
+          <MovieList action={action} movies={displayedMovies} />
         </Grid>
       </Grid>
       <Fab
