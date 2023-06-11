@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { getMovies } from "../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
+import AddToFavouritesIcon from '../components/cardIcons/addToFavourites'
 
 const HomePage = (props) => {
   const { data, error, isLoading, isError } = useQuery("discover", getMovies);
@@ -16,15 +17,13 @@ const HomePage = (props) => {
 
   const movies = data ? data.results : [];
 
-  const favourites = movies.filter((m) => m.favorite);
-  localStorage.setItem("favourites", JSON.stringify(favourites));
-  const addToFavourites = (movieId) => true;
-
   return (
     <PageTemplate
       title="Discover Movies"
       movies={movies}
-      selectFavourite={addToFavourites}
+      action={(movie) => {
+        return <AddToFavouritesIcon movie={movie} />
+      }}
     />
   );
 };
