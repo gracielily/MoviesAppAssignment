@@ -8,10 +8,10 @@ const AddToMustWatchList = ({ movie }) => {
 
   const onUserSelect = (e) => {
     e.preventDefault();
-    console.log(`adding ${movie.id} to watch list`);
+    context.addToMustWatch(movie);
   };
   return (
-    <IconButton aria-label="add to favorites" onClick={onUserSelect}>
+    <IconButton aria-label="add to must watch" onClick={onUserSelect}>
       <PlaylistAddIcon color="primary" fontSize="large" />
     </IconButton>
   );

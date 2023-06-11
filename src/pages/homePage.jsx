@@ -24,6 +24,7 @@ const HomePage = (props) => {
       action={(movie) => {
         return <AddToFavouritesIcon movie={movie} />
       }}
+      isUpcoming={false}
     />
   );
 };

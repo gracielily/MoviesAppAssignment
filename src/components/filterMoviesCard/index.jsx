@@ -54,8 +54,8 @@ export default function FilterMoviesCard(props) {
     handleUserImput(e, "genre", e.target.value);
   };
 
-  const genreOptions = genres.map((g) => (
-    <MenuItem value={g.id}>{g.name}</MenuItem>
+  const genreOptions = genres.map((g, index) => (
+    <MenuItem key={index} value={g.id}>{g.name}</MenuItem>
   ));
 
   return (

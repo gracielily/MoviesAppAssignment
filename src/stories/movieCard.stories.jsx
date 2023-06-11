@@ -21,6 +21,7 @@ export const Basic = () => {
       movie={SampleMovie}
       action={(movie) => <AddToFavouritesIcon movie={movie} />}
       taging={(movie) => null}
+      isUpcoming={false}
     />
   );
 };
