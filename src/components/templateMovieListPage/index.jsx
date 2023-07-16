@@ -26,7 +26,9 @@ function MovieListPageTemplate({ movies, title, action, isUpcoming }) {
   const genreId = Number(genreFilter);
   let displayedMovies = movies
     .filter((m) => {
-      return m.title.toLowerCase().search(titleFilter.toLowerCase()) !== -1;
+      // movies have titles while shows have names
+      const toSearch = m.title ? m.title : m.name;
+      return toSearch.toLowerCase().search(titleFilter.toLowerCase()) !== -1;
     })
     .filter((m) => {
       // genre data is different between list movies and movie details
