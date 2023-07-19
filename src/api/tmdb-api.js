@@ -105,9 +105,9 @@ export const getMovie = (args) => {
   };
 
 
-  export const getTvShows = () => {
+  export const getTvShows = (pageNum) => {
     return fetch(
-      `https://api.themoviedb.org/3/discover/tv?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=1&sort_by=popularity.desc`
+      `https://api.themoviedb.org/3/discover/tv?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=${pageNum}&sort_by=popularity.desc`
     ).then((response) => {
       if (!response.ok) {
         throw new Error(response.json().message);

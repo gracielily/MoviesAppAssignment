@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PageTemplate from '../components/templateMovieListPage';
 import { useQuery } from "react-query";
 import AddToMustWatchList from '../components/cardIcons/addToMustWatchList';
@@ -6,7 +6,12 @@ import Spinner from "../components/spinner";
 import { getTvShows } from "../api/tmdb-api";
 
 const TvShowsPage = () => {
-  const { data, error, isLoading, isError } = useQuery("top", getTvShows);
+  const [page, setPage] = useState(1);
+  const { data, error, isLoading, isError } = useQuery(["top", page], () => getTvShows(page), { keepPreviousData : true });
+
+  const setResultsPage = async (newPageNum) => {
+    setPage(newPageNum);
+  }
 
   if (isLoading) {
     return <Spinner />;
@@ -16,6 +21,8 @@ const TvShowsPage = () => {
   }
 
   const tvShows = data ? data.results : [];
+  const totalResults = data ? data.total_results : null;
+
   return (
     <PageTemplate
       title="TV Shows"
@@ -24,7 +31,11 @@ const TvShowsPage = () => {
         return <AddToMustWatchList movie={movie} />
       }}
       isUpcoming={false}
+      setResultsPage={setResultsPage}
+      totalResults={totalResults}
+      currentPage={page}
     />
+    
   );
 };
 export default TvShowsPage;
