@@ -15,6 +15,7 @@ import TopMoviesPage from "./pages/topMoviesPage";
 import TvShowsPage from "./pages/tvShowsPage";
 import TrendingActorsPage from "./pages/trendingActionsPasge";
 import CreateFantasyMoviePage from "./pages/createFantasyMoviePage";
+import ActorDetailsPage from "./pages/actorDetailsPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -47,6 +48,7 @@ const App = () => {
             <Route path="*" element={<Navigate to="/" />} />
             <Route path="/reviews/:id" element={<MovieReviewPage />} />
             <Route path="/fantasy-movies/form" element={<CreateFantasyMoviePage />} />
+            <Route path="/actor/:id" element={<ActorDetailsPage />} />
           </Routes>
         </MoviesContextProvider>
       </BrowserRouter>

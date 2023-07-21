@@ -57,7 +57,7 @@ export default function ActorCard({ actor }) {
         </Grid>
       </CardContent>
       <CardActions disableSpacing>
-        <Link to={`/actors/${actor.id}`}>
+        <Link to={`/actor/${actor.id}`}>
           <Button variant="outlined" size="medium" color="primary">
             More Details...
           </Button>
