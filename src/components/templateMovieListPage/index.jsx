@@ -50,7 +50,6 @@ function MovieListPageTemplate({ movies, title, action, isUpcoming, setResultsPa
   };
 
   const handlePaginationChange = (event, value) => {
-    console.log(value)
     setResultsPage(value)
   }
 
