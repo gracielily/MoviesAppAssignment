@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useQuery } from "react-query";
-import Spinner from '../spinner'
+import Spinner from "../spinner";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -12,6 +12,7 @@ import SortIcon from "@mui/icons-material/Sort";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { getMovieGenres } from "../../api/tmdb-api";
+import { AuthContext } from "../../contexts/authContext";
 
 const styles = {
   root: {
@@ -27,8 +28,11 @@ const styles = {
 };
 
 export default function FilterMoviesCard(props) {
-  const { data, error, isLoading, isError } = useQuery("genres", getMovieGenres);
-
+  const { data, error, isLoading, isError } = useQuery(
+    "genres",
+    getMovieGenres
+  );
+  const { token } = useContext(AuthContext);
   if (isLoading) {
     return <Spinner />;
   }
@@ -55,45 +59,53 @@ export default function FilterMoviesCard(props) {
   };
 
   const genreOptions = genres.map((g, index) => (
-    <MenuItem key={index} value={g.id}>{g.name}</MenuItem>
+    <MenuItem key={index} value={g.id}>
+      {g.name}
+    </MenuItem>
   ));
 
   return (
     <>
-      <Card sx={styles.root} variant="outlined">
-        <CardContent>
-          <Typography variant="h5" component="h1">
-            <FilterAltIcon fontSize="large" />
-            Filter the movies.
-          </Typography>
-          <TextField
-            sx={styles.formControl}
-            id="filled-search"
-            label="Search field"
-            type="search"
-            value={props.titleFilter}
-            variant="filled"
-            onChange={handleTextChange}
-          />
-          <FormControl sx={styles.formControl}>
-            <InputLabel id="genre-label">Genre</InputLabel>
-            <Select
-              labelId="genre-label"
-              id="genre-select"
-              value={props.genreFilter}
-              onChange={handleGenreChange}
-            >{genreOptions}</Select>
-          </FormControl>
-        </CardContent>
-      </Card>
-      <Card sx={styles.root} variant="outlined">
-        <CardContent>
-          <Typography variant="h5" component="h1">
-            <SortIcon fontSize="large" />
-            Sort the movies.
-          </Typography>
-        </CardContent>
-      </Card>
+      {token ? (
+        <>
+          <Card sx={styles.root} variant="outlined">
+            <CardContent>
+              <Typography variant="h5" component="h1">
+                <FilterAltIcon fontSize="large" />
+                Filter the movies.
+              </Typography>
+              <TextField
+                sx={styles.formControl}
+                id="filled-search"
+                label="Search field"
+                type="search"
+                value={props.titleFilter}
+                variant="filled"
+                onChange={handleTextChange}
+              />
+              <FormControl sx={styles.formControl}>
+                <InputLabel id="genre-label">Genre</InputLabel>
+                <Select
+                  labelId="genre-label"
+                  id="genre-select"
+                  value={props.genreFilter}
+                  onChange={handleGenreChange}
+                >
+                  {genreOptions}
+                </Select>
+              </FormControl>
+            </CardContent>
+          </Card>
+          <Card sx={styles.root} variant="outlined">
+            <CardContent>
+              <Typography variant="h5" component="h1">
+                <SortIcon fontSize="large" />
+                Sort the movies.
+              </Typography>
+            </CardContent>
+          </Card>
+        </>
+      ) : <p> Please Log in to use Filters</p>}
     </>
   );
 }
