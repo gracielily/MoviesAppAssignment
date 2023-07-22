@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -11,6 +11,7 @@ import Menu from "@mui/material/Menu";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import {AuthContext} from "../../contexts/authContext";
 
 const styles = {
   title: {
@@ -26,18 +27,29 @@ const SiteHeader = () => {
   const open = Boolean(anchorEl);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  const { token, onLogout } = useContext(AuthContext);
 
   const menuOptions = [
     { label: "Home", path: "/" },
     { label: "Upcoming Movies", path: "/movies/upcoming" },
     { label: "Top Rated Movies", path: "/movies/top" },
     { label: "Favorite Movies", path: "/movies/favourites" },
-    { label: "TV Shows", path: "/tvshows/" },
-    { label: "Trending Actors", path: "/trending-actors/" },
+    { label: "TV Shows", path: "/tvshows" },
+    { label: "Trending Actors", path: "/trending-actors" },
   ];
 
+  if(token){
+    menuOptions.push({label: "Logout", path: "/logout"})
+  } else {
+    menuOptions.push({label: "Login", path: "/login"})
+  }
+
   const handleMenuSelect = (pageURL) => {
+    if(pageURL.includes("logout")){
+      onLogout();
+    } else {
     navigate(pageURL);
+    }
   };
 
   const handleMenu = (event) => {
