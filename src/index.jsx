@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "react-query";
@@ -20,6 +20,7 @@ import ActorDetailsPage from "./pages/actorDetailsPage";
 import PrivateRoute from "./components/PrivateRoute";
 import LoginPage from "./pages/loginPage";
 import { AuthContext } from "./contexts/authContext";
+import { createClient } from '@supabase/supabase-js'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -31,7 +32,11 @@ const queryClient = new QueryClient({
   },
 });
 
+
+
+
 const App = () => {
+
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>

@@ -1,31 +1,20 @@
 import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../contexts/authContext";
-
-
-async function loginUser(credentials) {
-    console.log(credentials)
-    return fetch('http://localhost:5173/api/authenticate', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(credentials)
-    })
-      .then(data => data.json())
-   }
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPageTemplate() {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
-  const { onLogin } = useContext(AuthContext);
+  const { onLogin, token } = useContext(AuthContext);
+  const navigate = useNavigate();
+  console.log(token)
+  if (token) {
+    navigate("/movies");
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = await loginUser({
-      username,
-      password,
-    });
-    onLogin(token);
+    onLogin({ username, password });
   };
 
   return (

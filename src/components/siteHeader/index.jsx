@@ -38,12 +38,6 @@ const SiteHeader = () => {
     { label: "Trending Actors", path: "/trending-actors" },
   ];
 
-  if(token){
-    menuOptions.push({label: "Logout", path: "/logout"})
-  } else {
-    menuOptions.push({label: "Login", path: "/login"})
-  }
-
   const handleMenuSelect = (pageURL) => {
     if(pageURL.includes("logout")){
       onLogout();
@@ -101,6 +95,13 @@ const SiteHeader = () => {
                     {opt.label}
                   </MenuItem>
                 ))}
+                <Button
+                  key={token ? "Logout" : "Login"}
+                  color="inherit"
+                  onClick={() => handleMenuSelect(token ? "/logout" : "/login")}
+                >
+                  {token ? "Logout" : "Login"}
+                </Button>
               </Menu>
             </>
           ) : (
@@ -114,8 +115,16 @@ const SiteHeader = () => {
                   {opt.label}
                 </Button>
               ))}
+              <Button
+                  key={token ? "Logout" : "Login"}
+                  color="inherit"
+                  onClick={() => handleMenuSelect(token ? "/logout" : "/login")}
+                >
+                  {token ? "Logout" : "Login"}
+                </Button>
             </>
           )}
+          
         </Toolbar>
       </AppBar>
       <Offset />
