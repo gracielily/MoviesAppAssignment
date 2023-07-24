@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useQuery } from "react-query";
 import Spinner from "../spinner";
 import Card from "@mui/material/Card";
@@ -13,6 +13,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { getMovieGenres } from "../../api/tmdb-api";
 import { AuthContext } from "../../contexts/authContext";
+import SearchIcon from '@mui/icons-material/Search';
 
 const styles = {
   root: {
@@ -33,6 +34,7 @@ export default function FilterMoviesCard(props) {
     getMovieGenres
   );
   const { token } = useContext(AuthContext);
+
   if (isLoading) {
     return <Spinner />;
   }
@@ -45,44 +47,79 @@ export default function FilterMoviesCard(props) {
     genres.unshift({ id: "0", name: "All" });
   }
 
-  const handleUserImput = (e, type, value) => {
-    e.preventDefault();
-    props.onUserInput(type, value);
-  };
-
-  const handleTextChange = (e, props) => {
-    handleUserImput(e, "title", e.target.value);
-  };
-
-  const handleGenreChange = (e) => {
-    handleUserImput(e, "genre", e.target.value);
-  };
-
   const genreOptions = genres.map((g, index) => (
     <MenuItem key={index} value={g.id}>
       {g.name}
     </MenuItem>
   ));
 
+  const handleUserInput = (e, type, value) => {
+    e.preventDefault();
+    props.onUserInput(type, value);
+  };
+
+  const handleTextChange = (e, props) => {
+    handleUserInput(e, "title", e.target.value);
+  };
+
+  const handleGenreChange = (e) => {
+    handleUserInput(e, "genre", e.target.value);
+  };
+
+  const handleSortChange = (e) => {
+    handleUserInput(e, "sort", e.target.value);
+  };
+
+  const handleYearChange = (e) => {
+    handleUserInput(e, "year", e.target.value);
+  };
+
+  const handleCountryChange = (e) => {
+    handleUserInput(e, "country", e.target.value);
+  };
+
+  const handleLanguageChange = (e) => {
+    handleUserInput(e, "lang", e.target.value);
+  };
+
   return (
     <>
+    <p>{props.genreFilter} {props.yearFilter} {props.languageFilter} {props.countryFilter}</p>
       {token ? (
         <>
+        {(!props.genreFilter || props.genreFilter === "0") && !props.sortBy && (
+          <>
+          <Card sx={styles.root} variant="outlined">
+            <CardContent>
+              <Typography variant="h5" component="h1">
+                <SearchIcon fontSize="large" />
+               Search the movies.
+              </Typography>
+              <FormControl sx={styles.formControl}>
+                <InputLabel id="sort-label">Search for a movie by title or description</InputLabel>
+                <TextField
+                sx={styles.formControl}
+                id="filled-search"
+                type="search"
+                value={props.titleFilter}
+                variant="filled"
+                onChange={handleTextChange}
+              />
+              </FormControl>
+            </CardContent>
+          </Card>
+          </>
+        )}
+          
+          {!props.titleFilter && (
+            <>
           <Card sx={styles.root} variant="outlined">
             <CardContent>
               <Typography variant="h5" component="h1">
                 <FilterAltIcon fontSize="large" />
                 Filter the movies.
               </Typography>
-              <TextField
-                sx={styles.formControl}
-                id="filled-search"
-                label="Search field"
-                type="search"
-                value={props.titleFilter}
-                variant="filled"
-                onChange={handleTextChange}
-              />
+            
               <FormControl sx={styles.formControl}>
                 <InputLabel id="genre-label">Genre</InputLabel>
                 <Select
@@ -94,6 +131,39 @@ export default function FilterMoviesCard(props) {
                   {genreOptions}
                 </Select>
               </FormControl>
+              <FormControl sx={styles.formControl}>
+                <InputLabel id="sort-label">Origin Country</InputLabel>
+                <TextField
+                sx={styles.formControl}
+                id="filled-search"
+                type="search"
+                value={props.countryFilter}
+                variant="filled"
+                onChange={handleCountryChange}
+              />
+              </FormControl>
+              <FormControl sx={styles.formControl}>
+                <InputLabel id="sort-label">Release Year</InputLabel>
+                <TextField
+                sx={styles.formControl}
+                id="filled-search"
+                type="search"
+                value={props.yearFilter}
+                variant="filled"
+                onChange={handleYearChange}
+              />
+              </FormControl>
+              <FormControl sx={styles.formControl}>
+                <InputLabel id="sort-label">Language</InputLabel>
+                <TextField
+                sx={styles.formControl}
+                id="filled-search"
+                type="search"
+                value={props.languageFilter}
+                variant="filled"
+                onChange={handleLanguageChange}
+              />
+              </FormControl>
             </CardContent>
           </Card>
           <Card sx={styles.root} variant="outlined">
@@ -102,10 +172,39 @@ export default function FilterMoviesCard(props) {
                 <SortIcon fontSize="large" />
                 Sort the movies.
               </Typography>
+              <FormControl sx={styles.formControl}>
+                <InputLabel id="sort-label">Sort By</InputLabel>
+                <Select
+                  labelId="sort-label"
+                  id="sort-select"
+                  value={props.sortBy}
+                  onChange={handleSortChange}
+                >
+                  <MenuItem value={""}>Clear</MenuItem>
+                  <MenuItem value={"primary_release_date.asc"}>
+                    Release Date (Asc)
+                  </MenuItem>
+                  <MenuItem value={"primary_release_date.desc"}>
+                    Release Date (Desc)
+                  </MenuItem>
+                  <MenuItem value={"revenue.asc"}>Revenue (Asc)</MenuItem>
+                  <MenuItem value={"revenue.desc"}>Revenue (Desc)</MenuItem>
+                  <MenuItem value={"vote_average.asc"}>
+                    Vote Average (Asc)
+                  </MenuItem>
+                  <MenuItem value={"vote_average.desc"}>
+                    Vote Average (Desc)
+                  </MenuItem>
+                </Select>
+              </FormControl>
             </CardContent>
           </Card>
+          </>
+          )}
         </>
-      ) : <p> Please Log in to use Filters</p>}
+      ) : (
+        <p> Please Log in to use Filters</p>
+      )}
     </>
   );
 }

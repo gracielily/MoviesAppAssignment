@@ -21,32 +21,22 @@ const styles = {
   },
 };
 
-function MovieListPageTemplate({ movies, title, action, isUpcoming, setResultsPage, totalResults, currentPage }) {
+function MovieListPageTemplate({ movies, title, action, isUpcoming, setResultsPage, totalResults, currentPage, updateQuery, updateSearchTerm }) {
   const [titleFilter, setTitleFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
+  const [sortBy, setSortBy] = useState("");
+  const [languageFilter, setLanguageFilter] = useState("");
+  const [yearFilter, setYearFilter] = useState("");
+  const [countryFilter, setCountryFilter] = useState("");
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  const genreId = Number(genreFilter);
-  let displayedMovies = movies
-    .filter((m) => {
-      // movies have titles while shows have names
-      const toSearch = m.title ? m.title : m.name;
-      return toSearch.toLowerCase().search(titleFilter.toLowerCase()) !== -1;
-    })
-    .filter((m) => {
-      // genre data is different between list movies and movie details
-      let genreIds;
-      if(m.genres){
-        genreIds = m.genres.map(g => g.id);
-      } else {
-        genreIds = m.genre_ids
-      }
-      return genreId > 0 ? genreIds.includes(genreId) : true;
-    });
-
   const handleChange = (type, value) => {
-    if (type === "title") setTitleFilter(value);
-    else setGenreFilter(value);
+    if (type === "title") {setTitleFilter(value); setSortBy(""); setGenreFilter(""); updateSearchTerm(value)};
+    if(type === "sort") { setSortBy(value); updateQuery({"sort_by": value})};
+    if (type === "genre") { setGenreFilter(value); updateQuery({"with_genres": value}) }
+    if (type === "lang") { setLanguageFilter(value); updateQuery({"language": value}) }
+    if (type === "year") { setYearFilter(value); updateQuery({"year": value}) }
+    if (type === "country") { setCountryFilter(value); updateQuery({"with_origin_country": value}) }
   };
 
   const handlePaginationChange = (event, value) => {
@@ -60,7 +50,7 @@ function MovieListPageTemplate({ movies, title, action, isUpcoming, setResultsPa
           <Header title={title} />
         </Grid>
         <Grid item container spacing={5}>
-          <MovieList action={action} movies={displayedMovies} isUpcoming={isUpcoming} />
+          <MovieList action={action} movies={movies} isUpcoming={isUpcoming} />
         </Grid>
         <Typography>{totalResults} Results found.</Typography>
         <Pagination count={500} page={currentPage} onChange={handlePaginationChange} />
@@ -82,6 +72,10 @@ function MovieListPageTemplate({ movies, title, action, isUpcoming, setResultsPa
           onUserInput={handleChange}
           titleFilter={titleFilter}
           genreFilter={genreFilter}
+          countryFilter={countryFilter}
+          languageFilter={languageFilter}
+          yearFilter={yearFilter}
+          sortBy={sortBy}
         />
       </Drawer>
     </>  

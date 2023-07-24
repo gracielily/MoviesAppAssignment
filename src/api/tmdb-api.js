@@ -13,9 +13,16 @@ const _fetchData = (urlToFetch) => {
      throw error
   });
 }
-export const getMovies = () => {
+export const getMovies = (page, queryParams) => {
+  let queryParamStr = ""
+  for (const [key, value] of Object.entries(queryParams)) {
+    console.log(`${key}: ${value}`);
+    queryParamStr += `&${key}=${value}`
+  }
+  console.log(queryParamStr, page)
+
   return _fetchData(
-    `https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=1`
+    `https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=${page}${queryParamStr}`
   )
 };
 
@@ -92,6 +99,13 @@ export const getMovie = (args) => {
     )
   };
 
+
+  export const searchForMovie = (searchTerm) => {
+    return _fetchData(
+      `https://api.themoviedb.org/3/search/movie?api_key=${import.meta.env.VITE_TMDB_KEY}&query=${searchTerm}`
+    )
+
+  }
 
   
   

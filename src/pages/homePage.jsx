@@ -1,30 +1,91 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PageTemplate from "../components/templateMovieListPage";
-import { getMovies } from "../api/tmdb-api";
+import { getMovies, searchForMovie } from "../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
-import AddToFavouritesIcon from '../components/cardIcons/addToFavourites'
+import AddToFavouritesIcon from "../components/cardIcons/addToFavourites";
 
 const HomePage = (props) => {
-  const { data, error, isLoading, isError } = useQuery("discover", getMovies);
+  const [queryParams, setQueryParams] = useState({});
+  const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [movies, setMovies] = useState([])
 
-  if (isLoading) {
+  const { data:movies_data, error:movies_error, isLoading:loading_movies, isError:movies_has_error, refetch:refetch_movies } = useQuery(
+    "discover",
+    () => getMovies(page, queryParams),
+    { keepPreviousData: true }
+  );
+
+  const { data:search_movies, error:search_error, isLoading:loading_search, isError:search_has_error, refetch:refetch_search } = useQuery(
+    "search",
+    () => searchForMovie(searchTerm),
+    { keepPreviousData: true }
+  );
+
+  
+
+  const updateMoviesQuery = (query) => {
+    const queryToSend = {...queryParams}
+    if(query.with_origin_country) queryToSend.with_origin_country = query.with_origin_country
+    if(query.year) queryToSend.year = query.year
+    if(query.language) queryToSend.language = query.language
+    if(query.sort_by) queryToSend.sort_by = query.sort_by
+    if(query.with_genres) {
+      // if all genres selected
+      if(query.with_genres === "0" && queryToSend.with_genres) {
+        delete queryToSend.with_genres
+      } else {
+      queryToSend.with_genres = query.with_genres
+      }
+    }
+    console.log("QUERY TO SEND", queryToSend)
+    setQueryParams(queryToSend)
+  }
+  
+  const setResultsPage = (newPageNum) => {
+    setPage(newPageNum);
+  }
+  
+  useEffect(() => {
+    console.log("REFETCHING WITH THESE QUEREIS", queryParams)
+    refetch_movies();
+  }, [queryParams, page]);
+
+
+  useEffect(() => {
+    if(searchTerm){
+    refetch_search(searchTerm);
+    }
+  }, [searchTerm]);
+
+
+  useEffect(() => {
+    if(searchTerm && search_movies){
+      setMovies(search_movies.results)
+    } else if (movies_data){
+      setMovies(movies_data.results)
+    }
+  }, [movies_data, search_movies]);
+
+  if (loading_movies || loading_search) {
     return <Spinner />;
   }
-  if (isError) {
-    return <h1>{error.message}</h1>;
+  if (movies_has_error || search_has_error) {
+    return <h1>{search_error ? search_error.message : movies_error.message}</h1>;
   }
-
-  const movies = data ? data.results : [];
 
   return (
     <PageTemplate
       title="Discover Movies"
       movies={movies}
       action={(movie) => {
-        return <AddToFavouritesIcon movie={movie} />
+        return <AddToFavouritesIcon movie={movie} />;
       }}
       isUpcoming={false}
+      updateQuery={updateMoviesQuery}
+      setResultsPage={setResultsPage}
+      updateSearchTerm={setSearchTerm}
     />
   );
 };

@@ -15,7 +15,6 @@ const AuthContextProvider = ({ children }) => {
   const navigate = useNavigate();
 
   const [token, setSession] = useState(null)
-  const [loginError, setLoginError] = useState(null);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { token } }) => {
@@ -37,11 +36,7 @@ const AuthContextProvider = ({ children }) => {
       email: username,
       password: password,
     });
-    if(error){
-        setLoginError(error.message)
-    } else {
-        navigate(originLocation.state?.from?.pathname || "/movies");
-    }
+    navigate(originLocation.state?.from?.pathname || "/movies");
   };
 
   const handleLogout = async () => {
@@ -51,7 +46,6 @@ const AuthContextProvider = ({ children }) => {
 
   const value = {
     token,
-    loginError,
     onLogin: handleLogin,
     onLogout: handleLogout,
   };
