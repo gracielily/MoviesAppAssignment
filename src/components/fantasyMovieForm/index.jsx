@@ -4,13 +4,19 @@ import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, useFieldArray } from "react-hook-form";
 import { MoviesContext } from "../../contexts/moviesContext";
 import { useNavigate } from "react-router-dom";
 import styles from "../reviewForm/styles";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import { FormControl, InputLabel, OutlinedInput, Select } from "@mui/material";
+import {
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  Select,
+  FormGroup,
+} from "@mui/material";
 
 const FantasyMovieForm = ({ genreChoices }) => {
   const defaultValues = {
@@ -19,17 +25,26 @@ const FantasyMovieForm = ({ genreChoices }) => {
     genres: [],
     runtime: 0,
     productionCompany: "",
+    cast: [{ actor: "", role: "", description: "" }],
   };
   const {
     control,
     formState: { errors },
     handleSubmit,
     reset,
-  } = useForm(defaultValues);
+  } = useForm({ defaultValues: defaultValues });
   const navigate = useNavigate();
   const context = useContext(MoviesContext);
   const [open, setOpen] = useState(false);
   const [genres, setGenres] = useState([]);
+
+  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
+    {
+      control,
+      name: "cast",
+    }
+  );
+  console.log(fields);
 
   const handleGenresChange = (event) => {
     const {
@@ -44,6 +59,7 @@ const FantasyMovieForm = ({ genreChoices }) => {
   };
 
   const onSubmit = (fantasyMovie) => {
+    console.log("fantasy movie here", fantasyMovie);
     context.createFantasyMovie(fantasyMovie);
     setOpen(true);
   };
@@ -169,8 +185,7 @@ const FantasyMovieForm = ({ genreChoices }) => {
           </Typography>
         )}
 
-
-    <Controller
+        <Controller
           name="productionCompany"
           control={control}
           defaultValue=""
@@ -188,7 +203,77 @@ const FantasyMovieForm = ({ genreChoices }) => {
           )}
         />
 
+        {fields.map((field, index) => {
+          return (
+            <FormGroup row key={index}>
+              <Controller
+                name={`cast.${index}.actor`}
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <TextField
+                    sx={{ width: "25ch" }}
+                    variant="outlined"
+                    margin="normal"
+                    onChange={onChange}
+                    value={value}
+                    id="actor"
+                    label="Actor"
+                    autoFocus
+                  />
+                )}
+              />
+              <Controller
+                name={`cast.${index}.role`}
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <TextField
+                    sx={{ width: "25ch" }}
+                    variant="outlined"
+                    margin="normal"
+                    onChange={onChange}
+                    value={value}
+                    id="role"
+                    label="Role"
+                  />
+                )}
+              />
+
+              <Controller
+                name={`cast.${index}.description`}
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <TextField
+                    sx={{ width: "25ch" }}
+                    variant="outlined"
+                    margin="normal"
+                    onChange={onChange}
+                    value={value}
+                    id="description"
+                    label="Description"
+                  />
+                )}
+              />
+              {fields.length > 1 && (
+                <>
+                  <Button variant="contained" onClick={() => remove(index)}>
+                    Remove
+                  </Button>
+                </>
+              )}
+            </FormGroup>
+          );
+        })}
+
         <Box sx={styles.buttons}>
+          <Button
+            type="button"
+            variant="contained"
+            color="secondary"
+            onClick={() => append({ actor: "", role: "", description: "" })}
+          >
+            Add Cast Member
+          </Button>
+
           <Button
             type="submit"
             variant="contained"

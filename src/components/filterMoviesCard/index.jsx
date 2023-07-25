@@ -33,6 +33,7 @@ export default function FilterMoviesCard(props) {
     "genres",
     getMovieGenres
   );
+
   const { token } = useContext(AuthContext);
 
   if (isLoading) {
