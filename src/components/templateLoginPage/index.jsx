@@ -17,7 +17,6 @@ export default function LoginPageTemplate() {
     navigate("/movies");
   }
   const onSubmit = async (credentials) => {
-    console.log(credentials)
     onLogin({ username: credentials.username, password: credentials.password });
   };
 

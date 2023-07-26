@@ -16,7 +16,9 @@ import {
   OutlinedInput,
   Select,
   FormGroup,
+  IconButton,
 } from "@mui/material";
+import { FileUploadOutlined } from "@mui/icons-material";
 
 const FantasyMovieForm = ({ genreChoices }) => {
   const defaultValues = {
@@ -37,14 +39,12 @@ const FantasyMovieForm = ({ genreChoices }) => {
   const context = useContext(MoviesContext);
   const [open, setOpen] = useState(false);
   const [genres, setGenres] = useState([]);
+  const [posterImg, setPosterImg] = useState("");
 
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
-    {
-      control,
-      name: "cast",
-    }
-  );
-  console.log(fields);
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "cast",
+  });
 
   const handleGenresChange = (event) => {
     const {
@@ -53,12 +53,20 @@ const FantasyMovieForm = ({ genreChoices }) => {
     setGenres(typeof value === "string" ? value.split(",") : value);
   };
 
+  const handlePosterImgChange = (event) => {
+    const file = event.target.files[0];
+    setPosterImg(file);
+  };
+
   const handleSnackClose = (event) => {
     setOpen(false);
     navigate("/fantasy-movies");
   };
 
   const onSubmit = (fantasyMovie) => {
+    if (posterImg) {
+      fantasyMovie.posterImg = posterImg;
+    }
     console.log("fantasy movie here", fantasyMovie);
     context.createFantasyMovie(fantasyMovie);
     setOpen(true);
@@ -263,6 +271,15 @@ const FantasyMovieForm = ({ genreChoices }) => {
             </FormGroup>
           );
         })}
+
+        <TextField
+          variant="standard"
+          type="file"
+          onChange={handlePosterImgChange}
+          InputProps={{
+            endAdornment: <FileUploadOutlined />,
+          }}
+        />
 
         <Box sx={styles.buttons}>
           <Button

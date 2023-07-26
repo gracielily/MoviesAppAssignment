@@ -16,7 +16,6 @@ const _fetchData = (urlToFetch) => {
 export const getMovies = (page, queryParams) => {
   let queryParamStr = ""
   for (const [key, value] of Object.entries(queryParams)) {
-    console.log(`${key}: ${value}`);
     queryParamStr += `&${key}=${value}`
   }
   console.log(queryParamStr, page)

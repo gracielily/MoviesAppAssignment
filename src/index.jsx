@@ -19,7 +19,6 @@ import CreateFantasyMoviePage from "./pages/createFantasyMoviePage";
 import ActorDetailsPage from "./pages/actorDetailsPage";
 import PrivateRoute from "./components/PrivateRoute";
 import LoginPage from "./pages/loginPage";
-import { AuthContext } from "./contexts/authContext";
 import { createClient } from '@supabase/supabase-js'
 
 const queryClient = new QueryClient({

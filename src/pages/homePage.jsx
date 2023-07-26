@@ -39,7 +39,6 @@ const HomePage = (props) => {
       queryToSend.with_genres = query.with_genres
       }
     }
-    console.log("QUERY TO SEND", queryToSend)
     setQueryParams(queryToSend)
   }
   
@@ -48,7 +47,6 @@ const HomePage = (props) => {
   }
   
   useEffect(() => {
-    console.log("REFETCHING WITH THESE QUEREIS", queryParams)
     refetch_movies();
   }, [queryParams, page]);
 
