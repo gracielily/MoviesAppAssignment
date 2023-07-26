@@ -8,4 +8,7 @@ export default defineConfig({
     mix({
     handler: './api.js',
   }),],
+  "paths": {
+    "*": ["*", "*.jsx"]
+  }
 })
