@@ -6,6 +6,7 @@ import { getMovie } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
 import RemoveFromFavourites from "../components/cardIcons/removeFromFavourites";
 import WriteReview from "../components/cardIcons/writeReview";
+import MoveMovie from "../components/cardIcons/moveMovie";
 
 const FavouriteMoviesPage = (props) => {
   const { favourites: movieIds } = useContext(MoviesContext);
@@ -27,7 +28,7 @@ const FavouriteMoviesPage = (props) => {
   const movies = favouriteMovieQueries.map((q) => q.data);
 
   return (
-<PageTemplate
+    <PageTemplate
       title="Favourite Movies"
       movies={movies}
       action={(movie) => {
@@ -35,6 +36,13 @@ const FavouriteMoviesPage = (props) => {
           <>
             <RemoveFromFavourites movie={movie} />
             <WriteReview movie={movie} />
+            {movies.length > 1 && (
+              <>
+              {movies.indexOf(movie) !== 0 && (<><MoveMovie type="up" movie={movie} /></>)}
+              {movies.indexOf(movie) !== movies.length && (<><MoveMovie type="down" movie={movie} /></>)}
+                
+              </>
+            )}
           </>
         );
       }}

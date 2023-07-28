@@ -5,7 +5,7 @@ import AddToMustWatchList from '../components/cardIcons/addToMustWatchList';
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
 
-const TopMoviesPage = () => {
+const TopMoviesListPage = () => {
   const { data, error, isLoading, isError } = useQuery("top", getTopRatedMovies);
 
   if (isLoading) {
@@ -27,4 +27,4 @@ const TopMoviesPage = () => {
     />
   );
 };
-export default TopMoviesPage;
+export default TopMoviesListPage;

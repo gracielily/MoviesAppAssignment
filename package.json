@@ -7,14 +7,17 @@
     "@emotion/styled": "^11.6.0",
     "@mui/icons-material": "^5.3.1",
     "@mui/material": "^5.4.0",
+    "@mui/x-date-pickers": "^6.10.2",
     "@supabase/auth-ui-react": "^0.4.2",
     "@supabase/supabase-js": "^2.26.0",
     "body-parser": "^1.20.2",
+    "dayjs": "^1.11.9",
     "react": "^18.0.1",
     "react-dom": "^18.0.1",
     "react-hook-form": "^7.34.2",
     "react-query": "^3.13.0",
-    "react-router-dom": "6.3.0"
+    "react-router-dom": "6.3.0",
+    "rollup": "^3.27.0"
   },
   "scripts": {
     "storybook": "cross-env NODE_OPTIONS=--openssl-legacy-provider start-storybook -p 6006 -s public",

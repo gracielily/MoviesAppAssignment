@@ -12,7 +12,7 @@ import UpcomingMoviesPage from "./pages/upcomingMoviesPage";
 import AuthContextProvider from "./contexts/authContext";
 import MoviesContextProvider from "./contexts/moviesContext";
 import AddMovieReviewPage from './pages/addMovieReviewPage';
-import TopMoviesPage from "./pages/topMoviesPage";
+// import TopMoviesListPage from "./pages/topMoviesPage";
 import TvShowsPage from "./pages/tvShowsPage";
 import TrendingActorsPage from "./pages/trendingActionsPasge";
 import CreateFantasyMoviePage from "./pages/createFantasyMoviePage";
@@ -47,7 +47,7 @@ const App = () => {
           <Route path="home" element={<Home onLogin={handleLogin} />} /> */}
 
             <Route path="/movies/upcoming" element={<UpcomingMoviesPage />} />
-            <Route path="/movies/top" element={<TopMoviesPage />} />
+            {/* <Route path="/movies/top" element={<TopMoviesListPage />} /> */}
             <Route path="/tvshows" element={<TvShowsPage />} />
             <Route path="/trending-actors/" element={<TrendingActorsPage />} />
             <Route

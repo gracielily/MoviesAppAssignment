@@ -60,6 +60,17 @@ const MoviesContextProvider = (props) => {
     setFantasyMovies(myFantasyMovies.filter((fm) => fm.id !== movie.id));
   };
 
+  const reorderFavorites = (movie, direction) => {
+    const currentPosition = favourites.indexOf(movie.id)
+    const newPosition = direction === "down" ? currentPosition + 1 : currentPosition - 1
+    const newFavs = [...favourites]
+    // remove movie
+    newFavs.splice(currentPosition, 1);
+    // re add movie at position
+    newFavs.splice(newPosition, 0, movie.id)
+    setFavourites(newFavs);
+  }
+
   return (
     <MoviesContext.Provider
       value={{
@@ -72,6 +83,7 @@ const MoviesContextProvider = (props) => {
         createFantasyMovie,
         myFantasyMovies,
         removeFromFantasyMovies,
+        reorderFavorites,
       }}
     >
       {props.children}
