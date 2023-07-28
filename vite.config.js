@@ -5,10 +5,14 @@ import mix from 'vite-plugin-mix'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(),
-    mix({
+  mix({
     handler: './api.js',
-  }),],
-  "paths": {
+  }),
+  ],
+  build: {
+    outDir: 'dist/app',
+  },
+  paths: {
     "*": ["*", "*.jsx"]
   }
 })
