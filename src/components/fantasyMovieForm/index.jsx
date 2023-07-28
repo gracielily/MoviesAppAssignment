@@ -11,12 +11,7 @@ import styles from "../reviewForm/styles";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import {
-  FormControl,
-  InputLabel,
-  OutlinedInput,
-  Select,
-  FormGroup,
-  IconButton,
+  FormGroup
 } from "@mui/material";
 import { FileUploadOutlined } from "@mui/icons-material";
 
@@ -63,11 +58,12 @@ const FantasyMovieForm = ({ genreChoices }) => {
     navigate("/fantasy-movies");
   };
 
-  const onSubmit = (fantasyMovie) => {
+  const onSubmit = async (fantasyMovie) => {
     if (posterImg) {
       fantasyMovie.posterImg = posterImg;
     }
-    context.createFantasyMovie(fantasyMovie);
+    fantasyMovie.genres = genres;
+    await context.createFantasyMovie(fantasyMovie);
     setOpen(true);
   };
 

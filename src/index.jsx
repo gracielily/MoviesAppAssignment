@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "react-query";
@@ -19,7 +19,7 @@ import CreateFantasyMoviePage from "./pages/createFantasyMoviePage";
 import ActorDetailsPage from "./pages/actorDetailsPage";
 import PrivateRoute from "./components/PrivateRoute";
 import LoginPage from "./pages/loginPage";
-import { createClient } from '@supabase/supabase-js'
+import FantasyMoviesPage from "./pages/fantasyMoviesPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -60,7 +60,8 @@ const App = () => {
             <Route path="/" element={<HomePage />} />
             <Route path="*" element={<Navigate to="/" />} />
             <Route path="/reviews/:id" element={<MovieReviewPage />} />
-            <Route path="/fantasy-movies/form" element={<CreateFantasyMoviePage />} />
+            <Route path="/fantasy-movies/" element={<PrivateRoute><FantasyMoviesPage /></PrivateRoute>} />
+            <Route path="/fantasy-movies/form" element={<PrivateRoute><CreateFantasyMoviePage /></PrivateRoute>} />
             <Route path="/actor/:id" element={<ActorDetailsPage />} />
             <Route path="/login" element={<LoginPage />} />
           </Routes>

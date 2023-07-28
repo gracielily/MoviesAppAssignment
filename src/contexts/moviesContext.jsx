@@ -12,7 +12,7 @@ const MoviesContextProvider = (props) => {
   const [myReviews, setMyReviews] = useState( {} )
   const [favourites, setFavourites] = useState([]);
   const [mustWatch, setMustWatch] = useState([]);
-  const [myFantasyMovies, setFantasyMovies] = useState( {});
+  const [myFantasyMovies, setFantasyMovies] = useState([]);
 
   const addToFavourites = (movie) => {
     let updatedFavourites = [...favourites];
@@ -39,21 +39,26 @@ const MoviesContextProvider = (props) => {
   };
 
   const createFantasyMovie = async (fantasyMovie) => {
-
-    // upload image to supabase
+    fantasyMovie.id = Math.floor(Math.random() * 100000000)
     if(fantasyMovie.posterImg) {
       const posterFile = fantasyMovie.posterImg
       const { data } = await supabase
       .storage
       .from('fantasyMoviePosters')
-      .upload('test.png', posterFile, {
+      .upload(`${fantasyMovie.id}_${posterFile.name}`, posterFile, {
         cacheControl: '3600',
         upsert: false
       })
-      fantasyMovie.posterImg = data.path;
+      fantasyMovie.posterImg = data.path; 
     }
-    setFantasyMovies({...myFantasyMovies, fantasyMovie})
+    let fantasyMovies = [...myFantasyMovies];
+    fantasyMovies.push(fantasyMovie)
+    setFantasyMovies(fantasyMovies)
   }
+
+  const removeFromFantasyMovies = (movie) => {
+    setFantasyMovies(myFantasyMovies.filter((fm) => fm.id !== movie.id));
+  };
 
   return (
     <MoviesContext.Provider
@@ -65,6 +70,8 @@ const MoviesContextProvider = (props) => {
         mustWatch,
         addToMustWatch,
         createFantasyMovie,
+        myFantasyMovies,
+        removeFromFantasyMovies,
       }}
     >
       {props.children}
