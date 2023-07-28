@@ -10,10 +10,13 @@ import { useNavigate } from "react-router-dom";
 import styles from "../reviewForm/styles";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import {
-  FormGroup
-} from "@mui/material";
+import { FormGroup } from "@mui/material";
 import { FileUploadOutlined } from "@mui/icons-material";
+
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs, {Dayjs} from "dayjs";
 
 const FantasyMovieForm = ({ genreChoices }) => {
   const defaultValues = {
@@ -35,7 +38,7 @@ const FantasyMovieForm = ({ genreChoices }) => {
   const [open, setOpen] = useState(false);
   const [genres, setGenres] = useState([]);
   const [posterImg, setPosterImg] = useState("");
-
+  const [releaseDate, setReleaseDate] = useState(dayjs());
   const { fields, append, remove } = useFieldArray({
     control,
     name: "cast",
@@ -63,6 +66,7 @@ const FantasyMovieForm = ({ genreChoices }) => {
       fantasyMovie.posterImg = posterImg;
     }
     fantasyMovie.genres = genres;
+    fantasyMovie.releaseDate = releaseDate.format("YYYY-MM-DD");
     await context.createFantasyMovie(fantasyMovie);
     setOpen(true);
   };
@@ -205,6 +209,15 @@ const FantasyMovieForm = ({ genreChoices }) => {
             />
           )}
         />
+
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DatePicker
+            label="Release Date"
+            value={releaseDate}
+            onChange={(newValue) => setReleaseDate(newValue)}
+            required
+          />
+        </LocalizationProvider>
 
         {fields.map((field, index) => {
           return (

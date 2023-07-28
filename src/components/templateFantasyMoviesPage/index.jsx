@@ -15,8 +15,7 @@ const FantasyMoviesPageTemplate = ({ movies, action }) => {
 
         <Grid item container spacing={5}>
         <FantasyMovieList movies={movies} action={action}/>
-        </Grid>
-      
+        </Grid>     
       </Grid>
     
     </>
