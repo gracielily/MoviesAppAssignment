@@ -12,6 +12,7 @@ import FemaleIcon from "@mui/icons-material/Female";
 import EventBusyIcon from '@mui/icons-material/EventBusy';
 import HomeIcon from '@mui/icons-material/Home';
 import { Link } from "@mui/material";
+import ActorCredits from "../actorCredits";
 
 const styles = {
   chipSet: {
@@ -28,7 +29,7 @@ const styles = {
   },
 };
 
-const ActorDetails = ({ actor }) => {
+const ActorDetails = ({ actor, credits }) => {
   return (
     <>
       <Typography variant="h5" component="h3">
@@ -62,7 +63,9 @@ const ActorDetails = ({ actor }) => {
           <Chip icon={<TheatersIcon />} label="IMDB Page" clickable />
         </Link>
       </Paper>
+      <ActorCredits credits={credits} />
     </>
+
   );
 };
 export default ActorDetails;

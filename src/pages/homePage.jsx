@@ -60,9 +60,9 @@ const HomePage = (props) => {
 
   useEffect(() => {
     if(searchTerm && search_movies){
-      setMovies(search_movies.results)
+      setMovies(search_movies)
     } else if (movies_data){
-      setMovies(movies_data.results)
+      setMovies(movies_data)
     }
   }, [movies_data, search_movies]);
 
@@ -72,11 +72,10 @@ const HomePage = (props) => {
   if (movies_has_error || search_has_error) {
     return <h1>{search_error ? search_error.message : movies_error.message}</h1>;
   }
-
   return (
     <PageTemplate
       title="Discover Movies"
-      movies={movies}
+      movies={movies?.results}
       action={(movie) => {
         return <AddToFavouritesIcon movie={movie} />;
       }}
@@ -84,6 +83,8 @@ const HomePage = (props) => {
       updateQuery={updateMoviesQuery}
       setResultsPage={setResultsPage}
       updateSearchTerm={setSearchTerm}
+      totalResults={movies?.total_results}
+      totalPages={movies?.total_pages}
     />
   );
 };

@@ -21,7 +21,7 @@ const styles = {
   },
 };
 
-function MovieListPageTemplate({ movies, title, action, isUpcoming, setResultsPage, totalResults, currentPage, updateQuery, updateSearchTerm }) {
+function MovieListPageTemplate({ movies, title, action, isUpcoming, setResultsPage, totalResults, currentPage, updateQuery, updateSearchTerm, totalPages }) {
   const [titleFilter, setTitleFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
   const [sortBy, setSortBy] = useState("");
@@ -53,7 +53,8 @@ function MovieListPageTemplate({ movies, title, action, isUpcoming, setResultsPa
           <MovieList action={action} movies={movies} isUpcoming={isUpcoming} />
         </Grid>
         <Typography>{totalResults} Results found.</Typography>
-        <Pagination count={500} page={currentPage} onChange={handlePaginationChange} />
+        {/* page number can be no more than 500 according to TMBD API */}
+        <Pagination count={totalPages <= 500 ? totalPages : 500} page={currentPage} onChange={handlePaginationChange} />
       </Grid>
       <Fab
         color="secondary"

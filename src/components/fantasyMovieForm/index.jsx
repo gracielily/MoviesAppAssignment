@@ -67,7 +67,6 @@ const FantasyMovieForm = ({ genreChoices }) => {
     if (posterImg) {
       fantasyMovie.posterImg = posterImg;
     }
-    console.log("fantasy movie here", fantasyMovie);
     context.createFantasyMovie(fantasyMovie);
     setOpen(true);
   };

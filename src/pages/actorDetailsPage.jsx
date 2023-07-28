@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import ActorDetails from "../components/actorDetails";
 import PageTemplate from "../components/templateActorPage";
-import { getActor } from "../api/tmdb-api";
+import { getActor, getActorCredits } from "../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
 
@@ -16,12 +16,20 @@ const ActorDetailsPage = () => {
     isError,
   } = useQuery(["actor", { id: id }], getActor);
 
-  if (isLoading) {
+
+  const {
+    data: actorCredits,
+    error: creditsError,
+    isLoading: creditsLoading,
+    isError: isCreditsError,
+  } = useQuery(["actorCredits", {id: id}], getActorCredits);
+
+  if (isLoading || creditsLoading) {
     return <Spinner />;
   }
 
-  if (isError) {
-    return <h1>{error.message}</h1>;
+  if (isError || isCreditsError) {
+    return <h1>{creditsError ? creditsError.message : error.message}</h1>;
   }
 
   return (
@@ -29,7 +37,7 @@ const ActorDetailsPage = () => {
       {actor ? (
         <>
           <PageTemplate>
-            <ActorDetails actor={actor} />
+            <ActorDetails actor={actor} credits={actorCredits} />
           </PageTemplate>
         </>
       ) : (

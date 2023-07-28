@@ -18,7 +18,6 @@ export const getMovies = (page, queryParams) => {
   for (const [key, value] of Object.entries(queryParams)) {
     queryParamStr += `&${key}=${value}`
   }
-  console.log(queryParamStr, page)
 
   return _fetchData(
     `https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=${page}${queryParamStr}`
@@ -103,7 +102,14 @@ export const getMovie = (args) => {
     return _fetchData(
       `https://api.themoviedb.org/3/search/movie?api_key=${import.meta.env.VITE_TMDB_KEY}&query=${searchTerm}`
     )
+  };
 
+  export const getActorCredits = (args) => {
+    const [, idPart] = args.queryKey;
+    const { id } = idPart;
+    return _fetchData(
+      `https://api.themoviedb.org/3/person/${id}/combined_credits?api_key=${import.meta.env.VITE_TMDB_KEY}`
+    )
   }
 
   
