@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PageTemplate from '../components/templateMovieListPage';
 import { useQuery } from "react-query";
-import AddToMustWatchList from '../components/cardIcons/addToMustWatchList';
+import AddToFavouritesIcon from "../components/cardIcons/addToFavourites";
 import Spinner from "../components/spinner";
 import { getTvShows } from "../api/tmdb-api";
 
@@ -28,7 +28,7 @@ const TvShowsPage = () => {
       title="TV Shows"
       movies={tvShows}
       action={(movie) => {
-        return <AddToMustWatchList movie={movie} />
+        return <AddToFavouritesIcon el={movie} type="tvShows" />
       }}
       isUpcoming={false}
       setResultsPage={setResultsPage}

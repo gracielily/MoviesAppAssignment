@@ -5,9 +5,9 @@ import Grid from "@mui/material/Grid";
 import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
 import MovieList from "../movieList";
-import Button from '@mui/material/Button';
-import Pagination from '@mui/material/Pagination';
-import Typography from '@mui/material/Typography';
+import Button from "@mui/material/Button";
+import Pagination from "@mui/material/Pagination";
+import Typography from "@mui/material/Typography";
 
 const styles = {
   root: {
@@ -21,7 +21,19 @@ const styles = {
   },
 };
 
-function MovieListPageTemplate({ movies, title, action, isUpcoming, setResultsPage, totalResults, currentPage, updateQuery, updateSearchTerm, totalPages }) {
+function MovieListPageTemplate({
+  movies,
+  title,
+  action,
+  isUpcoming,
+  setResultsPage,
+  totalResults,
+  currentPage,
+  updateQuery,
+  updateSearchTerm,
+  totalPages,
+  hidePagination
+}) {
   const [titleFilter, setTitleFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
   const [sortBy, setSortBy] = useState("");
@@ -29,22 +41,42 @@ function MovieListPageTemplate({ movies, title, action, isUpcoming, setResultsPa
   const [yearFilter, setYearFilter] = useState("");
   const [countryFilter, setCountryFilter] = useState("");
   const [drawerOpen, setDrawerOpen] = useState(false);
-
+  
   const handleChange = (type, value) => {
-    if (type === "title") {setTitleFilter(value); setSortBy(""); setGenreFilter(""); updateSearchTerm(value)};
-    if(type === "sort") { setSortBy(value); updateQuery({"sort_by": value})};
-    if (type === "genre") { setGenreFilter(value); updateQuery({"with_genres": value}) }
-    if (type === "lang") { setLanguageFilter(value); updateQuery({"language": value}) }
-    if (type === "year") { setYearFilter(value); updateQuery({"year": value}) }
-    if (type === "country") { setCountryFilter(value); updateQuery({"with_origin_country": value}) }
+    if (type === "title") {
+      setTitleFilter(value);
+      setSortBy("");
+      setGenreFilter("");
+      updateSearchTerm(value);
+    }
+    if (type === "sort") {
+      setSortBy(value);
+      updateQuery({ sort_by: value });
+    }
+    if (type === "genre") {
+      setGenreFilter(value);
+      updateQuery({ with_genres: value });
+    }
+    if (type === "lang") {
+      setLanguageFilter(value);
+      updateQuery({ language: value });
+    }
+    if (type === "year") {
+      setYearFilter(value);
+      updateQuery({ year: value });
+    }
+    if (type === "country") {
+      setCountryFilter(value);
+      updateQuery({ with_origin_country: value });
+    }
   };
 
   const handlePaginationChange = (event, value) => {
-    setResultsPage(value)
-  }
+    setResultsPage(value);
+  };
 
   return (
-   <>
+    <>
       <Grid container sx={styles.root}>
         <Grid item xs={12}>
           <Header title={title} />
@@ -52,9 +84,17 @@ function MovieListPageTemplate({ movies, title, action, isUpcoming, setResultsPa
         <Grid item container spacing={5}>
           <MovieList action={action} movies={movies} isUpcoming={isUpcoming} />
         </Grid>
-        <Typography>{totalResults} Results found.</Typography>
-        {/* page number can be no more than 500 according to TMBD API */}
-        <Pagination count={totalPages <= 500 ? totalPages : 500} page={currentPage} onChange={handlePaginationChange} />
+        {!hidePagination && (
+          <>
+          <Typography>{totalResults} Results found.</Typography>
+            {/* page number can be no more than 500 according to TMBD API */}
+            <Pagination
+              count={totalPages <= 500 ? totalPages : 500}
+              page={currentPage}
+              onChange={handlePaginationChange}
+            />
+          </>
+        )}
       </Grid>
       <Fab
         color="secondary"
@@ -79,7 +119,7 @@ function MovieListPageTemplate({ movies, title, action, isUpcoming, setResultsPa
           sortBy={sortBy}
         />
       </Drawer>
-    </>  
+    </>
   );
 }
 export default MovieListPageTemplate;

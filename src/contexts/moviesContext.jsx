@@ -10,20 +10,22 @@ export const MoviesContext = React.createContext(null);
 
 const MoviesContextProvider = (props) => {
   const [myReviews, setMyReviews] = useState( {} )
-  const [favourites, setFavourites] = useState([]);
+  const [favourites, setFavourites] = useState({movies: [], tvShows: []});
   const [mustWatch, setMustWatch] = useState([]);
   const [myFantasyMovies, setFantasyMovies] = useState([]);
 
-  const addToFavourites = (movie) => {
-    let updatedFavourites = [...favourites];
-    if (!favourites.includes(movie.id)) {
-      updatedFavourites.push(movie.id);
+  const addToFavourites = (el, type) => {
+    let updatedFavourites = {...favourites};
+    if (!favourites[type].includes(el.id)) {
+      updatedFavourites[type].push(el.id);
     }
     setFavourites(updatedFavourites);
   };
 
-  const removeFromFavourites = (movie) => {
-    setFavourites(favourites.filter((mId) => mId !== movie.id));
+  const removeFromFavourites = (el, type) => {
+    let updatedFavourites = {...favourites};
+    updatedFavourites[type].splice(updatedFavourites[type].indexOf(el.id), 1)
+    setFavourites(updatedFavourites);
   };
 
   const addReview = (movie, review) => {
@@ -60,14 +62,14 @@ const MoviesContextProvider = (props) => {
     setFantasyMovies(myFantasyMovies.filter((fm) => fm.id !== movie.id));
   };
 
-  const reorderFavorites = (movie, direction) => {
-    const currentPosition = favourites.indexOf(movie.id)
+  const reorderFavorites = (el, type, direction) => {
+    const currentPosition = favourites[type].indexOf(el.id)
     const newPosition = direction === "down" ? currentPosition + 1 : currentPosition - 1
-    const newFavs = [...favourites]
+    const newFavs = {...favourites}
     // remove movie
-    newFavs.splice(currentPosition, 1);
+    newFavs[type].splice(currentPosition, 1);
     // re add movie at position
-    newFavs.splice(newPosition, 0, movie.id)
+    newFavs[type].splice(newPosition, 0, el.id)
     setFavourites(newFavs);
   }
 

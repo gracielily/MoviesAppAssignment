@@ -26,8 +26,13 @@ const styles = {
 
 export default function MovieCard({ movie, action, isUpcoming }) {
   const { favourites, mustWatch } = useContext(MoviesContext);
-
-  movie.favourite = favourites.find((id) => id === movie.id)
+ 
+  if(movie.name){
+    movie.favourite = favourites.tvShows.find((id) => id === movie.id)
+  } else {
+    movie.favourite = favourites.movies.find((id) => id === movie.id)
+  }
+  
   movie.mustWatch = mustWatch.find((id) => id === movie.id)
 
   const displayFavourite = !isUpcoming && movie.favourite;
@@ -47,7 +52,7 @@ export default function MovieCard({ movie, action, isUpcoming }) {
         }
         title={
           <Typography variant="h5" component="p">
-            {movie.title}{" "}
+            {movie.title ? movie.title : movie.name}{" "}
           </Typography>
         }
       />
@@ -64,7 +69,7 @@ export default function MovieCard({ movie, action, isUpcoming }) {
           <Grid item xs={6}>
             <Typography variant="h6" component="p">
               <CalendarIcon fontSize="small" />
-              {movie.release_date}
+              {movie.release_date ? movie.release_date : movie.first_air_date}
             </Typography>
           </Grid>
           <Grid item xs={6}>

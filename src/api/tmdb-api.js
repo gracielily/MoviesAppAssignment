@@ -82,6 +82,14 @@ export const getMovie = (args) => {
     )
   };
 
+  export const getTvShow = (args) => {
+    const [, idPart] = args.queryKey;
+    const { id } = idPart;
+    return _fetchData(
+      `https://api.themoviedb.org/3/tv/${id}?api_key=${import.meta.env.VITE_TMDB_KEY}`
+    )
+  };
+
 
   export const getTrendingActors = () => {
     return _fetchData(
