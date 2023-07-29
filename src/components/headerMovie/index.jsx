@@ -25,7 +25,7 @@ const styles = {
 const MovieHeader = (props) => {
   const movie = props.movie;
   const context = useContext(MoviesContext);
-  const isinFavourites = context?.favourites.includes(movie.id);
+  const isinFavourites = context?.favourites[movie.name ? "tvShows" : "movies"].includes(movie.id);
   
   return (
     <Paper component="div" sx={styles.root}>
@@ -38,13 +38,11 @@ const MovieHeader = (props) => {
         </Avatar>
       ) : null}
       <Typography variant="h4" component="h3">
-        {movie.title}
+        {movie.title ? movie.title : movie.name}
         {"   "}
         <a href={movie.homepage}>
           <HomeIcon color="primary" fontSize="='large" />
         </a>
-        <br />
-        <span>{`${movie.tagline}`} </span>
       </Typography>
       <IconButton aria-label="go forward">
         <ArrowForwardIcon color="primary" fontSize="large" />

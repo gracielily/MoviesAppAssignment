@@ -21,6 +21,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import LoginPage from "./pages/loginPage";
 import FantasyMoviesPage from "./pages/fantasyMoviesPage";
 import FavouriteTvShowsPage from "./pages/favouriteTvShowsPage";
+import TvShowDetailsPage from "./pages/tvShowDetailsPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -50,6 +51,7 @@ const App = () => {
             <Route path="/movies/upcoming" element={<UpcomingMoviesPage />} />
             <Route path="/movies/top" element={<TopMoviesListPage />} />
             <Route path="/tvshows" element={<TvShowsPage />} />
+            <Route path="/tvshows/:id" element={<PrivateRoute><TvShowDetailsPage /></PrivateRoute>} />
             <Route
               path="/tvshows/favourites"
               element={<FavouriteTvShowsPage />}

@@ -19,9 +19,9 @@ const styles = {
   },
 };
 
-const TemplateMoviePage = ({ movie, children }) => {
+const TemplateTvShowPage = ({ tvShow, children }) => {
   const { data , error, isLoading, isError } = useQuery(
-    ["images", { id: movie.id, type: movie.name ? "tv" : "movie" }],
+    ["images", { id: tvShow.id, type: "tv" }],
     getMovieImages
   );
 
@@ -35,7 +35,7 @@ const TemplateMoviePage = ({ movie, children }) => {
   const images = data.posters 
   return (
     <>
-      <MovieHeader movie={movie} />
+      <MovieHeader movie={tvShow} />
 
       <Grid container spacing={5} style={{ padding: "15px" }}>
         <Grid item xs={3}>
@@ -65,4 +65,4 @@ const TemplateMoviePage = ({ movie, children }) => {
   );
 };
 
-export default TemplateMoviePage;
+export default TemplateTvShowPage;

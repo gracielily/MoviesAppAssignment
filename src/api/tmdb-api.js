@@ -45,9 +45,9 @@ export const getMovie = (args) => {
   
   export const getMovieImages = ({ queryKey }) => {
     const [, idPart] = queryKey;
-    const { id } = idPart;
+    const { id, type } = idPart;
     return _fetchData(
-      `https://api.themoviedb.org/3/movie/${id}/images?api_key=${import.meta.env.VITE_TMDB_KEY}`
+      `https://api.themoviedb.org/3/${type}/${id}/images?api_key=${import.meta.env.VITE_TMDB_KEY}`
     )
   };
   

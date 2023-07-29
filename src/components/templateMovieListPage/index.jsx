@@ -32,7 +32,8 @@ function MovieListPageTemplate({
   updateQuery,
   updateSearchTerm,
   totalPages,
-  hidePagination
+  hidePagination,
+  type,
 }) {
   const [titleFilter, setTitleFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
@@ -82,7 +83,7 @@ function MovieListPageTemplate({
           <Header title={title} />
         </Grid>
         <Grid item container spacing={5}>
-          <MovieList action={action} movies={movies} isUpcoming={isUpcoming} />
+          <MovieList action={action} movies={movies} isUpcoming={isUpcoming} type={type} />
         </Grid>
         {!hidePagination && (
           <>

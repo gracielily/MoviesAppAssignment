@@ -34,6 +34,7 @@ const TvShowsPage = () => {
       setResultsPage={setResultsPage}
       totalResults={totalResults}
       currentPage={page}
+      type="tvshows"
     />
     
   );

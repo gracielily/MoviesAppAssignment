@@ -85,6 +85,7 @@ const HomePage = (props) => {
       updateSearchTerm={setSearchTerm}
       totalResults={movies?.total_results}
       totalPages={movies?.total_pages}
+      type="movies"
     />
   );
 };

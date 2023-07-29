@@ -24,19 +24,19 @@ const styles = {
   },
 };
 
-export default function MovieCard({ movie, action, isUpcoming }) {
+export default function MovieCard({ el, action, isUpcoming, type="movie" }) {
   const { favourites, mustWatch } = useContext(MoviesContext);
- 
-  if(movie.name){
-    movie.favourite = favourites.tvShows.find((id) => id === movie.id)
+  
+  if(type === "tvshows"){
+    el.favourite = favourites.tvShows.find((id) => id === el.id)
   } else {
-    movie.favourite = favourites.movies.find((id) => id === movie.id)
+    el.favourite = favourites.movies.find((id) => id === el.id)
   }
   
-  movie.mustWatch = mustWatch.find((id) => id === movie.id)
+  el.mustWatch = mustWatch.find((id) => id === el.id)
 
-  const displayFavourite = !isUpcoming && movie.favourite;
-  const displayMustWatch = isUpcoming && movie.mustWatch;
+  const displayFavourite = !isUpcoming && el.favourite;
+  const displayMustWatch = isUpcoming && el.mustWatch;
   const displayAvatar = displayFavourite || displayMustWatch;
 
   return (
@@ -52,15 +52,15 @@ export default function MovieCard({ movie, action, isUpcoming }) {
         }
         title={
           <Typography variant="h5" component="p">
-            {movie.title ? movie.title : movie.name}{" "}
+            {el.title ? el.title : el.name}{" "}
           </Typography>
         }
       />
       <CardMedia
         sx={styles.media}
         image={
-          movie.poster_path
-            ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+          el.poster_path
+            ? `https://image.tmdb.org/t/p/w500/${el.poster_path}`
             : img
         }
       />
@@ -69,20 +69,20 @@ export default function MovieCard({ movie, action, isUpcoming }) {
           <Grid item xs={6}>
             <Typography variant="h6" component="p">
               <CalendarIcon fontSize="small" />
-              {movie.release_date ? movie.release_date : movie.first_air_date}
+              {el.release_date ? el.release_date : el.first_air_date}
             </Typography>
           </Grid>
           <Grid item xs={6}>
             <Typography variant="h6" component="p">
               <StarRateIcon fontSize="small" />
-              {"  "} {movie.vote_average}{" "}
+              {"  "} {el.vote_average}{" "}
             </Typography>
           </Grid>
         </Grid>
       </CardContent>
       <CardActions disableSpacing>
-        {action(movie)}
-        <Link to={`/movies/${movie.id}`}>
+        {action(el)}
+        <Link to={`/${type}/${el.id}`}>
           <Button variant="outlined" size="medium" color="primary">
             More Info ...
           </Button>
