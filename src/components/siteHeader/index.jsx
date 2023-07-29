@@ -33,12 +33,14 @@ const SiteHeader = () => {
     { label: "Home", path: "/" },
     { label: "Upcoming Movies", path: "/movies/upcoming" },
     { label: "Top Rated Movies", path: "/movies/top" },
+    { label: "Trending Actors", path: "/trending-actors" },
+    { label: "TV Shows", path: "/tvshows" },
     { label: "Favorite Movies", path: "/movies/favourites" },
     { label: "Favorite TV Shows", path: "/tvshows/favourites" },
     { label: "Favorite Actors", path: "/actors/favourites" },
     { label: "Fantasy Movies", path: "/fantasy-movies" },
-    { label: "TV Shows", path: "/tvshows" },
-    { label: "Trending Actors", path: "/trending-actors" },
+    { label: "Search", path: "/search" },
+    { label: token ? "Logout" : "Login", path: token ? "/logout" : "/login" },
   ];
 
   const handleMenuSelect = (pageURL) => {
@@ -98,13 +100,6 @@ const SiteHeader = () => {
                     {opt.label}
                   </MenuItem>
                 ))}
-                <Button
-                  key={token ? "Logout" : "Login"}
-                  color="inherit"
-                  onClick={() => handleMenuSelect(token ? "/logout" : "/login")}
-                >
-                  {token ? "Logout" : "Login"}
-                </Button>
               </Menu>
             </>
           ) : (

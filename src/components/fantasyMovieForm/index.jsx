@@ -134,7 +134,7 @@ const FantasyMovieForm = ({ genreChoices }) => {
             />
           )}
         />
-        {errors.review && (
+        {errors.overview && (
           <Typography variant="h6" component="p">
             {errors.overview.message}
           </Typography>
@@ -315,6 +315,7 @@ const FantasyMovieForm = ({ genreChoices }) => {
             onClick={() => {
               reset(defaultValues);
               setGenres([]);
+              setReleaseDate(dayjs());
             }}
           >
             Reset
