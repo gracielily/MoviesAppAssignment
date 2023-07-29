@@ -14,7 +14,7 @@ import MoviesContextProvider from "./contexts/moviesContext";
 import AddMovieReviewPage from './pages/addMovieReviewPage';
 import TopMoviesListPage from "./pages/topMoviesPage";
 import TvShowsPage from "./pages/tvShowsPage";
-import TrendingActorsPage from "./pages/trendingActionsPasge";
+import TrendingActorsPage from "./pages/trendingActorsPage";
 import CreateFantasyMoviePage from "./pages/createFantasyMoviePage";
 import ActorDetailsPage from "./pages/actorDetailsPage";
 import PrivateRoute from "./components/PrivateRoute";
@@ -22,6 +22,7 @@ import LoginPage from "./pages/loginPage";
 import FantasyMoviesPage from "./pages/fantasyMoviesPage";
 import FavouriteTvShowsPage from "./pages/favouriteTvShowsPage";
 import TvShowDetailsPage from "./pages/tvShowDetailsPage";
+import FavouriteActorsPage from "./pages/favouriteActorsPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -71,6 +72,10 @@ const App = () => {
             <Route path="/fantasy-movies/form" element={<PrivateRoute><CreateFantasyMoviePage /></PrivateRoute>} />
             <Route path="/actor/:id" element={<ActorDetailsPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route
+              path="/actors/favourites"
+              element={<FavouriteActorsPage />}
+            />
           </Routes>
           </MoviesContextProvider>
           </AuthContextProvider>

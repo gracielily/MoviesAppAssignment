@@ -11,6 +11,9 @@ import StarRateIcon from "@mui/icons-material/StarRate";
 import Grid from "@mui/material/Grid";
 import img from "../../images/film-poster-placeholder.png";
 import { Link } from "react-router-dom";
+import { Avatar } from "@mui/material";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { MoviesContext } from "../../contexts/moviesContext";
 
 const styles = {
   card: { maxWidth: 345 },
@@ -20,7 +23,9 @@ const styles = {
   },
 };
 
-export default function ActorCard({ actor }) {
+export default function ActorCard({ actor, action }) {
+  const { favourites } = useContext(MoviesContext);
+  actor.favourite = favourites.actors.find((id) => id === actor.id)
 
   return (
     <Card sx={styles.card}>
@@ -30,6 +35,11 @@ export default function ActorCard({ actor }) {
           <Typography variant="h5" component="p">
             {actor.name}{" "}
           </Typography>
+        }
+        avatar={
+          actor.favourite && (
+            <Avatar sx={styles.avatar}><FavoriteIcon /></Avatar>
+          )
         }
       />
       <CardMedia
@@ -57,6 +67,7 @@ export default function ActorCard({ actor }) {
         </Grid>
       </CardContent>
       <CardActions disableSpacing>
+        {action(actor)}
         <Link to={`/actor/${actor.id}`}>
           <Button variant="outlined" size="medium" color="primary">
             More Details...

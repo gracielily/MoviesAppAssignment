@@ -17,7 +17,7 @@ const styles = {
   },
 };
 
-function TrendingActorsPageTemplate({ actors, title }) {
+function TrendingActorsPageTemplate({ actors, title, action }) {
   const [nameFilter, setNameFilter] = useState("");
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -37,7 +37,7 @@ function TrendingActorsPageTemplate({ actors, title }) {
           <Header title={title} />
         </Grid>
         <Grid item container spacing={5}>
-          <ActorsList actors={displayActors}  />
+          <ActorsList actors={displayActors} action={action}  />
         </Grid>
       </Grid>
       <Fab

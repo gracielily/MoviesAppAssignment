@@ -10,7 +10,7 @@ export const MoviesContext = React.createContext(null);
 
 const MoviesContextProvider = (props) => {
   const [myReviews, setMyReviews] = useState( {} )
-  const [favourites, setFavourites] = useState({movies: [], tvShows: []});
+  const [favourites, setFavourites] = useState({movies: [], tvShows: [], actors: []});
   const [mustWatch, setMustWatch] = useState([]);
   const [myFantasyMovies, setFantasyMovies] = useState([]);
 
