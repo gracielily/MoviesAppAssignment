@@ -10,6 +10,7 @@ import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from '../movieReviews'
+import SimilarMovies from "../similarMovies";
 
 const styles = {
   chipSet: {
@@ -65,6 +66,9 @@ const MovieDetails = ( {movie}) => {
           label={`${movie.vote_average} (${movie.vote_count}`}
         />
         <Chip label={`Released: ${movie.release_date}`} />
+      </Paper>
+      <Paper>
+        <SimilarMovies movieId={movie.id} />
       </Paper>
       <Fab    
         color="secondary"
