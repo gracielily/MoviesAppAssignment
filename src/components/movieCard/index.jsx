@@ -1,4 +1,4 @@
-import React, { useContext  } from "react";
+import React, { useContext } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -7,7 +7,8 @@ import CardHeader from "@mui/material/CardHeader";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
+import PlaylistAddCheckIcon from "@mui/icons-material/PlaylistAddCheck";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import Grid from "@mui/material/Grid";
@@ -15,6 +16,7 @@ import img from "../../images/film-poster-placeholder.png";
 import { Link } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import { MoviesContext } from "../../contexts/moviesContext";
+import { Tooltip } from "@mui/material";
 
 const styles = {
   card: { maxWidth: 345 },
@@ -24,20 +26,29 @@ const styles = {
   },
 };
 
-export default function MovieCard({ el, action, isUpcoming, type="movie" }) {
-  const { favourites, mustWatch } = useContext(MoviesContext);
-  
-  if(type === "tvshows"){
-    el.favourite = favourites.tvshows.find((id) => id === el.id)
+export default function MovieCard({ el, action, isUpcoming, type = "movie" }) {
+  const { favourites, mustWatch, playlists } = useContext(MoviesContext);
+
+  if (type === "tvshows") {
+    el.favourite = favourites.tvshows.find((id) => id === el.id);
   } else {
-    el.favourite = favourites.movies.find((id) => id === el.id)
+    el.favourite = favourites.movies.find((id) => id === el.id);
   }
-  
-  el.mustWatch = mustWatch.find((id) => id === el.id)
+
+  el.mustWatch = mustWatch.find((id) => id === el.id);
+  el.playlists = playlists.filter((pl) => pl.movies.includes(el.id));
 
   const displayFavourite = !isUpcoming && el.favourite;
   const displayMustWatch = isUpcoming && el.mustWatch;
-  const displayAvatar = displayFavourite || displayMustWatch;
+  const displayPlaylist = !isUpcoming && el.playlists?.length;
+
+  const displayAvatar = displayFavourite || displayMustWatch || displayPlaylist;
+  let playlistsNames = "";
+  if (el.playlists) {
+    el.playlists.map((pl) => {
+      playlistsNames += pl.title + " ";
+    });
+  }
 
   return (
     <Card sx={styles.card}>
@@ -46,7 +57,15 @@ export default function MovieCard({ el, action, isUpcoming, type="movie" }) {
         avatar={
           displayAvatar ? (
             <Avatar sx={styles.avatar}>
-              {displayFavourite ? <FavoriteIcon /> : <PlaylistAddCheckIcon /> }
+              {displayFavourite ? <FavoriteIcon /> : null}
+              {displayPlaylist ? (
+                <>
+                  <Tooltip title={`Added to playlist(s): ${playlistsNames}`}>
+                    <PlaylistAddCheckIcon />
+                  </Tooltip>{" "}
+                </>
+              ) : null}
+              {displayMustWatch ? <VisibilityIcon /> : null}
             </Avatar>
           ) : null
         }
