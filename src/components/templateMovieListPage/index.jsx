@@ -30,12 +30,10 @@ function MovieListPageTemplate({
   totalResults,
   currentPage,
   updateQuery,
-  updateSearchTerm,
   totalPages,
   hidePagination,
   type,
 }) {
-  const [titleFilter, setTitleFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
   const [sortBy, setSortBy] = useState("");
   const [languageFilter, setLanguageFilter] = useState("");
@@ -44,12 +42,6 @@ function MovieListPageTemplate({
   const [drawerOpen, setDrawerOpen] = useState(false);
   
   const handleChange = (type, value) => {
-    if (type === "title") {
-      setTitleFilter(value);
-      setSortBy("");
-      setGenreFilter("");
-      updateSearchTerm(value);
-    }
     if (type === "sort") {
       setSortBy(value);
       updateQuery({ sort_by: value });
@@ -112,7 +104,6 @@ function MovieListPageTemplate({
       >
         <FilterCard
           onUserInput={handleChange}
-          titleFilter={titleFilter}
           genreFilter={genreFilter}
           countryFilter={countryFilter}
           languageFilter={languageFilter}

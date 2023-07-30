@@ -13,7 +13,6 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { getMovieGenres } from "../../api/tmdb-api";
 import { AuthContext } from "../../contexts/authContext";
-import SearchIcon from '@mui/icons-material/Search';
 
 const styles = {
   root: {
@@ -59,10 +58,6 @@ export default function FilterMoviesCard(props) {
     props.onUserInput(type, value);
   };
 
-  const handleTextChange = (e, props) => {
-    handleUserInput(e, "title", e.target.value);
-  };
-
   const handleGenreChange = (e) => {
     handleUserInput(e, "genre", e.target.value);
   };
@@ -85,35 +80,9 @@ export default function FilterMoviesCard(props) {
 
   return (
     <>
-    <p>{props.genreFilter} {props.yearFilter} {props.languageFilter} {props.countryFilter}</p>
       {token ? (
         <>
-        {(!props.genreFilter || props.genreFilter === "0") && !props.sortBy && (
-          <>
-          <Card sx={styles.root} variant="outlined">
-            <CardContent>
-              <Typography variant="h5" component="h1">
-                <SearchIcon fontSize="large" />
-               Search the movies.
-              </Typography>
-              <FormControl sx={styles.formControl}>
-                <InputLabel id="sort-label">Search for a movie by title or description</InputLabel>
-                <TextField
-                sx={styles.formControl}
-                id="filled-search"
-                type="search"
-                value={props.titleFilter}
-                variant="filled"
-                onChange={handleTextChange}
-              />
-              </FormControl>
-            </CardContent>
-          </Card>
-          </>
-        )}
-          
-          {!props.titleFilter && (
-            <>
+      
           <Card sx={styles.root} variant="outlined">
             <CardContent>
               <Typography variant="h5" component="h1">
@@ -201,8 +170,6 @@ export default function FilterMoviesCard(props) {
             </CardContent>
           </Card>
           </>
-          )}
-        </>
       ) : (
         <p> Please Log in to use Filters</p>
       )}

@@ -28,7 +28,7 @@ export default function MovieCard({ el, action, isUpcoming, type="movie" }) {
   const { favourites, mustWatch } = useContext(MoviesContext);
   
   if(type === "tvshows"){
-    el.favourite = favourites.tvShows.find((id) => id === el.id)
+    el.favourite = favourites.tvshows.find((id) => id === el.id)
   } else {
     el.favourite = favourites.movies.find((id) => id === el.id)
   }

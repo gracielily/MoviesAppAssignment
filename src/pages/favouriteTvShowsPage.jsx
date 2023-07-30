@@ -12,7 +12,7 @@ const FavouriteTvShowsPage = (props) => {
   const { favourites } = useContext(MoviesContext);
 
   const favTvShowsQueries = useQueries(
-    favourites.tvShows?.map((tvId) => {
+    favourites.tvshows?.map((tvId) => {
       return {
         queryKey: ["tvShow", { id: tvId }],
         queryFn: getTvShow,
@@ -34,12 +34,12 @@ const FavouriteTvShowsPage = (props) => {
       action={(movie) => {
         return (
           <>
-            <RemoveFromFavourites el={movie} type="tvShows" />
+            <RemoveFromFavourites el={movie} type="tvshows" />
             <WriteReview movie={movie} />
             {tvShows.length > 1 && (
               <>
-              {tvShows.indexOf(movie) !== 0 && (<><MoveMovie direction="up" el={movie} type="tvShows" /></>)}
-              {tvShows.indexOf(movie) !== tvShows.length && (<><MoveMovie direction="down" el={movie} type="tvShows" /></>)}
+              {tvShows.indexOf(movie) !== 0 && (<><MoveMovie direction="up" el={movie} type="tvshows" /></>)}
+              {tvShows.indexOf(movie) !== tvShows.length && (<><MoveMovie direction="down" el={movie} type="tvshows" /></>)}
                 
               </>
             )}

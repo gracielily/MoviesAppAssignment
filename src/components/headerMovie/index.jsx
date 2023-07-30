@@ -25,7 +25,7 @@ const styles = {
 const MovieHeader = (props) => {
   const movie = props.movie;
   const context = useContext(MoviesContext);
-  const isinFavourites = context?.favourites[movie.name ? "tvShows" : "movies"].includes(movie.id);
+  const isinFavourites = context?.favourites[movie.name ? "tvshows" : "movies"].includes(movie.id);
   
   return (
     <Paper component="div" sx={styles.root}>

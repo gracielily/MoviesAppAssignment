@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PageTemplate from "../components/templateMovieListPage";
-import { getMovies, searchForMovie } from "../api/tmdb-api";
+import { getMovies } from "../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
 import AddToFavouritesIcon from "../components/cardIcons/addToFavourites";
@@ -8,7 +8,6 @@ import AddToFavouritesIcon from "../components/cardIcons/addToFavourites";
 const HomePage = (props) => {
   const [queryParams, setQueryParams] = useState({});
   const [page, setPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState("");
   const [movies, setMovies] = useState([])
 
   const { data:movies_data, error:movies_error, isLoading:loading_movies, isError:movies_has_error, refetch:refetch_movies } = useQuery(
@@ -17,14 +16,7 @@ const HomePage = (props) => {
     { keepPreviousData: true }
   );
 
-  const { data:search_movies, error:search_error, isLoading:loading_search, isError:search_has_error, refetch:refetch_search } = useQuery(
-    "search",
-    () => searchForMovie(searchTerm),
-    { keepPreviousData: true }
-  );
-
   
-
   const updateMoviesQuery = (query) => {
     const queryToSend = {...queryParams}
     if(query.with_origin_country) queryToSend.with_origin_country = query.with_origin_country
@@ -52,25 +44,14 @@ const HomePage = (props) => {
 
 
   useEffect(() => {
-    if(searchTerm){
-    refetch_search(searchTerm);
-    }
-  }, [searchTerm]);
-
-
-  useEffect(() => {
-    if(searchTerm && search_movies){
-      setMovies(search_movies)
-    } else if (movies_data){
       setMovies(movies_data)
-    }
-  }, [movies_data, search_movies]);
+  }, [movies_data]);
 
-  if (loading_movies || loading_search) {
+  if (loading_movies) {
     return <Spinner />;
   }
-  if (movies_has_error || search_has_error) {
-    return <h1>{search_error ? search_error.message : movies_error.message}</h1>;
+  if (movies_has_error ) {
+    return <h1>{movies_error.message}</h1>;
   }
   return (
     <PageTemplate
@@ -82,7 +63,6 @@ const HomePage = (props) => {
       isUpcoming={false}
       updateQuery={updateMoviesQuery}
       setResultsPage={setResultsPage}
-      updateSearchTerm={setSearchTerm}
       totalResults={movies?.total_results}
       totalPages={movies?.total_pages}
       type="movies"

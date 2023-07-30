@@ -10,7 +10,7 @@ const TemplateSearchPage = ({ children }) => {
   const [searchResults, setSearchResults] = React.useState([]);
 
   const getSearchResults = async (data) => {
-    setMediaType(data.media_type === "tv" ? "tvShows" : "movies");
+    setMediaType(data.media_type === "tv" ? "tvshows" : "movies");
     const fetchResults = await searchForMovie(data);
     setSearchResults(fetchResults);
   };
@@ -34,6 +34,7 @@ const TemplateSearchPage = ({ children }) => {
                 action={(movie) => {
                   return <AddToFavouritesIcon el={movie} type={mediaType} />;
                 }}
+                type={mediaType}
               />
             </Grid>
             
