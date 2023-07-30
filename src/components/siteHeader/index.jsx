@@ -40,6 +40,7 @@ const SiteHeader = () => {
     { label: "Favorite Actors", path: "/actors/favourites" },
     { label: "Fantasy Movies", path: "/fantasy-movies" },
     { label: "Search", path: "/search" },
+    { label: "Playlists", path: "/playlists" },
     { label: token ? "Logout" : "Login", path: token ? "/logout" : "/login" },
   ];
 

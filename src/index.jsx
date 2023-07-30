@@ -24,6 +24,7 @@ import FavouriteTvShowsPage from "./pages/favouriteTvShowsPage";
 import TvShowDetailsPage from "./pages/tvShowDetailsPage";
 import FavouriteActorsPage from "./pages/favouriteActorsPage";
 import SearchPage from "./pages/searchPage";
+import PlaylistsPage from "./pages/playlistsPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -81,6 +82,7 @@ const App = () => {
               path="/search"
               element={<SearchPage />}
             />
+            <Route path="/playlists" element={<PrivateRoute><PlaylistsPage /></PrivateRoute>} />
           </Routes>
           </MoviesContextProvider>
           </AuthContextProvider>
