@@ -13,7 +13,7 @@ const MoviesContextProvider = (props) => {
   const [favourites, setFavourites] = useState({movies: [], tvshows: [], actors: []});
   const [mustWatch, setMustWatch] = useState([]);
   const [myFantasyMovies, setFantasyMovies] = useState([]);
-  const [playlists, setPlaylists] = useState([]);
+  const [playlists, setPlaylists] = useState([{id: 82948, title: "A", theme: "cool", description:"okay", movies: [346698]}]);
 
   const addToFavourites = (el, type) => {
     let updatedFavourites = {...favourites};
@@ -97,6 +97,16 @@ const MoviesContextProvider = (props) => {
 
   }
 
+  const removeMovieFromPlaylist = (playlistId, movieId) => {
+    let updatedPlaylists = [...playlists];
+    updatedPlaylists.map((pl) => {
+      if(pl.id === playlistId){
+        pl.movies.splice(pl.movies.indexOf(movieId), 1)
+      }
+    })
+    setPlaylists(updatedPlaylists)
+  }
+
   return (
     <MoviesContext.Provider
       value={{
@@ -114,6 +124,7 @@ const MoviesContextProvider = (props) => {
         createPlaylist,
         removeFromPlaylists,
         addMovieToPlaylist,
+        removeMovieFromPlaylist,
       }}
     >
       {props.children}

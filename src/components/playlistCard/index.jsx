@@ -9,7 +9,8 @@ import MovieFilterIcon from "@mui/icons-material/MovieFilter";
 import Grid from "@mui/material/Grid";
 import img from "../../images/film-poster-placeholder.png";
 import RemoveFromPlaylistsIcon from "../cardIcons/removeFromPlaylists";
-import { Chip } from "@mui/material";
+import { Chip, Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const styles = {
   card: { maxWidth: 345 },
@@ -48,6 +49,11 @@ export default function PlaylistCard({ playlist }) {
       </CardContent>
       <CardActions disableSpacing>
         <RemoveFromPlaylistsIcon playlist={playlist} />
+        <Link to={`/playlists/${playlist.id}`}>
+          <Button variant="outlined" size="medium" color="primary">
+            View Playlist
+          </Button>
+        </Link>
       </CardActions>
     </Card>
   );
