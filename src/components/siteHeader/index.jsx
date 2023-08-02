@@ -114,13 +114,6 @@ const SiteHeader = () => {
                   {opt.label}
                 </Button>
               ))}
-              <Button
-                  key={token ? "Logout" : "Login"}
-                  color="inherit"
-                  onClick={() => handleMenuSelect(token ? "/logout" : "/login")}
-                >
-                  {token ? "Logout" : "Login"}
-                </Button>
             </>
           )}
           

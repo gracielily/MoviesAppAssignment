@@ -58,9 +58,9 @@ export const getMovie = (args) => {
   };
   
 
-  export const getMovieReviews = (id) => {
+  export const getMovieReviews = (type, id) => {
     return fetch(
-      `https://api.themoviedb.org/3/movie/${id}/reviews?api_key=${import.meta.env.VITE_TMDB_KEY}`
+      `https://api.themoviedb.org/3/${type}/${id}/reviews?api_key=${import.meta.env.VITE_TMDB_KEY}`
     )
       .then((res) => res.json())
       .then((json) => {
@@ -128,9 +128,9 @@ export const getMovie = (args) => {
   }
 
 
-  export const getSimilarMovies = (movieId) => {
+  export const getSimilarMedia = (type, movieId) => {
     return _fetchData(
-      `https://api.themoviedb.org/3/movie/${movieId}/similar?api_key=${import.meta.env.VITE_TMDB_KEY}`
+      `https://api.themoviedb.org/3/${type}/${movieId}/similar?api_key=${import.meta.env.VITE_TMDB_KEY}`
     )
   };
 

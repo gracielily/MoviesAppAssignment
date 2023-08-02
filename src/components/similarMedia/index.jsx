@@ -8,41 +8,45 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { Link } from "react-router-dom";
-import { Typography, CardMedia } from "@mui/material";
+import { Typography } from "@mui/material";
 import img from "../../images/film-poster-placeholder.png";
 import { useQuery } from "react-query";
-import { getSimilarMovies } from "../../api/tmdb-api";
+import { getSimilarMedia } from "../../api/tmdb-api";
 import Spinner from "../spinner";
 import StarRateIcon from "@mui/icons-material/StarRate";
 
-const columns = [
-  { id: "backdrop_path", label: "", minWidth: 150 },
-  { id: "title", label: "Title", minWidth: 170 },
-  {
-    id: "vote_average",
-    label: "Rating",
-    minWidth: 170,
-  },
-  { id: "genre_ids", label: "Genres", minWidth: 100 },
-  {
-    id: "release_date",
-    label: "Release Date",
-    minWidth: 170,
-    align: "right",
-  },
-];
+const SimilarMedia = ({ type, elId }) => {
+  const columns = [
+    { id: "backdrop_path", label: "", minWidth: 150 },
+    { id: type === "movie" ? "title" : "name", label: "Title", minWidth: 170 },
+    {
+      id: "vote_average",
+      label: "Rating",
+      minWidth: 170,
+    },
+    {
+      id: "popularity",
+      label: "Popularity",
+      minWidth: 170,
+    },
+    {
+      id: type === "movie" ? "release_date" : "first_air_date",
+      label: type === "movie" ? "Release Date" : "Date First Aired",
+      minWidth: 170,
+      align: "right",
+    },
+  ];
 
-const SimilarMovies = ({ movieId }) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const { data, error, isLoading, isError, refetch } = useQuery(
     "similar",
-    () => getSimilarMovies(movieId), { keepPreviousData : true }
+    () => getSimilarMedia(type, elId), { keepPreviousData : true }
   );
-
+  
   React.useEffect(() => {
-    refetch(movieId);
-  }, [movieId]);
+    refetch(type, elId);
+  }, [elId]);
 
   if (isLoading) {
     return <Spinner />;
@@ -60,12 +64,12 @@ const SimilarMovies = ({ movieId }) => {
     setPage(0);
   };
 
-  const similarMovies = data ? data.results : []
+  const similarMedia = data ? data.results : []
   return (
     <>
-    {similarMovies && (
+    {similarMedia.length ? (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      <Typography variant="h5">Similar Movies</Typography>
+      <Typography variant="h5">Similar {type === "movie" ? "Movies" : "TV Shows"}</Typography>
       <TableContainer sx={{ maxHeight: 600 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -112,7 +116,8 @@ const SimilarMovies = ({ movieId }) => {
                               <StarRateIcon fontSize="small" />
                               {"  "} {value}{" "}
                             </Typography>
-                            } else {
+                            }
+                            else {
                               return value;
                             }
                           })()}
@@ -128,16 +133,16 @@ const SimilarMovies = ({ movieId }) => {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={similarMovies.length}
+        count={similarMedia.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </Paper>
-    )}
+    ) : null}
     </>
   );
 };
 
-export default SimilarMovies;
+export default SimilarMedia;

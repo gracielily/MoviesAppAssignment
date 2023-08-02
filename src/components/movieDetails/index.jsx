@@ -9,7 +9,7 @@ import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from '../movieReviews'
-import SimilarMovies from "../similarMovies";
+import SimilarMedia from "../similarMedia";
 import VideosList from "../VideosList";
 
 const styles = {
@@ -71,7 +71,7 @@ const MovieDetails = ( {movie}) => {
         <VideosList elId={movie.id} type="movie" />
       </Paper>
       <Paper>
-        <SimilarMovies movieId={movie.id} />
+        <SimilarMedia type="movie" elId={movie.id} />
       </Paper>
       <Fab    
         color="secondary"
@@ -83,7 +83,7 @@ const MovieDetails = ( {movie}) => {
         Reviews
       </Fab>
       <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
-        <MovieReviews movie={movie} />
+        <MovieReviews type="movie" movie={movie} />
       </Drawer>
     </>
   );

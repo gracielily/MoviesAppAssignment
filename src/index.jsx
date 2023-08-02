@@ -58,30 +58,29 @@ const App = () => {
             <Route path="/tvshows/:id" element={<PrivateRoute><TvShowDetailsPage /></PrivateRoute>} />
             <Route
               path="/tvshows/favourites"
-              element={<FavouriteTvShowsPage />}
+              element={<PrivateRoute><FavouriteTvShowsPage /></PrivateRoute>}
             />
             <Route path="/trending-actors/" element={<TrendingActorsPage />} />
             <Route
               path="/movies/favourites"
-              element={<FavouriteMoviesPage />}
+              element={<PrivateRoute><FavouriteMoviesPage /></PrivateRoute>}
             />
-            <Route path="/reviews/form" element={<AddMovieReviewPage/>} />
-            
+            <Route path="/reviews/form" element={<PrivateRoute><AddMovieReviewPage/></PrivateRoute>} />
             <Route path="/movies/:id" element={<PrivateRoute><MoviePage /></PrivateRoute>} />
             <Route path="/" element={<HomePage />} />
             <Route path="*" element={<Navigate to="/" />} />
-            <Route path="/reviews/:id" element={<MovieReviewPage />} />
+            <Route path="/reviews/:id" element={<PrivateRoute><MovieReviewPage /></PrivateRoute>} />
             <Route path="/fantasy-movies/" element={<PrivateRoute><FantasyMoviesPage /></PrivateRoute>} />
             <Route path="/fantasy-movies/form" element={<PrivateRoute><CreateFantasyMoviePage /></PrivateRoute>} />
-            <Route path="/actor/:id" element={<ActorDetailsPage />} />
+            <Route path="/actor/:id" element={<PrivateRoute><ActorDetailsPage /></PrivateRoute>} />
             <Route path="/login" element={<LoginPage />} />
             <Route
               path="/actors/favourites"
-              element={<FavouriteActorsPage />}
+              element={<PrivateRoute><FavouriteActorsPage /></PrivateRoute>}
             />
             <Route
               path="/search"
-              element={<SearchPage />}
+              element={<PrivateRoute><SearchPage /></PrivateRoute>}
             />
             <Route path="/playlists" element={<PrivateRoute><PlaylistsPage /></PrivateRoute>} />
             <Route path="/playlists/:id" element={<PrivateRoute><PlaylistDetailsPage /></PrivateRoute>} />

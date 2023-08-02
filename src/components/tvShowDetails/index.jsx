@@ -3,11 +3,11 @@ import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 import StarRate from "@mui/icons-material/StarRate";
 import Typography from "@mui/material/Typography";
-
 import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from '../movieReviews'
+import SimilarMedia from "../similarMedia";
 
 const styles = {
   chipSet: {
@@ -34,12 +34,17 @@ const TvShowDetails = ( {tvShow}) => {
 
   return (
     <>
-      <Typography variant="h5" component="h3">
-        Tagline
-      </Typography>
 
       <Typography variant="h6" component="p">
         {tvShow.tagline}
+      </Typography>
+
+      <Typography variant="h5" component="h3">
+        Overview
+      </Typography>
+
+      <Typography variant="h6" component="p">
+        {tvShow.overview}
       </Typography>
 
       <Paper component="ul" sx={styles.chipSet}>
@@ -55,9 +60,18 @@ const TvShowDetails = ( {tvShow}) => {
       <Paper component="ul" sx={styles.chipSet}>
         <Chip
           icon={<StarRate />}
-          label={`${tvShow.vote_average} (${tvShow.vote_count}`}
+          label={`${tvShow.vote_average} (${tvShow.vote_count})`}
         />
-        <Chip label={`Released: ${tvShow.release_date}`} />
+        <Chip label={`Number of Seasons: ${tvShow.number_of_seasons}`} />
+        <Chip label={`Number of Episodes: ${tvShow.number_of_episodes}`} />
+        <Chip label={`First Air Date: ${tvShow.first_air_date}`} />
+        <Chip label={`Last Aired Date: ${tvShow.last_air_date}`} />
+      </Paper>
+      <Paper>
+        <a href={tvShow.homepage}>Watch</a>
+      </Paper>
+      <Paper>
+        <SimilarMedia type="tv" elId={tvShow.id} />
       </Paper>
       <Fab    
         color="secondary"
@@ -69,7 +83,7 @@ const TvShowDetails = ( {tvShow}) => {
         Reviews
       </Fab>
       <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
-        <MovieReviews movie={tvShow} />
+        <MovieReviews type="tv" movie={tvShow} />
       </Drawer>
     </>
   );

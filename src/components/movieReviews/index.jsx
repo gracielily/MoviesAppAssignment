@@ -16,11 +16,11 @@ const styles = {
   },
 };
 
-export default function MovieReviews({ movie }) {
+export default function MovieReviews({ type, movie }) {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    getMovieReviews(movie.id).then((reviews) => {
+    getMovieReviews(type, movie.id).then((reviews) => {
       setReviews(reviews);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

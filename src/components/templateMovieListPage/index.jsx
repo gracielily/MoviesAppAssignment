@@ -5,7 +5,6 @@ import Grid from "@mui/material/Grid";
 import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
 import MovieList from "../movieList";
-import Button from "@mui/material/Button";
 import Pagination from "@mui/material/Pagination";
 import Typography from "@mui/material/Typography";
 
@@ -40,7 +39,7 @@ function MovieListPageTemplate({
   const [yearFilter, setYearFilter] = useState("");
   const [countryFilter, setCountryFilter] = useState("");
   const [drawerOpen, setDrawerOpen] = useState(false);
-  
+
   const handleChange = (type, value) => {
     if (type === "sort") {
       setSortBy(value);
@@ -59,6 +58,7 @@ function MovieListPageTemplate({
       updateQuery({ year: value });
     }
     if (type === "country") {
+      console.log("COUNTRY", value);
       setCountryFilter(value);
       updateQuery({ with_origin_country: value });
     }
@@ -75,11 +75,16 @@ function MovieListPageTemplate({
           <Header title={title} />
         </Grid>
         <Grid item container spacing={5}>
-          <MovieList action={action} movies={movies} isUpcoming={isUpcoming} type={type} />
+          <MovieList
+            action={action}
+            movies={movies}
+            isUpcoming={isUpcoming}
+            type={type}
+          />
         </Grid>
         {!hidePagination && (
           <>
-          <Typography>{totalResults} Results found.</Typography>
+            <Typography>{totalResults} Results found.</Typography>
             {/* page number can be no more than 500 according to TMBD API */}
             <Pagination
               count={totalPages <= 500 ? totalPages : 500}
