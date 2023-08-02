@@ -30,7 +30,8 @@ const styles = {
 export default function FilterMoviesCard(props) {
   const { data, error, isLoading, isError } = useQuery(
     "genres",
-    getMovieGenres
+    getMovieGenres,
+    { keepPreviousData : true }
   );
 
   const { token } = useContext(AuthContext);

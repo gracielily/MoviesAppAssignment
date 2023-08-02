@@ -6,7 +6,7 @@ import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
 
 const UpcomingMoviesPage = () => {
-  const { data, error, isLoading, isError } = useQuery("upcoming", getUpcomingMovies);
+  const { data, error, isLoading, isError } = useQuery("upcoming", getUpcomingMovies, { keepPreviousData : true });
 
   if (isLoading) {
     return <Spinner />;

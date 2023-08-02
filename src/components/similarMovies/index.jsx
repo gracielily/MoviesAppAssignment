@@ -37,7 +37,7 @@ const SimilarMovies = ({ movieId }) => {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const { data, error, isLoading, isError, refetch } = useQuery(
     "similar",
-    () => getSimilarMovies(movieId)
+    () => getSimilarMovies(movieId), { keepPreviousData : true }
   );
 
   React.useEffect(() => {

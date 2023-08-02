@@ -6,7 +6,7 @@ import { getTrendingActors } from "../api/tmdb-api";
 import AddToFavouritesIcon from "../components/cardIcons/addToFavourites";
 
 const TrendingActorsPage = () => {
-  const { data, error, isLoading, isError } = useQuery("top", getTrendingActors);
+  const { data, error, isLoading, isError } = useQuery("top", getTrendingActors, { keepPreviousData : true });
 
   if (isLoading) {
     return <Spinner />;

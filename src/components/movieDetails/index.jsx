@@ -5,12 +5,12 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import MonetizationIcon from "@mui/icons-material/MonetizationOn";
 import StarRate from "@mui/icons-material/StarRate";
 import Typography from "@mui/material/Typography";
-
 import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from '../movieReviews'
 import SimilarMovies from "../similarMovies";
+import VideosList from "../VideosList";
 
 const styles = {
   chipSet: {
@@ -66,6 +66,9 @@ const MovieDetails = ( {movie}) => {
           label={`${movie.vote_average} (${movie.vote_count}`}
         />
         <Chip label={`Released: ${movie.release_date}`} />
+      </Paper>
+      <Paper>
+        <VideosList elId={movie.id} type="movie" />
       </Paper>
       <Paper>
         <SimilarMovies movieId={movie.id} />

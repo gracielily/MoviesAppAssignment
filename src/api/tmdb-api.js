@@ -134,6 +134,12 @@ export const getMovie = (args) => {
     )
   };
 
+  export const getVideosFor = (type, id) => {
+    return _fetchData(
+      `https://api.themoviedb.org/3/${type}/${id}/videos?api_key=${import.meta.env.VITE_TMDB_KEY}`
+    )
+  }
+
 
   
   
