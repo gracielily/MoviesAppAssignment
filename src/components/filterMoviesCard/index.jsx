@@ -11,7 +11,7 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import SortIcon from "@mui/icons-material/Sort";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { getMovieGenres } from "../../api/tmdb-api";
+import { getMovieGenres, getLanguages } from "../../api/tmdb-api";
 import { AuthContext } from "../../contexts/authContext";
 
 const styles = {
@@ -28,9 +28,15 @@ const styles = {
 };
 
 export default function FilterMoviesCard(props) {
-  const { data, error, isLoading, isError } = useQuery(
+  const { data:genres_data, error, isLoading, isError } = useQuery(
     "genres",
     getMovieGenres,
+    { keepPreviousData : true }
+  );
+
+  const { data:languages_data } = useQuery(
+    "languages",
+    getLanguages,
     { keepPreviousData : true }
   );
 
@@ -43,7 +49,7 @@ export default function FilterMoviesCard(props) {
   if (isError) {
     return <h1>{error.message}</h1>;
   }
-  const genres = data.genres;
+  const genres = genres_data.genres;
   if (genres[0].name !== "All") {
     genres.unshift({ id: "0", name: "All" });
   }
@@ -51,6 +57,14 @@ export default function FilterMoviesCard(props) {
   const genreOptions = genres.map((g, index) => (
     <MenuItem key={index} value={g.id}>
       {g.name}
+    </MenuItem>
+  ));
+
+
+  const languages = languages_data;
+  const languagesOptions = languages?.map((l, index) => (
+    <MenuItem key={index} value={l.iso_639_1}>
+      {l.english_name}
     </MenuItem>
   ));
 
@@ -69,10 +83,6 @@ export default function FilterMoviesCard(props) {
 
   const handleYearChange = (e) => {
     handleUserInput(e, "year", e.target.value);
-  };
-
-  const handleCountryChange = (e) => {
-    handleUserInput(e, "country", e.target.value);
   };
 
   const handleLanguageChange = (e) => {
@@ -102,17 +112,7 @@ export default function FilterMoviesCard(props) {
                   {genreOptions}
                 </Select>
               </FormControl>
-              <FormControl sx={styles.formControl}>
-                <InputLabel id="sort-label">Origin Country</InputLabel>
-                <TextField
-                sx={styles.formControl}
-                id="filled-search"
-                type="search"
-                value={props.countryFilter}
-                variant="filled"
-                onChange={handleCountryChange}
-              />
-              </FormControl>
+              
               <FormControl sx={styles.formControl}>
                 <InputLabel id="sort-label">Release Year</InputLabel>
                 <TextField
@@ -126,14 +126,14 @@ export default function FilterMoviesCard(props) {
               </FormControl>
               <FormControl sx={styles.formControl}>
                 <InputLabel id="sort-label">Language</InputLabel>
-                <TextField
-                sx={styles.formControl}
-                id="filled-search"
-                type="search"
-                value={props.languageFilter}
-                variant="filled"
-                onChange={handleLanguageChange}
-              />
+                <Select
+                  labelId="langauge-label"
+                  id="language-select"
+                  value={props.languageFilter}
+                  onChange={handleLanguageChange}
+                >
+                  {languagesOptions}
+                </Select>
               </FormControl>
             </CardContent>
           </Card>

@@ -47,6 +47,14 @@ export const getMovie = (args) => {
         "&language=en-US"
     )
   };
+
+
+  export const getLanguages = async () => {
+    return _fetchData(
+      "https://api.themoviedb.org/3/configuration/languages?api_key=" +
+        import.meta.env.VITE_TMDB_KEY
+    )
+  };
   
   
   export const getMovieImages = ({ queryKey }) => {

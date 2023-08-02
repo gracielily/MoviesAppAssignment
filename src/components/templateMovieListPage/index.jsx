@@ -37,7 +37,6 @@ function MovieListPageTemplate({
   const [sortBy, setSortBy] = useState("");
   const [languageFilter, setLanguageFilter] = useState("");
   const [yearFilter, setYearFilter] = useState("");
-  const [countryFilter, setCountryFilter] = useState("");
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const handleChange = (type, value) => {
@@ -56,11 +55,6 @@ function MovieListPageTemplate({
     if (type === "year") {
       setYearFilter(value);
       updateQuery({ year: value });
-    }
-    if (type === "country") {
-      console.log("COUNTRY", value);
-      setCountryFilter(value);
-      updateQuery({ with_origin_country: value });
     }
   };
 
@@ -110,7 +104,6 @@ function MovieListPageTemplate({
         <FilterCard
           onUserInput={handleChange}
           genreFilter={genreFilter}
-          countryFilter={countryFilter}
           languageFilter={languageFilter}
           yearFilter={yearFilter}
           sortBy={sortBy}
