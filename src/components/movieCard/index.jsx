@@ -17,6 +17,7 @@ import { Link } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import { MoviesContext } from "../../contexts/moviesContext";
 import { Tooltip } from "@mui/material";
+import { AuthContext } from "../../contexts/authContext";
 
 const styles = {
   card: { maxWidth: 345 },
@@ -28,7 +29,8 @@ const styles = {
 
 export default function MovieCard({ el, action, isUpcoming, type = "movie" }) {
   const { favourites, mustWatch, playlists } = useContext(MoviesContext);
-
+  const { token } = useContext(AuthContext)
+  
   if (type === "tvshows") {
     el.favourite = favourites.tvshows.find((id) => id === el.id);
   } else {
@@ -101,11 +103,12 @@ export default function MovieCard({ el, action, isUpcoming, type = "movie" }) {
       </CardContent>
       <CardActions disableSpacing>
         {action(el)}
-        <Link to={`/${type}/${el.id}`}>
+        { token ? (<Link to={`/${type}/${el.id}`}>
           <Button variant="outlined" size="medium" color="primary">
             More Info ...
           </Button>
-        </Link>
+        </Link>) : null}
+        
       </CardActions>
     </Card>
   );

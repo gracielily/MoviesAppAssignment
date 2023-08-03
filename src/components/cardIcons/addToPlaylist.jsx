@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { MoviesContext } from "../../contexts/moviesContext";
+import { AuthContext } from "../../contexts/authContext";
 import IconButton from "@mui/material/IconButton";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import Dialog from "@mui/material/Dialog";
@@ -13,6 +14,7 @@ const AddToPlaylistIcon = ({ movie }) => {
   const {playlists, addMovieToPlaylist} = useContext(MoviesContext);
   const [chosenPlaylist, setChosenPlaylist] = React.useState(playlists?.length ? playlists[0].id : "");
   const [open, setOpen] = React.useState(false);
+  const { token } = useContext(AuthContext);
 
   const onUserSubmit = () => {
     addMovieToPlaylist(chosenPlaylist, movie.id);
@@ -40,7 +42,7 @@ const AddToPlaylistIcon = ({ movie }) => {
 
   return (
     <>
-      {playlists?.length ? (
+      {(token && playlists?.length) ? (
         <>
           <Dialog open={open} onClose={handleClose}>
             <DialogTitle>Select Playlist</DialogTitle>

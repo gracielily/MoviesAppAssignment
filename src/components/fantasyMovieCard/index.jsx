@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import img from "../../images/film-poster-placeholder.png";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../contexts/authContext";
 const styles = {
   card: { maxWidth: 345 },
   media: { height: 500 },
@@ -16,6 +17,8 @@ const styles = {
 };
 
 export default function MovieCard({ movie, action }) {
+  const { token } = useContext(AuthContext);
+
   return (
     <Card sx={styles.card}>
       <CardHeader
@@ -36,11 +39,11 @@ export default function MovieCard({ movie, action }) {
       />
       <CardActions disableSpacing>
         {action(movie)}
-        <Link to={`/favorite-movies/${movie.id}`}>
+        { token ? (<Link to={`/favorite-movies/${movie.id}`}>
           <Button variant="outlined" size="medium" color="primary">
             More Info ...
           </Button>
-        </Link>
+        </Link>) : null}
       </CardActions>
     </Card>
   );
