@@ -148,6 +148,16 @@ export const getMovie = (args) => {
     )
   }
 
+  export const getMovieOrTvShow = async (args) => {
+    const [, idPart] = args.queryKey;
+    const { id, type } = idPart;
+    if(type === "movie") {
+      return await getMovie(args)
+    } else {
+      return await getTvShow(args)
+    }
+  }
+
 
   
   

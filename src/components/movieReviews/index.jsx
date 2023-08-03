@@ -57,7 +57,7 @@ export default function MovieReviews({ type, movie }) {
         </Table>
       ) : (
         <>
-          <WriteReviewIcon movie={movie} />
+          <WriteReviewIcon movie={movie} type={type} />
           <span>Write A Review</span>
         </>
       )}
