@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/authContext";
 
 const WriteReviewIcon = ({ movie }) => {
-  const { token } = useContext(AuthContext);
+  const { token } = React.useContext(AuthContext);
   return (
     <>
       {token ? (

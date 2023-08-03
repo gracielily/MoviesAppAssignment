@@ -125,6 +125,7 @@ const MoviesContextProvider = (props) => {
         removeFromPlaylists,
         addMovieToPlaylist,
         removeMovieFromPlaylist,
+        myReviews,
       }}
     >
       {props.children}
