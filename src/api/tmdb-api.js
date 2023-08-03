@@ -76,16 +76,16 @@ export const getMovie = (args) => {
       });
   };
 
-  export const getUpcomingMovies = () => {
+  export const getUpcomingMovies = (pageNum) => {
     return _fetchData(
-      `https://api.themoviedb.org/3/movie/upcoming?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&page=1`
+      `https://api.themoviedb.org/3/movie/upcoming?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&page=${pageNum}`
     )
   };
 
   
-  export const getTopRatedMovies = () => {
+  export const getTopRatedMovies = (pageNum) => {
     return _fetchData(
-      `https://api.themoviedb.org/3/movie/top_rated?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&page=1`
+      `https://api.themoviedb.org/3/movie/top_rated?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&page=${pageNum}`
     )
   };
 

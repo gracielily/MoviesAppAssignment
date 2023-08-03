@@ -6,7 +6,12 @@ import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
 
 const TopMoviesListPage = () => {
-  const { data, error, isLoading, isError } = useQuery("top", getTopRatedMovies);
+  const [page, setPage] = React.useState(1);
+  const { data, error, isLoading, isError } = useQuery(["top", page], () => getTopRatedMovies(page), {keepPreviousData: true});
+
+  const setResultsPage = (newPageNum) => {
+    setPage(newPageNum);
+  };
 
   if (isLoading) {
     return <Spinner />;
@@ -16,6 +21,7 @@ const TopMoviesListPage = () => {
   }
 
   const movies = data ? data.results : [];
+  const totalResults = data ? data.total_results : null;
   return (
     <PageTemplate
       title="Top Rated Movies"
@@ -24,6 +30,9 @@ const TopMoviesListPage = () => {
         return <AddToMustWatchList movie={movie} />
       }}
       isUpcoming={false}
+      currentPage={page}
+      setResultsPage={setResultsPage}
+      totalResults={totalResults}
     />
   );
 };

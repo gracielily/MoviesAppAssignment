@@ -6,7 +6,12 @@ import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
 
 const UpcomingMoviesPage = () => {
-  const { data, error, isLoading, isError } = useQuery("upcoming", getUpcomingMovies, { keepPreviousData : true });
+  const [page, setPage] = React.useState(1);
+  const { data, error, isLoading, isError } = useQuery(["upcoming", page], () => getUpcomingMovies(page), { keepPreviousData : true });
+  
+  const setResultsPage = (newPageNum) => {
+    setPage(newPageNum);
+  };
 
   if (isLoading) {
     return <Spinner />;
@@ -16,6 +21,7 @@ const UpcomingMoviesPage = () => {
   }
 
   const movies = data ? data.results : [];
+  const totalResults = data ? data.total_results : null;
   return (
     <PageTemplate
       title="Upcoming Movies"
@@ -24,6 +30,9 @@ const UpcomingMoviesPage = () => {
         return <AddToMustWatchList movie={movie} />
       }}
       isUpcoming={true}
+      currentPage={page}
+      setResultsPage={setResultsPage}
+      totalResults={totalResults}
     />
   );
 };
