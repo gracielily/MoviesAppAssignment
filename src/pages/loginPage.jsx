@@ -1,6 +1,6 @@
 import PageTemplate from "../components/templateLoginPage";
 
-const LoginPage = ({handleLogin, supabaseClient}) => {
+const LoginPage = ({supabaseClient}) => {
 
   return (
     <PageTemplate

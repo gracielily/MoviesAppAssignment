@@ -9,6 +9,7 @@ const supabase = createClient(
     import.meta.env.VITE_SUPABASE_API_KEY
 );
 
+
 const AuthContextProvider = ({ children }) => {
   const originLocation = useLocation();
   const navigate = useNavigate();
@@ -29,13 +30,30 @@ const AuthContextProvider = ({ children }) => {
     return () => subscription.unsubscribe()
   }, [])
 
+  const handleSignup = async ({ username, password }) => {
+    const { data, error } = await supabase.auth.signUp({
+      email: username,
+      password: password,
+    });
+    if(!error) {
+      navigate("/login");
+      } else {
+        return error
+      }
+    
+  };
+
 
   const handleLogin = async ({ username, password }) => {
     const { data, error } = await supabase.auth.signInWithPassword({
       email: username,
       password: password,
     });
-    navigate(originLocation.state?.from?.pathname || "/movies");
+    if(!error) {
+    navigate(originLocation.state?.from?.pathname || "/");
+    } else {
+      return error
+    }
   };
 
   const handleLogout = async () => {
@@ -47,6 +65,7 @@ const AuthContextProvider = ({ children }) => {
     token,
     onLogin: handleLogin,
     onLogout: handleLogout,
+    onSignup: handleSignup,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

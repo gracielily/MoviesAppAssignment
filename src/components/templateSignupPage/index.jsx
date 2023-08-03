@@ -1,13 +1,14 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { AuthContext } from "../../contexts/authContext";
 import { useNavigate } from "react-router-dom";
 import { Typography, Box, Alert } from "@mui/material";
 import { useForm } from "react-hook-form";
 import styles from "../reviewForm/styles";
 import CredentialsForm from "../credentialsForm";
-export default function LoginPageTemplate() {
-  const [msg, setMsg] = useState("");
-  const { onLogin, token, loginError } = useContext(AuthContext);
+
+export default function SignupPageTemplate() {
+  const [msg, setMsg] = React.useState("");
+  const { onSignup, token, signupError } = useContext(AuthContext);
   const {
     control,
     formState: { errors },
@@ -16,27 +17,27 @@ export default function LoginPageTemplate() {
 
   const navigate = useNavigate();
   if (token) {
-    navigate("/movies");
+    navigate("/");
   }
   const onSubmit = async (credentials) => {
-    const error = await onLogin({ username: credentials.username, password: credentials.password });
+    const error = await onSignup({ username: credentials.username, password: credentials.password });
     if(error) {
-      setMsg(error.message)
-  }
+        setMsg(error.message)
+    }
   };
 
   return (
     <Box component="div" sx={styles.root}>
       <Typography component="h1" variant="h2">
-        Login
+        Signup
       </Typography>
       <Typography component="h5" variant="h6">
-        Enter your login details below
+        Enter your credentials below
       </Typography>
-      {loginError && (
-          <Alert severity="error">{loginError}</Alert>
+      {signupError && (
+          <Alert severity="error">{signupError}</Alert>
         )}
-        <CredentialsForm submitBtnLabel="Login" control={control} errors={errors} onSubmit={handleSubmit(onSubmit)} authMsg={msg} />
-      </Box>
+      <CredentialsForm submitBtnLabel="Signup" control={control} errors={errors} onSubmit={handleSubmit(onSubmit)} authMsg={msg} />
+    </Box>
   );
 }
