@@ -12,7 +12,7 @@ import UpcomingMoviesPage from "./pages/upcomingMoviesPage";
 import AuthContextProvider from "./contexts/authContext";
 import MoviesContextProvider from "./contexts/moviesContext";
 import AddMovieReviewPage from './pages/addMovieReviewPage';
-import TopMoviesListPage from "./pages/topMoviesPage";
+import TopMoviesListPage from "./pages/topMoviePage";
 import TvShowsPage from "./pages/tvShowsPage";
 import TrendingActorsPage from "./pages/trendingActorsPage";
 import CreateFantasyMoviePage from "./pages/createFantasyMoviePage";
