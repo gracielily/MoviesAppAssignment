@@ -126,7 +126,7 @@ const TemplatePlaylistsPage = () => {
           </DialogActions>
         </form>
       </Dialog>
-
+      
       <PlaylistList />
     </>
   );

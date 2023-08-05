@@ -160,7 +160,7 @@ const SearchMovieForm = ({formSubmitted}) => {
             sx={styles.submit}
             onClick={() => {
               reset(defaultValues);
-              setYear(dayjs());
+              setYear(null);
             }}
           >
             Reset

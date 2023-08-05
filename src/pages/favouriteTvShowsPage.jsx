@@ -48,6 +48,7 @@ const FavouriteTvShowsPage = (props) => {
       }}
       isUpcoming={false}
       hidePagination={true}
+      type="tv"
     />
   );
 };

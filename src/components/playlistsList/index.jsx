@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import Grid from "@mui/material/Grid";
 import PlaylistCard from "../playlistCard";
 import { MoviesContext } from "../../contexts/moviesContext";
+import { Alert } from "@mui/material";
 
 const PlaylistList = () => {
   const {playlists} = useContext(MoviesContext)
@@ -10,6 +11,9 @@ const PlaylistList = () => {
       <PlaylistCard key={index} playlist={pl} />
     </Grid>
   ));
+  if (!playlistCards.length) {
+    playlistCards = <Alert severity="info">No Playlists could be found.</Alert>
+  }
   return playlistCards;
 };
 

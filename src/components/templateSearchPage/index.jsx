@@ -3,11 +3,12 @@ import SearchMovieForm from "../SearchForm";
 import { searchForMovie } from "../../api/tmdb-api";
 import MovieList from "../movieList";
 import AddToFavouritesIcon from "../cardIcons/addToFavourites";
-import { Typography, Grid, Paper } from "@mui/material";
+import { Typography, Grid, Paper, Alert } from "@mui/material";
 
 const TemplateSearchPage = () => {
   const [mediaType, setMediaType] = React.useState("");
   const [searchResults, setSearchResults] = React.useState([]);
+  const [formSubmitted, setFormSubmitted] = React.useState(false);
 
   const getSearchResults = async (data) => {
     setMediaType(data.media_type === "tv" ? "tvshows" : "movies");
@@ -16,6 +17,7 @@ const TemplateSearchPage = () => {
     }
     const fetchResults = await searchForMovie(data);
     setSearchResults(fetchResults);
+    setFormSubmitted(true);
   };
 
   return (
@@ -43,7 +45,7 @@ const TemplateSearchPage = () => {
             
           </Grid>
         </>
-      ) : null}
+      ) : <>{formSubmitted ? (<Alert severity="warning">No Results found for submitted search</Alert>) : null}</>}
     </>
   );
 };

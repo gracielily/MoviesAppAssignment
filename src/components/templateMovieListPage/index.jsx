@@ -7,6 +7,7 @@ import Drawer from "@mui/material/Drawer";
 import MovieList from "../movieList";
 import Pagination from "@mui/material/Pagination";
 import Typography from "@mui/material/Typography";
+import { Alert, AlertTitle } from "@mui/material";
 
 const styles = {
   root: {
@@ -81,14 +82,22 @@ function MovieListPageTemplate({
         <Grid item xs={12}>
           <Header title={title} />
         </Grid>
-        <Grid item container spacing={5}>
-          <MovieList
-            action={action}
-            movies={movies}
-            isUpcoming={isUpcoming}
-            type={type}
-          />
-        </Grid>
+        
+          {movies?.length ? (
+            <Grid item container spacing={5}>
+            <MovieList
+              action={action}
+              movies={movies}
+              isUpcoming={isUpcoming}
+              type={type}
+            />
+            </Grid>
+          ) : (
+            <Alert severity="info">
+              No {type === "tv" ? "Tv Shows" : "Movies"} could be found.
+            </Alert>
+          )}
+
         {!hidePagination && (
           <>
             <Typography>{totalResults} Results found.</Typography>
