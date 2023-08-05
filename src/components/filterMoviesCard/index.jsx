@@ -90,7 +90,7 @@ export default function FilterMoviesCard(props) {
   };
 
   const handleYearChange = (value) => {
-    props.onUserInput("year", value.format("YYYY"));
+    props.onUserInput("year", value ? value.format("YYYY") : value);
   };
 
   const handleLanguageChange = (e) => {
@@ -137,6 +137,11 @@ export default function FilterMoviesCard(props) {
                     value={props.yearFilter ? dayjs(props.yearFilter) : null}
                     maxDate={dayjs()}
                     onChange={(newValue) => handleYearChange(newValue)}
+                    slotProps={{
+                      actionBar: {
+                        actions: ['clear'],
+                      },
+                    }}
                   />
                 </LocalizationProvider>
               </FormControl>
