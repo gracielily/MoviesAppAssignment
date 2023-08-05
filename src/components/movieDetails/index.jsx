@@ -12,8 +12,8 @@ import MovieReviews from "../movieReviews";
 import SimilarMedia from "../similarMedia";
 import VideosList from "../VideosList";
 import { Grid } from "@mui/material";
-import { Link } from "react-router-dom";
 import ActorsList from "../actorsList";
+import InsertInvitationIcon from '@mui/icons-material/InsertInvitation';
 
 const styles = {
   chipSet: {

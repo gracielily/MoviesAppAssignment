@@ -11,19 +11,23 @@ import { Link } from "react-router-dom";
 import { Typography, CardMedia } from "@mui/material";
 import img from "../../images/film-poster-placeholder.png";
 
-const columns = [
-{ id: "backdrop_path", label: "", minWidth: 150 },
-  { id: "title", label: "Title", minWidth: 170 },
-  { id: "media_type", label: "Media", minWidth: 100 },
-  {
-    id: "character",
-    label: "Character",
-    minWidth: 170,
-    align: "right",
-  },
-];
-
 const ActorCredits = ({ credits }) => {
+  credits?.cast.map((credit) => {
+    if(credit.name) {
+      credit.title = credit.name
+    }
+  })
+  const columns = [
+    { id: "backdrop_path", label: "", minWidth: 150 },
+      { id: "title", label: "Title", minWidth: 170 },
+      { id: "media_type", label: "Media", minWidth: 100 },
+      {
+        id: "character",
+        label: "Character",
+        minWidth: 170,
+      },
+    ];
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(25);
 
@@ -37,8 +41,8 @@ const ActorCredits = ({ credits }) => {
   };
 
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      <Typography>Credits</Typography>
+    <>
+      <Typography variant="h5" sx={{marginTop: "30px"}} textAlign="center">Credits</Typography>
       <TableContainer sx={{ maxHeight: 600 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -63,7 +67,7 @@ const ActorCredits = ({ credits }) => {
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
-                        <TableCell key={column.id} align={column.align}>
+                        <TableCell key={column.id} align={column.align} component={Link} to={`/movies/${row.id}`} style={{ textDecoration: "none"}}>
                           {(() => {
                             if (column.id === "backdrop_path") {
                             return <img
@@ -72,7 +76,7 @@ const ActorCredits = ({ credits }) => {
                           />;
                               }
                             else if (column.id === "title") {
-                              return <Link to={`/movies/${row.id}`}>{value}</Link>;
+                              return value;
                             } else if (column.id === "media_type") {
                               return value.toLowerCase().replace(/\b\w/g, s => s.toUpperCase());
                             } else {
@@ -97,7 +101,7 @@ const ActorCredits = ({ credits }) => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-    </Paper>
+    </>
   );
 };
 

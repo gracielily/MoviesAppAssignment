@@ -1,7 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import FantasyMovieDetails from "../components/fantasyMovieDetails";
-import PageTemplate from "../components/templateMoviePage";
 import { MoviesContext } from "../contexts/moviesContext";
 
 const FasntasyMovieDetailsPage = () => {

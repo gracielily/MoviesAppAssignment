@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import { Avatar } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { MoviesContext } from "../../contexts/moviesContext";
+import { AuthContext } from "../../contexts/authContext";
 
 const styles = {
   card: { maxWidth: 345 },
@@ -25,7 +26,9 @@ const styles = {
 
 export default function ActorCard({ actor, action, displayMoreInfo }) {
   const { favourites } = useContext(MoviesContext);
+  const {token} = useContext(AuthContext);
   actor.favourite = favourites.actors.find((id) => id === actor.id);
+  
 
   return (
     <Card sx={styles.card}>
@@ -81,11 +84,11 @@ export default function ActorCard({ actor, action, displayMoreInfo }) {
               <>
                 {action ? <>{action(actor)}</> : null}
 
-                <Link to={`/actor/${actor.id}`}>
-                  <Button variant="outlined" size="medium" color="primary">
-                    More Details...
+                {token ? (<Link to={`/actor/${actor.id}`}>
+                  <Button variant="outlined" size="medium" color="secondary">
+                    View
                   </Button>
-                </Link>
+                </Link>) : null }
               </>
             </CardActions>
           </>

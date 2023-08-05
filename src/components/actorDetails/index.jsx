@@ -13,6 +13,7 @@ import EventBusyIcon from '@mui/icons-material/EventBusy';
 import HomeIcon from '@mui/icons-material/Home';
 import { Link } from "@mui/material";
 import ActorCredits from "../actorCredits";
+import Header from "../headerMovieList";
 
 const styles = {
   chipSet: {
@@ -32,15 +33,9 @@ const styles = {
 const ActorDetails = ({ actor, credits }) => {
   return (
     <>
-      <Typography variant="h5" component="h3">
-        Actor Details
-      </Typography>
+      <Header title={actor.name} />
 
-      <Typography variant="h6" component="p">
-        {actor.name}
-      </Typography>
-
-      <Paper variant="outlined">
+      <Paper variant="outlined" sx={{textAlign: "center"}}>
         <img
           src={
             actor.profile_path
@@ -48,10 +43,7 @@ const ActorDetails = ({ actor, credits }) => {
               : img
           }
         />
-        <Typography>{actor.biography}</Typography>
-      </Paper>
-
-      <Paper component="ul" sx={styles.chipSet}>
+        <Paper component="ul" sx={styles.chipSet}>
         <Chip icon={actor.gender === 1 ? <FemaleIcon /> : <MaleIcon />} />
         <Chip icon={<HomeIcon />} label={`${actor.place_of_birth}`} />
         <Chip icon={<CakeIcon />} label={`${actor.birthday}`} />
@@ -60,9 +52,13 @@ const ActorDetails = ({ actor, credits }) => {
       ) : (null)}
         <Chip icon={<StarRate />} label={`Popularity: ${actor.popularity}`} />
         <Link href={`https://www.imdb.com/name/${actor.imdb_id}`}>
-          <Chip icon={<TheatersIcon />} label="IMDB Page" clickable />
+          <Chip icon={<TheatersIcon />} label="IMDB Page" clickable color="secondary" />
         </Link>
       </Paper>
+        <Typography>{actor.biography}</Typography>
+      </Paper>
+
+      
       <ActorCredits credits={credits} />
     </>
 
