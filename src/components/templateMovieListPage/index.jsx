@@ -32,12 +32,15 @@ function MovieListPageTemplate({
   totalPages,
   hidePagination,
   type,
+  displayFilter,
 }) {
   const [genreFilter, setGenreFilter] = useState("0");
   const [sortBy, setSortBy] = useState("");
   const [languageFilter, setLanguageFilter] = useState("");
   const [yearFilter, setYearFilter] = useState("");
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [voteAverageGteFilter, setVoteAverageGteFilter] = useState("");
+  const [voteAverageLteFilter, setVoteAverageLteFilter] = useState("");
 
   const handleChange = (type, value) => {
     if (type === "sort") {
@@ -55,6 +58,16 @@ function MovieListPageTemplate({
     if (type === "year") {
       setYearFilter(value);
       updateQuery({ year: value });
+    }
+
+    if (type === "voteAvgGte") {
+      setVoteAverageGteFilter(value);
+      updateQuery({ "vote_average.gte": value });
+    }
+
+    if (type === "voteAvgLte") {
+      setVoteAverageLteFilter(value);
+      updateQuery({ "vote_average.lte": value });
     }
   };
 
@@ -88,27 +101,33 @@ function MovieListPageTemplate({
           </>
         )}
       </Grid>
-      <Fab
-        color="secondary"
-        variant="extended"
-        onClick={() => setDrawerOpen(true)}
-        sx={styles.fab}
-      >
-        Filter
-      </Fab>
-      <Drawer
-        anchor="left"
-        open={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
-      >
-        <FilterCard
-          onUserInput={handleChange}
-          genreFilter={genreFilter}
-          languageFilter={languageFilter}
-          yearFilter={yearFilter}
-          sortBy={sortBy}
-        />
-      </Drawer>
+      {displayFilter ? (
+        <>
+          <Fab
+            color="secondary"
+            variant="extended"
+            onClick={() => setDrawerOpen(true)}
+            sx={styles.fab}
+          >
+            Filter
+          </Fab>
+          <Drawer
+            anchor="left"
+            open={drawerOpen}
+            onClose={() => setDrawerOpen(false)}
+          >
+            <FilterCard
+              onUserInput={handleChange}
+              genreFilter={genreFilter}
+              languageFilter={languageFilter}
+              yearFilter={yearFilter}
+              sortBy={sortBy}
+              voteAverageGteFilter={voteAverageGteFilter}
+              voteAverageLteFilter={voteAverageLteFilter}
+            />
+          </Drawer>
+        </>
+      ) : null}
     </>
   );
 }

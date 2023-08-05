@@ -17,7 +17,9 @@ const _fetchData = (urlToFetch) => {
 const _buildQueryStr = (queryParams) => {
   let queryParamStr = ""
   for (const [key, value] of Object.entries(queryParams)) {
-    queryParamStr += `&${key}=${value}`
+    if(value){
+      queryParamStr += `&${key}=${value}`
+    }
   }
   return queryParamStr;
 }
@@ -90,9 +92,10 @@ export const getMovie = (args) => {
   };
 
 
-  export const getTvShows = (pageNum) => {
+  export const getTvShows = (pageNum, queryParams) => {
+    const queryParamStr = _buildQueryStr(queryParams)
     return _fetchData(
-      `https://api.themoviedb.org/3/discover/tv?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=${pageNum}&sort_by=popularity.desc`
+      `https://api.themoviedb.org/3/discover/tv?api_key=${import.meta.env.VITE_TMDB_KEY}&page=${pageNum}${queryParamStr}`
     )
   };
 

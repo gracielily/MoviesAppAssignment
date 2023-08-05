@@ -5,8 +5,9 @@ import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
 import AddToFavouritesIcon from "../components/cardIcons/addToFavourites";
 import AddToPlaylistIcon from "../components/cardIcons/addToPlaylist";
+import setQueryString from "../util";
 
-const HomePage = (props) => {
+const HomePage = () => {
   const [queryParams, setQueryParams] = useState({});
   const [page, setPage] = useState(1);
   const [movies, setMovies] = useState([]);
@@ -22,20 +23,7 @@ const HomePage = (props) => {
   });
 
   const updateMoviesQuery = (query) => {
-    const queryToSend = { ...queryParams };
-    if (query.with_origin_country)
-      queryToSend.with_origin_country = query.with_origin_country;
-    if (query.year) queryToSend.year = query.year;
-    if (query.language) queryToSend.language = query.language;
-    if (query.sort_by) queryToSend.sort_by = query.sort_by;
-    if (query.with_genres) {
-      // if all genres selected
-      if (query.with_genres === "0" && queryToSend.with_genres) {
-        delete queryToSend.with_genres;
-      } else {
-        queryToSend.with_genres = query.with_genres;
-      }
-    }
+    const queryToSend = setQueryString(queryParams, query, "movie")
     setQueryParams(queryToSend);
   };
 
@@ -75,6 +63,7 @@ const HomePage = (props) => {
       totalResults={movies?.total_results}
       totalPages={movies?.total_pages}
       type="movies"
+      displayFilter={true}
     />
   );
 };

@@ -6,13 +6,16 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import TextField from "@mui/material/TextField";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import SortIcon from "@mui/icons-material/Sort";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { getMovieGenres, getLanguages } from "../../api/tmdb-api";
 import { AuthContext } from "../../contexts/authContext";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs from "dayjs";
 
 const styles = {
   root: {
@@ -28,17 +31,16 @@ const styles = {
 };
 
 export default function FilterMoviesCard(props) {
-  const { data:genres_data, error, isLoading, isError } = useQuery(
-    "genres",
-    getMovieGenres,
-    { keepPreviousData : true }
-  );
+  const {
+    data: genres_data,
+    error,
+    isLoading,
+    isError,
+  } = useQuery("genres", getMovieGenres, { keepPreviousData: true });
 
-  const { data:languages_data } = useQuery(
-    "languages",
-    getLanguages,
-    { keepPreviousData : true }
-  );
+  const { data: languages_data } = useQuery("languages", getLanguages, {
+    keepPreviousData: true,
+  });
 
   const { token } = useContext(AuthContext);
 
@@ -60,11 +62,17 @@ export default function FilterMoviesCard(props) {
     </MenuItem>
   ));
 
-
   const languages = languages_data;
   const languagesOptions = languages?.map((l, index) => (
     <MenuItem key={index} value={l.iso_639_1}>
       {l.english_name}
+    </MenuItem>
+  ));
+
+
+  const voteAverageOptions = Array.from(Array(10), (e,i)=>i+1).map((v) => (
+    <MenuItem key={v} value={v}>
+      {v}
     </MenuItem>
   ));
 
@@ -81,26 +89,34 @@ export default function FilterMoviesCard(props) {
     handleUserInput(e, "sort", e.target.value);
   };
 
-  const handleYearChange = (e) => {
-    handleUserInput(e, "year", e.target.value);
+  const handleYearChange = (value) => {
+    props.onUserInput("year", value.format("YYYY"));
   };
 
   const handleLanguageChange = (e) => {
     handleUserInput(e, "lang", e.target.value);
   };
 
+
+  const handleVoteAverageGteChange = (e) => {
+    handleUserInput(e, "voteAvgGte", e.target.value);
+  };
+
+  const handleVoteAverageLteChange = (e) => {
+    handleUserInput(e, "voteAvgLte", e.target.value);
+  };
+
   return (
     <>
       {token ? (
         <>
-      
           <Card sx={styles.root} variant="outlined">
             <CardContent>
               <Typography variant="h5" component="h1">
                 <FilterAltIcon fontSize="large" />
                 Filter the movies.
               </Typography>
-            
+
               <FormControl sx={styles.formControl}>
                 <InputLabel id="genre-label">Genre</InputLabel>
                 <Select
@@ -112,29 +128,54 @@ export default function FilterMoviesCard(props) {
                   {genreOptions}
                 </Select>
               </FormControl>
-              
+
               <FormControl sx={styles.formControl}>
-                <InputLabel id="sort-label">Release Year</InputLabel>
-                <TextField
-                sx={styles.formControl}
-                id="filled-search"
-                type="search"
-                value={props.yearFilter}
-                variant="filled"
-                onChange={handleYearChange}
-              />
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    views={["year"]}
+                    label="Year"
+                    value={props.yearFilter ? dayjs(props.yearFilter) : null}
+                    maxDate={dayjs()}
+                    onChange={(newValue) => handleYearChange(newValue)}
+                  />
+                </LocalizationProvider>
               </FormControl>
               <FormControl sx={styles.formControl}>
                 <InputLabel id="sort-label">Language</InputLabel>
                 <Select
                   labelId="langauge-label"
                   id="language-select"
-                  value={props.languageFilter}
+                  value={props.languageFilter ? props.languageFilter : "en"}
                   onChange={handleLanguageChange}
                 >
                   {languagesOptions}
                 </Select>
               </FormControl>
+
+              <FormControl sx={styles.formControl}>
+                <InputLabel id="vote-average-gte-label">Vote Average (Greater Than/Equals)</InputLabel>
+                <Select
+                  labelId="vote-average-gte-label"
+                  id="vote-average-gte-select"
+                  value={props.voteAverageGteFilter}
+                  onChange={handleVoteAverageGteChange}
+                >
+                  {voteAverageOptions}
+                </Select>
+              </FormControl>
+
+              <FormControl sx={styles.formControl}>
+                <InputLabel id="vote-average-lte-label">Vote Average (Less Than/Equals)</InputLabel>
+                <Select
+                  labelId="vote-average-lte-label"
+                  id="vote-average-lte-select"
+                  value={props.voteAverageLteFilter}
+                  onChange={handleVoteAverageLteChange}
+                >
+                  {voteAverageOptions}
+                </Select>
+              </FormControl>
+
             </CardContent>
           </Card>
           <Card sx={styles.root} variant="outlined">
@@ -170,7 +211,7 @@ export default function FilterMoviesCard(props) {
               </FormControl>
             </CardContent>
           </Card>
-          </>
+        </>
       ) : (
         <p> Please Log in to use Filters</p>
       )}
