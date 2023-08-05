@@ -37,7 +37,7 @@ const styles = {
 
 const MovieDetails = ({ movie }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  
+
   return (
     <>
       <Typography variant="h3" align="center" gutterBottom>
@@ -87,6 +87,9 @@ const MovieDetails = ({ movie }) => {
         </Grid>
       </Paper>
       <Paper>
+      <Typography variant="h5" gutterBottom>
+          Videos
+        </Typography>
         <VideosList elId={movie.id} type="movie" />
       </Paper>
       <Paper>

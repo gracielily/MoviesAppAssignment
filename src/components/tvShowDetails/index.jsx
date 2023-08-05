@@ -8,6 +8,9 @@ import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from '../movieReviews'
 import SimilarMedia from "../similarMedia";
+import ActorsList from "../actorsList";
+import { Grid } from "@mui/material";
+import VideosList from "../VideosList";
 
 const styles = {
   chipSet: {
@@ -69,6 +72,20 @@ const TvShowDetails = ( {tvShow}) => {
       </Paper>
       <Paper>
         <a href={tvShow.homepage}>Watch</a>
+      </Paper>
+      <Paper>
+        <Typography variant="h5" gutterBottom>
+          Cast Snapshot
+        </Typography>
+        <Grid item container spacing={2}>
+          <ActorsList actors={tvShow.credits.cast.slice(0, 6)} />
+        </Grid>
+      </Paper>
+      <Paper>
+      <Typography variant="h5" gutterBottom>
+          Videos
+        </Typography>
+        <VideosList elId={tvShow.id} type="tv" />
       </Paper>
       <Paper>
         <SimilarMedia type="tv" elId={tvShow.id} />

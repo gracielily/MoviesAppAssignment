@@ -33,7 +33,6 @@ const SimilarMedia = ({ type, elId }) => {
       id: type === "movie" ? "release_date" : "first_air_date",
       label: type === "movie" ? "Release Date" : "Date First Aired",
       minWidth: 170,
-      align: "right",
     },
   ];
 

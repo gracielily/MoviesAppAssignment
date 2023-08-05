@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Grid from "@mui/material/Grid";
 import VideoViewer from "../videoViewer";
 import { getVideosFor } from "../../api/tmdb-api";
@@ -16,7 +16,7 @@ const VideosList = ({ elId, type }) => {
 
   let videos = data ? data.results : [];
   if (videos.length > 5) {
-    videos = videos.slice(0, 5);
+    videos = videos.slice(0, 6);
   }
 
   if (isLoading) {
@@ -31,11 +31,15 @@ const VideosList = ({ elId, type }) => {
     <>
       {videos.length ? (
         <>
+        <Grid item container spacing={4}>
           {videos.map((v, index) => {
-            <Grid key={index} item xs={12} sm={6} md={4} lg={3} xl={2}>
+            return (
+            <Grid key={index} item xs={4}>
               <VideoViewer key={index} video={v} />
-            </Grid>;
+            </Grid>
+            )
           })}
+          </Grid>
         </>
       ) : (
         <p>No videos available</p>

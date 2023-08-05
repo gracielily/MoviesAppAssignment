@@ -50,7 +50,7 @@ const MovieHeader = (props) => {
         </Avatar>
       ) : null}
       <Typography variant="h4" component="h3">
-        {movie.title ? movie.title : movie.name}
+        {movie.title ? "Movie Details" : "Tv Show Details"}
         {"   "}
         <a href="/">
           <HomeIcon color="primary" fontSize="='large" />

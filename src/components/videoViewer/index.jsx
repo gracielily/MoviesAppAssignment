@@ -6,8 +6,7 @@ import Typography from "@mui/material/Typography";
 import CardMedia from '@mui/material/CardMedia';
 
 const styles = {
-  card: { width: 600 },
-  media: { height: 500 },
+  media: { height: 400, },
 };
 
 export default function VideoViewer({ video }) {
@@ -26,7 +25,7 @@ export default function VideoViewer({ video }) {
           </Typography>
         }
       />
-      <CardMedia component="iframe" src={mediaUrlMap[video.site]}/>
+      <CardMedia component="iframe" src={mediaUrlMap[video.site]} sx={styles.media}/>
       <CardContent>
         <p>{video.type}</p>
         <p>{video.published_at}</p>
