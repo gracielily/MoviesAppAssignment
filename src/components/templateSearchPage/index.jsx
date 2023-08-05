@@ -5,12 +5,15 @@ import MovieList from "../movieList";
 import AddToFavouritesIcon from "../cardIcons/addToFavourites";
 import { Typography, Grid, Paper } from "@mui/material";
 
-const TemplateSearchPage = ({ children }) => {
+const TemplateSearchPage = () => {
   const [mediaType, setMediaType] = React.useState("");
   const [searchResults, setSearchResults] = React.useState([]);
 
   const getSearchResults = async (data) => {
     setMediaType(data.media_type === "tv" ? "tvshows" : "movies");
+    if(data.media_type === "tv") {
+      data.first_air_date_year = data.year
+    }
     const fetchResults = await searchForMovie(data);
     setSearchResults(fetchResults);
   };

@@ -32,10 +32,10 @@ const SearchMovieForm = ({formSubmitted}) => {
     handleSubmit,
     reset,
   } = useForm({ defaultValues: defaultValues });
-  const [year, setYear] = useState(dayjs());
+  const [year, setYear] = useState(null);
 
   const onSubmit = async (searchData) => {
-    searchData.year = year.format("YYYY");
+    searchData.year = year ? year.format("YYYY") : year;
     formSubmitted(searchData)
   };
 
@@ -102,6 +102,11 @@ const SearchMovieForm = ({formSubmitted}) => {
             label="Year"
             value={year}
             onChange={(newValue) => setYear(newValue)}
+            slotProps={{
+              actionBar: {
+                actions: ['clear'],
+              },
+            }}
           />
         </LocalizationProvider>
 
