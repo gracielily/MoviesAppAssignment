@@ -12,11 +12,12 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { FormGroup } from "@mui/material";
 import { FileUploadOutlined } from "@mui/icons-material";
-
+import { Paper, Grid } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import dayjs, {Dayjs} from "dayjs";
+import dayjs from "dayjs";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const FantasyMovieForm = ({ genreChoices }) => {
   const defaultValues = {
@@ -39,11 +40,12 @@ const FantasyMovieForm = ({ genreChoices }) => {
   const [genres, setGenres] = useState([]);
   const [posterImg, setPosterImg] = useState("");
   const [releaseDate, setReleaseDate] = useState(dayjs());
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: "cast",
   });
-
   const handleGenresChange = (event) => {
     const {
       target: { value },
@@ -56,272 +58,291 @@ const FantasyMovieForm = ({ genreChoices }) => {
     setPosterImg(file);
   };
 
-  const handleSnackClose = (event) => {
-    setOpen(false);
-    navigate("/fantasy-movies");
-  };
-
   const onSubmit = async (fantasyMovie) => {
+    setIsSubmitting(true)
     if (posterImg) {
       fantasyMovie.posterImg = posterImg;
     }
     fantasyMovie.genres = genres;
     fantasyMovie.releaseDate = releaseDate.format("YYYY-MM-DD");
     await context.createFantasyMovie(fantasyMovie);
+    setIsSubmitting(false)
     setOpen(true);
+    setTimeout(()=> {
+      navigate("/fantasy-movies");
+    }, 2000)
+    
   };
 
   return (
     <Box component="div" sx={styles.root}>
-      <Typography component="h2" variant="h3">
-        Create your fantasy movie
+      <Typography variant="h4" textAlign="center" sx={{ marginTop: "50px" }}>
+        Create a Fantasy Movie
+      </Typography>
+      <Typography variant="h6" textAlign="center" color="textSecondary">
+        Fill out the form below to create your fantasy movie.
       </Typography>
       <Snackbar
         sx={styles.snack}
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
         open={open}
-        onClose={handleSnackClose}
       >
-        <Alert severity="success" variant="filled" onClose={handleSnackClose}>
+        <Alert severity="success" variant="filled">
           <Typography variant="h4">Fantasy movie created</Typography>
         </Alert>
       </Snackbar>
-      <form sx={styles.form} onSubmit={handleSubmit(onSubmit)} noValidate>
-        <Controller
-          name="title"
-          control={control}
-          rules={{ required: "Title is required" }}
-          defaultValue=""
-          render={({ field: { onChange, value } }) => (
-            <TextField
-              sx={{ width: "40ch" }}
-              variant="outlined"
-              margin="normal"
-              required
-              onChange={onChange}
-              value={value}
-              id="title"
-              label="Movie Title"
-              autoFocus
-            />
-          )}
-        />
-        {errors.title && (
-          <Typography variant="h6" component="p">
-            {errors.title.message}
-          </Typography>
-        )}
-        <Controller
-          name="overview"
-          control={control}
-          rules={{
-            required: "Overview cannot be empty.",
-            minLength: { value: 10, message: "Overview is too short" },
-          }}
-          defaultValue=""
-          render={({ field: { onChange, value } }) => (
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              value={value}
-              onChange={onChange}
-              label="Movie Overview"
-              id="overview"
-              multiline
-              minRows={10}
-            />
-          )}
-        />
-        {errors.overview && (
-          <Typography variant="h6" component="p">
-            {errors.overview.message}
-          </Typography>
-        )}
-
-        <Controller
-          control={control}
-          name="genres"
-          render={() => (
-            <TextField
-              id="select-genres"
-              select
-              variant="outlined"
-              label="Genres Select"
-              required
-              sx={{ m: 1, width: 300 }}
-              SelectProps={{
-                multiple: true,
-                value: genres,
-                onChange: handleGenresChange,
-              }}
-            >
-              {genreChoices?.map((genre) => (
-                <MenuItem key={genre.name} value={genre.name}>
-                  {genre.name}
-                </MenuItem>
-              ))}
-            </TextField>
-          )}
-        />
-
-        <Controller
-          name="runtime"
-          control={control}
-          rules={{ required: "Runtime is required" }}
-          defaultValue=""
-          render={({ field: { onChange, value } }) => (
-            <TextField
-              sx={{ width: "40ch" }}
-              variant="outlined"
-              margin="normal"
-              required
-              type="number"
-              onChange={onChange}
-              value={value}
-              id="runtime"
-              label="Runtime in minutes"
-              autoFocus
-            />
-          )}
-        />
-        {errors.runtime && (
-          <Typography variant="h6" component="p">
-            {errors.runtime.message}
-          </Typography>
-        )}
-
-        <Controller
-          name="productionCompany"
-          control={control}
-          defaultValue=""
-          render={({ field: { onChange, value } }) => (
-            <TextField
-              sx={{ width: "40ch" }}
-              variant="outlined"
-              margin="normal"
-              onChange={onChange}
-              value={value}
-              id="production-company"
-              label="Production Company"
-              autoFocus
-            />
-          )}
-        />
-
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DatePicker
-            label="Release Date"
-            value={releaseDate}
-            onChange={(newValue) => setReleaseDate(newValue)}
-            required
-          />
-        </LocalizationProvider>
-
-        {fields.map((field, index) => {
-          return (
-            <FormGroup row key={index}>
-              <Controller
-                name={`cast.${index}.actor`}
-                control={control}
-                render={({ field: { onChange, value } }) => (
-                  <TextField
-                    sx={{ width: "25ch" }}
-                    variant="outlined"
-                    margin="normal"
-                    onChange={onChange}
-                    value={value}
-                    id="actor"
-                    label="Actor"
-                    autoFocus
-                  />
-                )}
-              />
-              <Controller
-                name={`cast.${index}.role`}
-                control={control}
-                render={({ field: { onChange, value } }) => (
-                  <TextField
-                    sx={{ width: "25ch" }}
-                    variant="outlined"
-                    margin="normal"
-                    onChange={onChange}
-                    value={value}
-                    id="role"
-                    label="Role"
-                  />
-                )}
-              />
-
-              <Controller
-                name={`cast.${index}.description`}
-                control={control}
-                render={({ field: { onChange, value } }) => (
-                  <TextField
-                    sx={{ width: "25ch" }}
-                    variant="outlined"
-                    margin="normal"
-                    onChange={onChange}
-                    value={value}
-                    id="description"
-                    label="Description"
-                  />
-                )}
-              />
-              {fields.length > 1 && (
-                <>
-                  <Button variant="contained" onClick={() => remove(index)}>
-                    Remove
-                  </Button>
-                </>
+      <Paper sx={{ marginTop: "20px", padding: "20px" }}>
+        <form sx={styles.form} onSubmit={handleSubmit(onSubmit)} noValidate>
+          <Grid xs={12} item>
+            <Controller
+              name="title"
+              control={control}
+              rules={{ required: "Title is required" }}
+              defaultValue=""
+              render={({ field: { onChange, value } }) => (
+                <TextField
+                  sx={{ width: "40ch" }}
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  onChange={onChange}
+                  value={value}
+                  id="title"
+                  label="Movie Title"
+                  error={errors.title}
+                  helperText={errors.title?.message}
+                  autoFocus
+                />
               )}
-            </FormGroup>
-          );
-        })}
+            />
+          </Grid>
+          <Grid xs={12} item>
+            <Controller
+              name="overview"
+              control={control}
+              rules={{
+                required: "Overview cannot be empty.",
+                minLength: { value: 10, message: "Overview is too short" },
+              }}
+              defaultValue=""
+              render={({ field: { onChange, value } }) => (
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  value={value}
+                  onChange={onChange}
+                  label="Movie Overview"
+                  id="overview"
+                  multiline
+                  minRows={10}
+                  error={errors.overview}
+                  helperText={errors.overview?.message}
+                />
+              )}
+            />
+          </Grid>
 
-        <TextField
-          variant="standard"
-          type="file"
-          onChange={handlePosterImgChange}
-          InputProps={{
-            endAdornment: <FileUploadOutlined />,
-          }}
-        />
+          <Grid xs={12}>
+            <Controller
+              control={control}
+              name="genres"
+              render={() => (
+                <TextField
+                  id="select-genres"
+                  select
+                  variant="outlined"
+                  label="Genres Select"
+                  sx={{ m: 1, width: 300 }}
+                  SelectProps={{
+                    multiple: true,
+                    value: genres,
+                    onChange: handleGenresChange,
+                  }}
+                >
+                  {genreChoices?.map((genre) => (
+                    <MenuItem key={genre.name} value={genre.name}>
+                      {genre.name}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              )}
+            />
+          </Grid>
 
-        <Box sx={styles.buttons}>
-          <Button
-            type="button"
-            variant="contained"
-            color="secondary"
-            onClick={() => append({ actor: "", role: "", description: "" })}
-          >
-            Add Cast Member
-          </Button>
+          <Grid xs={12}>
+            <Controller
+              name="runtime"
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <TextField
+                  sx={{ width: "40ch" }}
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  type="number"
+                  onChange={onChange}
+                  value={value}
+                  id="runtime"
+                  label="Runtime in minutes"
+                />
+              )}
+            />
+          </Grid>
 
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            sx={styles.submit}
-          >
-            Submit
-          </Button>
-          <Button
-            type="reset"
-            variant="contained"
-            color="secondary"
-            sx={styles.submit}
-            onClick={() => {
-              reset(defaultValues);
-              setGenres([]);
-              setReleaseDate(dayjs());
+          <Grid xs={12}>
+            <Controller
+              name="productionCompany"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value } }) => (
+                <TextField
+                  sx={{ width: "40ch" }}
+                  variant="outlined"
+                  margin="normal"
+                  onChange={onChange}
+                  value={value}
+                  id="production-company"
+                  label="Production Company"
+                />
+              )}
+            />
+          </Grid>
+          <Grid xs={12} sx={{ marginTop: "10px", marginBottom: "10px" }}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                label="Release Date"
+                value={releaseDate}
+                onChange={(newValue) => setReleaseDate(newValue)}
+                required
+              />
+            </LocalizationProvider>
+          </Grid>
+           <Typography variant="h6">Add Cast Members</Typography>     
+          {fields.map((field, index) => {
+            return (
+              <Grid>
+                <FormGroup row key={index}>
+                  <Grid item>
+                    <Controller
+                      name={`cast.${index}.actor`}
+                      control={control}
+                      render={({ field: { onChange, value } }) => (
+                        <TextField
+                          sx={{ width: "25ch" }}
+                          variant="outlined"
+                          margin="normal"
+                          onChange={onChange}
+                          value={value}
+                          id="actor"
+                          label="Actor"
+                        />
+                      )}
+                    />
+                  </Grid>
+                  <Grid item>
+                    <Controller
+                      name={`cast.${index}.role`}
+                      control={control}
+                      render={({ field: { onChange, value } }) => (
+                        <TextField
+                          sx={{ width: "25ch" }}
+                          variant="outlined"
+                          margin="normal"
+                          onChange={onChange}
+                          value={value}
+                          id="role"
+                          label="Role"
+                        />
+                      )}
+                    />
+                  </Grid>
+
+                  <Grid item>
+                    <Controller
+                      name={`cast.${index}.description`}
+                      control={control}
+                      render={({ field: { onChange, value } }) => (
+                        <TextField
+                          sx={{ width: "25ch" }}
+                          variant="outlined"
+                          margin="normal"
+                          onChange={onChange}
+                          value={value}
+                          id="description"
+                          label="Description"
+                        />
+                      )}
+                    />
+                  </Grid>
+
+                  {fields.length > 1 && (
+                    <>
+                      <Button
+                        variant="outlined"
+                        color="error"
+                        onClick={() => remove(index)}
+                        sx={{ height: 58, marginTop: "15px" }}
+                      >
+                        <DeleteIcon />
+                      </Button>
+                    </>
+                  )}
+                </FormGroup>
+              </Grid>
+            );
+          })}
+
+          <Grid xs={12}>
+            <Button
+              type="button"
+              variant="outlined"
+              color="secondary"
+              onClick={() => append({ actor: "", role: "", description: "" })}
+            >
+              Add Cast Member
+            </Button>
+          </Grid>
+          <Grid sx={{marginTop: "20px", marginBottom: "30px"}}>
+          <Typography variant="h6">Upload Poster Image</Typography>
+          <TextField
+            variant="standard"
+            type="file"
+            onChange={handlePosterImgChange}
+            InputProps={{
+              endAdornment: <FileUploadOutlined />,
             }}
-          >
-            Reset
-          </Button>
-        </Box>
-      </form>
+          />
+          </Grid>
+
+          <Box sx={styles.buttons}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              sx={styles.submit}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Submitting..." : "Submit" }
+            </Button>
+            <Button
+              type="reset"
+              variant="contained"
+              color="secondary"
+              sx={styles.submit}
+              onClick={() => {
+                reset(defaultValues);
+                setGenres([]);
+                setReleaseDate(dayjs());
+              }}
+              disabled={isSubmitting}
+            >
+              Reset
+            </Button>
+          </Box>
+        </form>
+      </Paper>
     </Box>
   );
 };

@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import {AuthContext} from "../../contexts/authContext";
+import { Link } from "react-router-dom";
 
 const styles = {
   title: {
@@ -66,7 +67,7 @@ const SiteHeader = () => {
       <AppBar position="fixed" elevation={0} color="primary">
         <Toolbar>
           <Typography variant="h4" sx={styles.title}>
-            TMDB Client
+            <Link to="/" style={{textDecoration: 'none', color: 'white' }}>TMDB Client</Link>
           </Typography>
           {isMobile ? (
             <>

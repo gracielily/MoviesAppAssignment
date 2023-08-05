@@ -17,7 +17,7 @@ const styles = {
 };
 
 export default function MovieCard({ movie, action }) {
-  const { token } = useContext(AuthContext);
+  const { token } = React.useContext(AuthContext);
 
   return (
     <Card sx={styles.card}>
