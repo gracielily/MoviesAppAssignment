@@ -45,7 +45,7 @@ const TemplatePlaylistsPage = () => {
 
   return (
     <>
-      <Button onClick={handleClickOpen}>Add Playlist</Button>
+      <Button variant="outlined" onClick={handleClickOpen}>Create Playlist</Button>
 
       <Dialog open={open} onClose={handleClose}>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>

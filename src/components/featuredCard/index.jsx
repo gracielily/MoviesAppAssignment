@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 function FeaturedCard({ movie, type }) {
 
   return (
-    <Box component={Link} to={`/${type}/${movie.id}`}>
+    <Box component={Link} to={`/${type}/${movie.id}`} style={{textDecoration: 'none'}}>
       <Card >
         <CardMedia
         sx={{height: "500px;"}}

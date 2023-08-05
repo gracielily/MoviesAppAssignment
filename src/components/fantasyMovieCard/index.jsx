@@ -41,7 +41,7 @@ export default function MovieCard({ movie, action }) {
         {action(movie)}
         { token ? (<Link to={`/favorite-movies/${movie.id}`}>
           <Button variant="outlined" size="medium" color="primary">
-            More Info ...
+            View
           </Button>
         </Link>) : null}
       </CardActions>

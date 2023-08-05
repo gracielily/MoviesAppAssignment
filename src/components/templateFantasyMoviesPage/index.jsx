@@ -13,7 +13,7 @@ const FantasyMoviesPageTemplate = ({ movies, action }) => {
         <Grid item xs={12}>
           <Header title={"Fantasy Movies"} />
           <Link to="/fantasy-movies/form">
-            <Button>Create New</Button>
+            <Button variant="outlined">Create Fantasy Movie</Button>
           </Link>
         </Grid>
         {movies?.length ? (

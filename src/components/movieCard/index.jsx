@@ -20,8 +20,9 @@ import { Tooltip } from "@mui/material";
 import { AuthContext } from "../../contexts/authContext";
 
 const styles = {
-  card: { maxWidth: 345 },
-  media: { height: 500 },
+  card: { maxWidth: 345, height: 580, display: "flex",
+  flexDirection: "column", },
+  media: { height: 400 },
   avatar: {
     backgroundColor: "rgb(255, 0, 0)",
   },
@@ -72,7 +73,7 @@ export default function MovieCard({ el, action, isUpcoming, type = "movie" }) {
           ) : null
         }
         title={
-          <Typography variant="h5" component="p">
+          <Typography variant="h6" component="p">
             {el.title ? el.title : el.name}{" "}
           </Typography>
         }
@@ -101,11 +102,11 @@ export default function MovieCard({ el, action, isUpcoming, type = "movie" }) {
           </Grid>
         </Grid>
       </CardContent>
-      <CardActions disableSpacing>
+      <CardActions disableSpacing sx={{ mt: "auto" }}>
         {action(el)}
         { token ? (<Link to={`/${type}/${el.id}`}>
           <Button variant="outlined" size="medium" color="primary">
-            More Info ...
+            View
           </Button>
         </Link>) : null}
         

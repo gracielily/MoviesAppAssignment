@@ -88,11 +88,13 @@ function MovieListPageTemplate({
         ) : null}
 
         {displayFeature && movies?.length ? (
+          <Grid item xs={12} sx={{marginBottom: "20px"}}>
           <FeaturedCard movie={movies[0]} type={type} />
+          </Grid>
         ) : null}
 
         {movies?.length ? (
-          <Grid item container spacing={5}>
+          <Grid item container spacing={5} alignItems="stretch">
             <MovieList
               action={action}
               movies={movies}

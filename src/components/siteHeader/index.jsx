@@ -33,14 +33,14 @@ const SiteHeader = () => {
     { label: "Home", path: "/", type: "public" },
     { label: "Upcoming Movies", path: "/movies/upcoming", type: "public" },
     { label: "Top Rated Movies", path: "/movies/top", type: "public" },
-    { label: "Trending Actors", path: "/trending-actors",type: "public" },
     { label: "TV Shows", path: "/tvshows", type: "public" },
-    { label: "Watchlist", path: "/movies/watchlist", type: "private" },
-    { label: "Favorite Movies", path: "/movies/favourites", type: "private" },
-    { label: "Favorite TV Shows", path: "/tvshows/favourites", type: "private" },
-    { label: "Favorite Actors", path: "/actors/favourites", type: "private" },
-    { label: "Fantasy Movies", path: "/fantasy-movies", type: "private" },
     { label: "Search", path: "/search", type: "private" },
+    { label: "Trending Actors", path: "/trending-actors",type: "public" },
+    { label: "Watchlist", path: "/movies/watchlist", type: "private" },
+    { label: "Fav Movies", path: "/movies/favourites", type: "private" },
+    { label: "Fav TV Shows", path: "/tvshows/favourites", type: "private" },
+    { label: "Fav Actors", path: "/actors/favourites", type: "private" },
+    { label: "Fantasy Movies", path: "/fantasy-movies", type: "private" },
     { label: "Playlists", path: "/playlists", type: "private" },
     { label: token ? "Logout" : "Login", path: token ? "/logout" : "/login", type: "public" },
   ];
@@ -67,9 +67,6 @@ const SiteHeader = () => {
         <Toolbar>
           <Typography variant="h4" sx={styles.title}>
             TMDB Client
-          </Typography>
-          <Typography variant="h6" sx={styles.title}>
-            All you ever wanted to know about Movies!
           </Typography>
           {isMobile ? (
             <>

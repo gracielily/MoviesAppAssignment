@@ -29,6 +29,15 @@ import PlaylistDetailsPage from "./pages/playlistDetailsPage";
 import SignupPage from "./pages/signupPage";
 import WatchlistMoviesPage from "./pages/watchlistPage";
 
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -46,6 +55,8 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
       <BrowserRouter>
       <AuthContextProvider>
         <SiteHeader/>
@@ -93,6 +104,7 @@ const App = () => {
           </AuthContextProvider>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />
+      </ThemeProvider>
     </QueryClientProvider>
   );
 };
