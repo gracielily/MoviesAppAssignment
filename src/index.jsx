@@ -31,6 +31,7 @@ import WatchlistMoviesPage from "./pages/watchlistPage";
 
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import FasntasyMovieDetailsPage from "./pages/fantasyMovieDetailsPage";
 
 const darkTheme = createTheme({
   palette: {
@@ -85,6 +86,7 @@ const App = () => {
             <Route path="*" element={<Navigate to="/" />} />
             <Route path="/reviews/:id" element={<PrivateRoute><MovieReviewPage /></PrivateRoute>} />
             <Route path="/fantasy-movies/" element={<PrivateRoute><FantasyMoviesPage /></PrivateRoute>} />
+            <Route path="/fantasy-movies/:id" element={<PrivateRoute><FasntasyMovieDetailsPage /></PrivateRoute>} />
             <Route path="/fantasy-movies/form" element={<PrivateRoute><CreateFantasyMoviePage /></PrivateRoute>} />
             <Route path="/actor/:id" element={<PrivateRoute><ActorDetailsPage /></PrivateRoute>} />
             <Route path="/login" element={<LoginPage />} />

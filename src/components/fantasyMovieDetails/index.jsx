@@ -1,19 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import MonetizationIcon from "@mui/icons-material/MonetizationOn";
-import StarRate from "@mui/icons-material/StarRate";
 import Typography from "@mui/material/Typography";
 import NavigationIcon from "@mui/icons-material/Navigation";
-import Fab from "@mui/material/Fab";
-import Drawer from "@mui/material/Drawer";
 import MovieReviews from "../movieReviews";
 import SimilarMedia from "../similarMedia";
 import VideosList from "../VideosList";
 import { Grid } from "@mui/material";
-import { Link } from "react-router-dom";
 import ActorsList from "../actorsList";
+import InsertInvitationIcon from '@mui/icons-material/InsertInvitation';
 
 const styles = {
   chipSet: {
@@ -35,18 +31,12 @@ const styles = {
   },
 };
 
-const MovieDetails = ({ movie }) => {
-  const [drawerOpen, setDrawerOpen] = useState(false);
-
+const FantasyMovieDetails = ({ movie }) => {
   return (
     <>
       <Typography variant="h3" align="center" gutterBottom>
-        {movie.title ? movie.title : movie.name} (
-        {movie.release_date.split("-")[0]})
-      </Typography>
-
-      <Typography variant="h5" align="center" gutterBottom>
-        {movie.tagline}
+        {movie.title} (
+        {movie.releaseDate.split("-")[0]})
       </Typography>
 
       <Typography variant="h5" gutterBottom style={{ marginTop: "20px" }}>
@@ -68,50 +58,17 @@ const MovieDetails = ({ movie }) => {
       </Paper>
       <Paper component="ul" sx={styles.chipSet}>
         <Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />
-        <Chip
-          icon={<MonetizationIcon />}
-          label={`${movie.revenue.toLocaleString()}`}
-        />
-        <Chip
-          icon={<StarRate />}
-          label={`${movie.vote_average} (${movie.vote_count}`}
-        />
-       <Chip icon={<InsertInvitationIcon/>} label={`${movie.release_date}`} />
+        <Chip icon={<InsertInvitationIcon/>} label={`${movie.releaseDate}`} />
       </Paper>
       <Paper>
         <Typography variant="h5" gutterBottom>
           Cast Snapshot
         </Typography>
         <Grid item container spacing={2}>
-          <ActorsList actors={movie.credits.cast.slice(0, 6)} />
+          <ActorsList actors={movie.cast} />
         </Grid>
       </Paper>
-      <Paper>
-      <Typography variant="h5" gutterBottom>
-          Videos
-        </Typography>
-        <VideosList elId={movie.id} type="movie" />
-      </Paper>
-      <Paper>
-        <SimilarMedia type="movie" elId={movie.id} />
-      </Paper>
-      <Fab
-        color="secondary"
-        variant="extended"
-        onClick={() => setDrawerOpen(true)}
-        sx={styles.fab}
-      >
-        <NavigationIcon />
-        Reviews
-      </Fab>
-      <Drawer
-        anchor="top"
-        open={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
-      >
-        <MovieReviews type="movie" movie={movie} />
-      </Drawer>
     </>
   );
 };
-export default MovieDetails;
+export default FantasyMovieDetails;

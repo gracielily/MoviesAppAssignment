@@ -39,7 +39,7 @@ export default function MovieCard({ movie, action }) {
       />
       <CardActions disableSpacing>
         {action(movie)}
-        { token ? (<Link to={`/favorite-movies/${movie.id}`}>
+        { token ? (<Link to={`/fantasy-movies/${movie.id}`}>
           <Button variant="outlined" size="medium" color="primary">
             View
           </Button>
