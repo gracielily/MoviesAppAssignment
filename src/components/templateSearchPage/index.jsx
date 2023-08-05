@@ -25,15 +25,13 @@ const TemplateSearchPage = () => {
       <SearchMovieForm formSubmitted={getSearchResults} />
       {searchResults?.results?.length ? (
         <>
-          <Grid container>
+          <Grid container sx={{marginTop: "20px"}}>
             <Grid item xs={12}>
               <Paper component="div">
-                <Typography variant="h4" component="h3">
+                <Typography variant="h4" component="h3" textAlign="center" sx={{marginBottom: "20px"}}>
                   Search Results
                 </Typography>
-              </Paper>
-            </Grid>
-            <Grid item container spacing={5}>
+                <Grid item container spacing={5}>
               <MovieList
                 movies={searchResults.results}
                 action={(movie) => {
@@ -42,6 +40,9 @@ const TemplateSearchPage = () => {
                 type={mediaType}
               />
             </Grid>
+              </Paper>
+            </Grid>
+            
             
           </Grid>
         </>
