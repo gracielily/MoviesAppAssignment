@@ -29,21 +29,25 @@ const SiteHeader = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const { token, onLogout } = useContext(AuthContext);
 
-  const menuOptions = [
-    { label: "Home", path: "/" },
-    { label: "Upcoming Movies", path: "/movies/upcoming" },
-    { label: "Top Rated Movies", path: "/movies/top" },
-    { label: "Trending Actors", path: "/trending-actors" },
-    { label: "TV Shows", path: "/tvshows" },
-    { label: "Watchlist", path: "/movies/watchlist" },
-    { label: "Favorite Movies", path: "/movies/favourites" },
-    { label: "Favorite TV Shows", path: "/tvshows/favourites" },
-    { label: "Favorite Actors", path: "/actors/favourites" },
-    { label: "Fantasy Movies", path: "/fantasy-movies" },
-    { label: "Search", path: "/search" },
-    { label: "Playlists", path: "/playlists" },
-    { label: token ? "Logout" : "Login", path: token ? "/logout" : "/login" },
+  let menuOptions = [
+    { label: "Home", path: "/", type: "public" },
+    { label: "Upcoming Movies", path: "/movies/upcoming", type: "public" },
+    { label: "Top Rated Movies", path: "/movies/top", type: "public" },
+    { label: "Trending Actors", path: "/trending-actors",type: "public" },
+    { label: "TV Shows", path: "/tvshows", type: "public" },
+    { label: "Watchlist", path: "/movies/watchlist", type: "private" },
+    { label: "Favorite Movies", path: "/movies/favourites", type: "private" },
+    { label: "Favorite TV Shows", path: "/tvshows/favourites", type: "private" },
+    { label: "Favorite Actors", path: "/actors/favourites", type: "private" },
+    { label: "Fantasy Movies", path: "/fantasy-movies", type: "private" },
+    { label: "Search", path: "/search", type: "private" },
+    { label: "Playlists", path: "/playlists", type: "private" },
+    { label: token ? "Logout" : "Login", path: token ? "/logout" : "/login", type: "public" },
   ];
+
+  if(!token) {
+    menuOptions = menuOptions.filter((m) => m.type !== "private")
+  }
 
   const handleMenuSelect = (pageURL) => {
     if(pageURL.includes("logout")){
