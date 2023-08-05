@@ -33,6 +33,7 @@ const UpcomingMoviesPage = () => {
       currentPage={page}
       setResultsPage={setResultsPage}
       totalResults={totalResults}
+      type="movies"
     />
   );
 };

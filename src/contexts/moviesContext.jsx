@@ -41,6 +41,13 @@ const MoviesContextProvider = (props) => {
     setMustWatch(updatedMustWatch);
   };
 
+  const removeFromMustWatch = (movie, type) => {
+    let updatedMustWatch = [...mustWatch];
+    updatedMustWatch.splice(updatedMustWatch.indexOf(movie.id), 1)
+    setMustWatch(updatedMustWatch);
+  };
+
+
   const createFantasyMovie = async (fantasyMovie) => {
     fantasyMovie.id = Math.floor(Math.random() * 100000000)
     if(fantasyMovie.posterImg) {
@@ -107,6 +114,15 @@ const MoviesContextProvider = (props) => {
     setPlaylists(updatedPlaylists)
   }
 
+  const reorderMustWatch = (el, direction) => {
+    const currentPosition = mustWatch.indexOf(el.id)
+    const newPosition = direction === "down" ? currentPosition + 1 : currentPosition - 1
+    const newMustWatch = [...mustWatch]
+    newMustWatch.splice(currentPosition, 1);
+    newMustWatch.splice(newPosition, 0, el.id)
+    setMustWatch(newMustWatch);
+  }
+
   return (
     <MoviesContext.Provider
       value={{
@@ -116,6 +132,7 @@ const MoviesContextProvider = (props) => {
         addReview,
         mustWatch,
         addToMustWatch,
+        removeFromMustWatch,
         createFantasyMovie,
         myFantasyMovies,
         removeFromFantasyMovies,
@@ -126,6 +143,7 @@ const MoviesContextProvider = (props) => {
         addMovieToPlaylist,
         removeMovieFromPlaylist,
         myReviews,
+        reorderMustWatch,
       }}
     >
       {props.children}

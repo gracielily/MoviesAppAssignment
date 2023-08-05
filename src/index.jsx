@@ -27,6 +27,7 @@ import SearchPage from "./pages/searchPage";
 import PlaylistsPage from "./pages/playlistsPage";
 import PlaylistDetailsPage from "./pages/playlistDetailsPage";
 import SignupPage from "./pages/signupPage";
+import WatchlistMoviesPage from "./pages/watchlistPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -62,6 +63,10 @@ const App = () => {
             <Route
               path="/movies/favourites"
               element={<PrivateRoute><FavouriteMoviesPage /></PrivateRoute>}
+            />
+            <Route
+              path="/movies/watchlist"
+              element={<PrivateRoute><WatchlistMoviesPage /></PrivateRoute>}
             />
             <Route path="/reviews/form" element={<PrivateRoute><AddMovieReviewPage/></PrivateRoute>} />
             <Route path="/movies/:id" element={<PrivateRoute><MoviePage /></PrivateRoute>} />

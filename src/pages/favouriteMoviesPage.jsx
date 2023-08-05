@@ -35,7 +35,7 @@ const FavouriteMoviesPage = (props) => {
         return (
           <>
             <RemoveFromFavourites el={movie} type="movies" />
-            <WriteReview movie={movie} />
+            <WriteReview movie={movie} type="movie" />
             {movies.length > 1 && (
               <>
               {movies.indexOf(movie) !== 0 && (<><MoveMovie type="movies" el={movie} direction="up"/></>)}
@@ -48,6 +48,7 @@ const FavouriteMoviesPage = (props) => {
       }}
       isUpcoming={false}
       hidePagination={true}
+      type="movies"
     />
   );
 };

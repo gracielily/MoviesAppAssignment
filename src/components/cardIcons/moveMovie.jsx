@@ -4,12 +4,16 @@ import IconButton from "@mui/material/IconButton";
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
 
-const MoveMovie = ({ el, type, direction }) => {
+const MoveMovie = ({ el, type, direction, isWatchList }) => {
   const context = useContext(MoviesContext);
 
   const onUserSelect = (e) => {
     e.preventDefault();
+    if(isWatchList){
+      context.reorderMustWatch(el, direction)
+    } else {
     context.reorderFavorites(el, type, direction);
+    }
   };
   return (
     <IconButton aria-label="change order in favorites" onClick={onUserSelect}>

@@ -7,7 +7,7 @@ import { getTvShows } from "../api/tmdb-api";
 
 const TvShowsPage = () => {
   const [page, setPage] = useState(1);
-  const { data, error, isLoading, isError } = useQuery(["top", page], () => getTvShows(page), { keepPreviousData : true });
+  const { data, error, isLoading, isError } = useQuery(["tvShows", page], () => getTvShows(page), { keepPreviousData : true });
 
   const setResultsPage = async (newPageNum) => {
     setPage(newPageNum);
