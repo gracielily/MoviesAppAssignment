@@ -37,7 +37,7 @@ export const getMovie = (args) => {
   const [, idPart] = args.queryKey;
   const { id } = idPart;
   return _fetchData(
-    `https://api.themoviedb.org/3/movie/${id}?api_key=${import.meta.env.VITE_TMDB_KEY}`
+    `https://api.themoviedb.org/3/movie/${id}?api_key=${import.meta.env.VITE_TMDB_KEY}&append_to_response=videos,credits`
   )
 };
 

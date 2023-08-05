@@ -47,7 +47,6 @@ const HomePage = () => {
   }
   return (
     <PageTemplate
-      title="Discover Movies"
       movies={movies?.results}
       action={(movie) => {
         return (
@@ -64,6 +63,7 @@ const HomePage = () => {
       totalPages={movies?.total_pages}
       type="movies"
       displayFilter={true}
+      displayFeature={true}
     />
   );
 };

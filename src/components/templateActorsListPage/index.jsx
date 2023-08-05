@@ -19,7 +19,7 @@ function TrendingActorsPageTemplate({ actors, title, action }) {
         </Grid>
         {actors?.length ? (
           <Grid item container spacing={5}>
-            <ActorsList actors={actors} action={action} />
+            <ActorsList actors={actors} action={action} displayMoreInfo={true} />
           </Grid>
         ) : (
           <Alert severity="info">No Actors could be found.</Alert>

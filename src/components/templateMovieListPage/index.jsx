@@ -8,6 +8,7 @@ import MovieList from "../movieList";
 import Pagination from "@mui/material/Pagination";
 import Typography from "@mui/material/Typography";
 import { Alert, AlertTitle } from "@mui/material";
+import FeaturedCard from "../featuredCard";
 
 const styles = {
   root: {
@@ -34,6 +35,7 @@ function MovieListPageTemplate({
   hidePagination,
   type,
   displayFilter,
+  displayFeature,
 }) {
   const [genreFilter, setGenreFilter] = useState("0");
   const [sortBy, setSortBy] = useState("");
@@ -79,24 +81,30 @@ function MovieListPageTemplate({
   return (
     <>
       <Grid container sx={styles.root}>
-        <Grid item xs={12}>
-          <Header title={title} />
-        </Grid>
-        
-          {movies?.length ? (
-            <Grid item container spacing={5}>
+        {title ? (
+          <Grid item xs={12}>
+            <Header title={title} />
+          </Grid>
+        ) : null}
+
+        {displayFeature && movies?.length ? (
+          <FeaturedCard movie={movies[0]} type={type} />
+        ) : null}
+
+        {movies?.length ? (
+          <Grid item container spacing={5}>
             <MovieList
               action={action}
               movies={movies}
               isUpcoming={isUpcoming}
               type={type}
             />
-            </Grid>
-          ) : (
-            <Alert severity="info">
-              No {type === "tv" ? "Tv Shows" : "Movies"} could be found.
-            </Alert>
-          )}
+          </Grid>
+        ) : (
+          <Alert severity="info">
+            No {type === "tv" ? "Tv Shows" : "Movies"} could be found.
+          </Alert>
+        )}
 
         {!hidePagination && (
           <>

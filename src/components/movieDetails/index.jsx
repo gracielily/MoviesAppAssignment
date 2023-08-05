@@ -8,9 +8,12 @@ import Typography from "@mui/material/Typography";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
-import MovieReviews from '../movieReviews'
+import MovieReviews from "../movieReviews";
 import SimilarMedia from "../similarMedia";
 import VideosList from "../VideosList";
+import { Grid } from "@mui/material";
+import { Link } from "react-router-dom";
+import ActorsList from "../actorsList";
 
 const styles = {
   chipSet: {
@@ -25,22 +28,30 @@ const styles = {
   chipLabel: {
     margin: 0.5,
   },
-  fab: { 
+  fab: {
     position: "fixed",
     top: 50,
     right: 2,
   },
 };
 
-const MovieDetails = ( {movie}) => {
+const MovieDetails = ({ movie }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
-
+  
   return (
     <>
-      <Typography variant="h5" component="h3">
-        Overview
+      <Typography variant="h3" align="center" gutterBottom>
+        {movie.title ? movie.title : movie.name} (
+        {movie.release_date.split("-")[0]})
       </Typography>
 
+      <Typography variant="h5" align="center" gutterBottom>
+        {movie.tagline}
+      </Typography>
+
+      <Typography variant="h5" gutterBottom style={{ marginTop: "20px" }}>
+        Overview
+      </Typography>
       <Typography variant="h6" component="p">
         {movie.overview}
       </Typography>
@@ -51,7 +62,7 @@ const MovieDetails = ( {movie}) => {
         </li>
         {movie.genres.map((g) => (
           <li key={g.name}>
-            <Chip label={g.name}  />
+            <Chip label={g.name} />
           </li>
         ))}
       </Paper>
@@ -68,24 +79,36 @@ const MovieDetails = ( {movie}) => {
         <Chip label={`Released: ${movie.release_date}`} />
       </Paper>
       <Paper>
+        <Typography variant="h5" gutterBottom>
+          Cast Snapshot
+        </Typography>
+        <Grid item container spacing={2}>
+          <ActorsList actors={movie.credits.cast.slice(0, 6)} />
+        </Grid>
+      </Paper>
+      <Paper>
         <VideosList elId={movie.id} type="movie" />
       </Paper>
       <Paper>
         <SimilarMedia type="movie" elId={movie.id} />
       </Paper>
-      <Fab    
+      <Fab
         color="secondary"
         variant="extended"
-        onClick={() =>setDrawerOpen(true)}
+        onClick={() => setDrawerOpen(true)}
         sx={styles.fab}
       >
         <NavigationIcon />
         Reviews
       </Fab>
-      <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+      <Drawer
+        anchor="top"
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+      >
         <MovieReviews type="movie" movie={movie} />
       </Drawer>
     </>
   );
 };
-export default  MovieDetails ;
+export default MovieDetails;

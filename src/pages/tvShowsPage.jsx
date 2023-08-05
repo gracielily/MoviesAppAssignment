@@ -53,6 +53,7 @@ const TvShowsPage = () => {
       type="tvshows"
       displayFilter={true}
       updateQuery={updateTvShowsQuery}
+      displayFeature={true}
     />
   );
 };

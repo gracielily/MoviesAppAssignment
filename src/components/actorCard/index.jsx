@@ -1,4 +1,4 @@
-import React, { useContext  } from "react";
+import React, { useContext } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -23,22 +23,29 @@ const styles = {
   },
 };
 
-export default function ActorCard({ actor, action }) {
+export default function ActorCard({ actor, action, displayMoreInfo }) {
   const { favourites } = useContext(MoviesContext);
-  actor.favourite = favourites.actors.find((id) => id === actor.id)
+  actor.favourite = favourites.actors.find((id) => id === actor.id);
 
   return (
     <Card sx={styles.card}>
       <CardHeader
         sx={styles.header}
         title={
-          <Typography variant="h5" component="p">
-            {actor.name}{" "}
-          </Typography>
+          <>
+          <Link to={`/actor/${actor.id}`} style={{textDecoration: 'none'}}><Typography variant="h5" color="textPrimary" align="center"component="p">
+              {actor.name}{" "}</Typography></Link>
+            
+            <Typography variant="h6" color="textSecondary" align="center" component="p">
+              {actor.character}{" "}
+            </Typography>
+          </>
         }
         avatar={
           actor.favourite && (
-            <Avatar sx={styles.avatar}><FavoriteIcon /></Avatar>
+            <Avatar sx={styles.avatar}>
+              <FavoriteIcon />
+            </Avatar>
           )
         }
       />
@@ -50,30 +57,40 @@ export default function ActorCard({ actor, action }) {
             : img
         }
       />
-      <CardContent>
-        <Grid container>
-          <Grid item xs={6}>
-            <Typography variant="h6" component="p">
-              <MovieFilterIcon fontSize="small" />
-              {actor.known_for_department}
-            </Typography>
-          </Grid>
-          <Grid item xs={6}>
-            <Typography variant="h6" component="p">
-              <StarRateIcon fontSize="small" />
-              {"  "} {actor.popularity}{" "}
-            </Typography>
-          </Grid>
-        </Grid>
-      </CardContent>
-      <CardActions disableSpacing>
-        {action(actor)}
-        <Link to={`/actor/${actor.id}`}>
-          <Button variant="outlined" size="medium" color="primary">
-            More Details...
-          </Button>
-        </Link>
-      </CardActions>
+      <>
+        {displayMoreInfo ? (
+          <>
+            <CardContent>
+              <Grid container>
+                <Grid item xs={6}>
+                  <Typography variant="h6" component="p">
+                    <MovieFilterIcon fontSize="small" />
+                    {actor.known_for_department}
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="h6" component="p">
+                    <StarRateIcon fontSize="small" />
+                    {"  "} {actor.popularity}{" "}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </CardContent>
+
+            <CardActions disableSpacing>
+              <>
+                {action ? <>{action(actor)}</> : null}
+
+                <Link to={`/actor/${actor.id}`}>
+                  <Button variant="outlined" size="medium" color="primary">
+                    More Details...
+                  </Button>
+                </Link>
+              </>
+            </CardActions>
+          </>
+        ) : null}
+      </>
     </Card>
   );
 }
