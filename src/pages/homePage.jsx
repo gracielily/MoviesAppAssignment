@@ -56,7 +56,6 @@ const HomePage = () => {
           </>
         );
       }}
-      isUpcoming={false}
       updateQuery={updateMoviesQuery}
       setResultsPage={setResultsPage}
       totalResults={movies?.total_results}

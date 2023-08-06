@@ -44,7 +44,6 @@ const WatchlistMoviesPage = () => {
           </>
         );
       }}
-      isUpcoming={false}
       hidePagination={true}
       type="movies"
     />

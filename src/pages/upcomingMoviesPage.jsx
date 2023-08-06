@@ -29,7 +29,6 @@ const UpcomingMoviesPage = () => {
       action={(movie) => {
         return <AddToMustWatchList movie={movie} />
       }}
-      isUpcoming={true}
       currentPage={page}
       setResultsPage={setResultsPage}
       totalResults={totalResults}

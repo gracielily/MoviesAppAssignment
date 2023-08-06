@@ -92,7 +92,7 @@ const SimilarMedia = ({ type, elId }) => {
                         tabIndex={-1}
                         key={row.id}
                         component={Link}
-                        to={`/movies/${row.id}`}
+                        to={`/${type === "movies" ? "movies" : "tvshows"}/${row.id}`}
                         sx={{ textDecoration: "none" }}
                       >
                         {columns.map((column) => {

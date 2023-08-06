@@ -46,7 +46,6 @@ const FavouriteMoviesPage = (props) => {
           </>
         );
       }}
-      isUpcoming={false}
       hidePagination={true}
       type="movies"
     />

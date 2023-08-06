@@ -40,7 +40,6 @@ const TopMoviesListPage = () => {
           </>
         );
       }}
-      isUpcoming={false}
       currentPage={page}
       setResultsPage={setResultsPage}
       totalResults={totalResults}

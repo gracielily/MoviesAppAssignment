@@ -28,7 +28,7 @@ const styles = {
   },
 };
 
-export default function MovieCard({ el, action, isUpcoming, type = "movie" }) {
+export default function MovieCard({ el, action, type = "movie" }) {
   const { favourites, mustWatch, playlists } = useContext(MoviesContext);
   const { token } = useContext(AuthContext)
   
@@ -41,9 +41,9 @@ export default function MovieCard({ el, action, isUpcoming, type = "movie" }) {
   el.mustWatch = mustWatch.find((id) => id === el.id);
   el.playlists = playlists.filter((pl) => pl.movies.includes(el.id));
 
-  const displayFavourite = !isUpcoming && el.favourite;
-  const displayMustWatch = isUpcoming && el.mustWatch;
-  const displayPlaylist = !isUpcoming && el.playlists?.length;
+  const displayFavourite =  el.favourite;
+  const displayMustWatch =  el.mustWatch;
+  const displayPlaylist =  el.playlists?.length;
 
   const displayAvatar = displayFavourite || displayMustWatch || displayPlaylist;
   let playlistsNames = "";
@@ -59,18 +59,17 @@ export default function MovieCard({ el, action, isUpcoming, type = "movie" }) {
         sx={styles.header}
         avatar={
           displayAvatar ? (
-            <Avatar sx={styles.avatar}>
-              {displayFavourite ? <FavoriteIcon /> : null}
+            <>
+              {displayFavourite ? (<Avatar sx={styles.avatar}><FavoriteIcon /></Avatar>) : null}
               {displayPlaylist ? (
                 <>
                   <Tooltip title={`Added to playlist(s): ${playlistsNames}`}>
-                    <PlaylistAddCheckIcon />
+                  <Avatar sx={styles.avatar}><PlaylistAddCheckIcon /></Avatar>
                   </Tooltip>{" "}
                 </>
               ) : null}
-              {displayMustWatch ? <VisibilityIcon /> : null}
-            </Avatar>
-          ) : null
+              {displayMustWatch ? (<Avatar sx={styles.avatar}><VisibilityIcon /></Avatar>) : null}
+          </>) : null
         }
         title={
           <Typography variant="h6" component="p">

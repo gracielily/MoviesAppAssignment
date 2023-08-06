@@ -46,7 +46,6 @@ const TvShowsPage = () => {
       action={(movie) => {
         return <AddToFavouritesIcon el={movie} type="tvshows" />;
       }}
-      isUpcoming={false}
       setResultsPage={setResultsPage}
       totalResults={totalResults}
       currentPage={page}

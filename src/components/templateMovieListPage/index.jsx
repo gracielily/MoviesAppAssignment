@@ -26,7 +26,6 @@ function MovieListPageTemplate({
   movies,
   title,
   action,
-  isUpcoming,
   setResultsPage,
   totalResults,
   currentPage,
@@ -98,7 +97,6 @@ function MovieListPageTemplate({
             <MovieList
               action={action}
               movies={movies}
-              isUpcoming={isUpcoming}
               type={type}
             />
           </Grid>
