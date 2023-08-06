@@ -4,8 +4,11 @@ import Paper from "@mui/material/Paper";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import Typography from "@mui/material/Typography";
 import { Grid } from "@mui/material";
-import ActorsList from "../actorsList";
 import InsertInvitationIcon from '@mui/icons-material/InsertInvitation';
+import img from "../../images/film-poster-placeholder.png";
+import Header from "../headerMovieList";
+import ApartmentIcon from '@mui/icons-material/Apartment';
+import FantasyMovieCastTable from "../fantasyMovieCastTable";
 
 const styles = {
   chipSet: {
@@ -30,6 +33,8 @@ const styles = {
 const FantasyMovieDetails = ({ movie }) => {
   return (
     <>
+    <Header title="Fantasy Movie Details" />
+    <Grid sx={{padding: "20px"}}>
       <Typography variant="h3" align="center" gutterBottom>
         {movie.title} (
         {movie.releaseDate.split("-")[0]})
@@ -42,28 +47,36 @@ const FantasyMovieDetails = ({ movie }) => {
         {movie.overview}
       </Typography>
 
+      <Paper variant="outlined" sx={{textAlign: "center", marginTop: "20px"}}>
+        <img
+          src={
+            movie.posterImg
+            ? `${import.meta.env.VITE_SUPABASE_POSTER_BASE_URL}${movie.posterImg}`
+            : img
+          }
+          style={{maxWidth: "500px", maxHeight: "600px"}}
+        />
+
       <Paper component="ul" sx={styles.chipSet}>
-        <li>
-          <Chip label="Genres" sx={styles.chipLabel} color="primary" />
+        {movie.genres.length ? (<>        <li>
+          <Chip label="Genres" sx={styles.chipLabel} color="secondary" />
         </li>
-        {movie.genres.map((g) => (
-          <li key={g.name}>
-            <Chip label={g.name} />
+        {movie.genres.map((g, index) => (
+          <li key={index}>
+            <Chip label={g} />
           </li>
-        ))}
+        ))}</>) : null}
       </Paper>
       <Paper component="ul" sx={styles.chipSet}>
-        <Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />
-        <Chip icon={<InsertInvitationIcon/>} label={`${movie.releaseDate}`} />
+        {movie.runtime ? (<Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />) : null}
+        {movie.releaseDate ? (<Chip icon={<InsertInvitationIcon/>} label={`${movie.releaseDate}`} />) : null}
+        {movie.productionCompany ? (<Chip icon={<ApartmentIcon/>} label={`${movie.productionCompany}`} />) : null}
       </Paper>
       <Paper>
-        <Typography variant="h5" gutterBottom>
-          Cast Snapshot
-        </Typography>
-        <Grid item container spacing={2}>
-          <ActorsList actors={movie.cast} />
-        </Grid>
+        </Paper>
+        {movie.cast[0].actor ? (<FantasyMovieCastTable actors={movie.cast}/>) : null}
       </Paper>
+      </Grid>
     </>
   );
 };

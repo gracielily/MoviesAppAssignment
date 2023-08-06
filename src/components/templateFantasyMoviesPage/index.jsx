@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Header from "../headerMovieList";
@@ -10,7 +10,7 @@ const FantasyMoviesPageTemplate = ({ movies, action }) => {
   return (
     <>
       <Grid container>
-        <Grid item xs={12}>
+        <Grid item xs={12} sx={{mb: 3}}>
           <Header title={"Fantasy Movies"} />
           <Link to="/fantasy-movies/form">
             <Button variant="outlined">Create Fantasy Movie</Button>
@@ -21,7 +21,9 @@ const FantasyMoviesPageTemplate = ({ movies, action }) => {
             <FantasyMovieList movies={movies} action={action} />
           </Grid>
         ) : (
-          <Alert severity="info">No Fantasy Movies could be found.</Alert>
+          <Grid item xs={12}>
+          <Alert severity="warning">No Fantasy Movies could be found.</Alert>
+          </Grid>
         )}
       </Grid>
     </>

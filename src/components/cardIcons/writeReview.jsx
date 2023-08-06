@@ -1,7 +1,7 @@
 import React from "react";
-import RateReviewIcon from "@mui/icons-material/RateReview";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/authContext";
+import { Button } from "@mui/material";
 
 const WriteReviewIcon = ({ movie, type }) => {
   const { token } = React.useContext(AuthContext);
@@ -15,7 +15,7 @@ const WriteReviewIcon = ({ movie, type }) => {
           type: type,
         }}
     >
-      <RateReviewIcon color="primary" fontSize="large" />
+      <Button variant="outlined" color="primary">Write a Review</Button>
     </Link>
     ) : null}
     </>

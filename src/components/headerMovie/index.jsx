@@ -39,6 +39,14 @@ const MovieHeader = (props) => {
     navigate(1)
   }
 
+  let headerTitle = ""
+
+  if(props.isReview) {
+    headerTitle = "Review Details"
+  } else {
+    headerTitle = movie.title ? "Movie Details" : "Tv Show Details"
+  }
+
   return (
     <Paper component="div" sx={styles.root}>
       <IconButton aria-label="go back">
@@ -50,7 +58,7 @@ const MovieHeader = (props) => {
         </Avatar>
       ) : null}
       <Typography variant="h4" component="h3">
-        {movie.title ? "Movie Details" : "Tv Show Details"}
+        {headerTitle}
         {"   "}
         <a href="/">
           <HomeIcon color="primary" fontSize="='large" />

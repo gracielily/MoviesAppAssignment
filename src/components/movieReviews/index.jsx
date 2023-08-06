@@ -7,7 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Link } from "react-router-dom";
-import { Typography } from "@mui/material";
+import { Typography, Button, Grid } from "@mui/material";
 import { getMovieReviews } from "../../api/tmdb-api";
 import { excerpt } from "../../util";
 import { MoviesContext } from "../../contexts/moviesContext";
@@ -56,24 +56,23 @@ export default function MovieReviews({ type, movie }) {
           </TableBody>
         </Table>
       ) : (
-        <>
+        <Grid item xs={12} justifyContent="right" sx={{display: "flex", paddingRight: "20px", paddingTop: "20px"}}>
           <WriteReviewIcon movie={movie} type={type} />
-          <span>Write A Review</span>
-        </>
+        </Grid>
       )}
       <Table sx={styles.table} aria-label="reviews table">
         <TableHead>
           <TableRow>
             <TableCell>Author</TableCell>
             <TableCell align="center">Excerpt</TableCell>
-            <TableCell align="right">More</TableCell>
+            <TableCell align="right"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {reviews.map((r) => (
             <TableRow key={r.id}>
               <TableCell component="th" scope="row">
-                {r.author}
+                <Typography color="primary">{r.author}</Typography>
               </TableCell>
               <TableCell>{excerpt(r.content)}</TableCell>
               <TableCell>
@@ -84,7 +83,7 @@ export default function MovieReviews({ type, movie }) {
                     movie: movie,
                   }}
                 >
-                  Full Review
+                  <Button variant="outlined" color="secondary">Read</Button>
                 </Link>
               </TableCell>
             </TableRow>
