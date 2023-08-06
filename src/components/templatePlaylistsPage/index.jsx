@@ -9,7 +9,8 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useForm, Controller } from "react-hook-form";
 import { MoviesContext } from "../../contexts/moviesContext";
-import { Typography } from "@mui/material";
+import { Typography, Grid } from "@mui/material";
+import Header from "../headerMovieList";
 
 const TemplatePlaylistsPage = () => {
   const [open, setOpen] = React.useState(false);
@@ -45,7 +46,10 @@ const TemplatePlaylistsPage = () => {
 
   return (
     <>
-      <Button variant="outlined" onClick={handleClickOpen}>Create Playlist</Button>
+      <Header title="Playlists" />
+
+      <Grid xs={12} sx={{padding: "20px"}}>
+      <Button variant="outlined" onClick={handleClickOpen} sx={{marginBottom: "20px"}}>Create Playlist</Button>
 
       <Dialog open={open} onClose={handleClose}>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -71,14 +75,11 @@ const TemplatePlaylistsPage = () => {
                   required
                   onChange={onChange}
                   value={value}
+                  error={errors.title}
+                  helperText={errors.title?.message}
                 />
               )}
             />
-            {errors.title && (
-              <Typography variant="p" component="p">
-                {errors.title.message}
-              </Typography>
-            )}
             <Controller
               name="theme"
               control={control}
@@ -94,18 +95,17 @@ const TemplatePlaylistsPage = () => {
                   required
                   onChange={onChange}
                   value={value}
+                  error={errors.theme}
+                  helperText={errors.theme?.message}
                 />
               )}
             />
-            {errors.title && (
-              <Typography variant="p" component="p">
-                {errors.title.message}
-              </Typography>
-            )}
+            
             <Controller
               name="description"
               control={control}
               defaultValue=""
+              rules={{ required: "Description is required" }}
               render={({ field: { onChange, value } }) => (
                 <TextField
                   margin="dense"
@@ -116,6 +116,8 @@ const TemplatePlaylistsPage = () => {
                   required
                   onChange={onChange}
                   value={value}
+                  error={errors.description}
+                  helperText={errors.description?.message}
                 />
               )}
             />
@@ -128,6 +130,7 @@ const TemplatePlaylistsPage = () => {
       </Dialog>
       
       <PlaylistList />
+      </Grid>
     </>
   );
 };

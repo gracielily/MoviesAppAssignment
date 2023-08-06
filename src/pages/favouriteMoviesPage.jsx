@@ -39,7 +39,7 @@ const FavouriteMoviesPage = (props) => {
             {movies.length > 1 && (
               <>
               {movies.indexOf(movie) !== 0 && (<><MoveMovie type="movies" el={movie} direction="up"/></>)}
-              {movies.indexOf(movie) !== movies.length && (<><MoveMovie type="movies" el={movie} direction="down" /></>)}
+              {movies.indexOf(movie) + 1 !== movies.length && (<><MoveMovie type="movies" el={movie} direction="down" /></>)}
                 
               </>
             )}

@@ -67,7 +67,7 @@ const SiteHeader = () => {
       <AppBar position="fixed" elevation={0} color="primary">
         <Toolbar>
           <Typography variant="h4" sx={styles.title}>
-            <Link to="/" style={{textDecoration: 'none', color: 'white' }}>TMDB Client</Link>
+            <Link to="/" style={{textDecoration: 'none' }}><Typography variant="h4" color="secondary">TMDB Client</Typography></Link>
           </Typography>
           {isMobile ? (
             <>

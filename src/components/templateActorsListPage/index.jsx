@@ -22,7 +22,9 @@ function TrendingActorsPageTemplate({ actors, title, action }) {
             <ActorsList actors={actors} action={action} displayMoreInfo={true} />
           </Grid>
         ) : (
-          <Alert severity="info">No Actors could be found.</Alert>
+          <Grid item xs={12}>
+          <Alert severity="warning">No Actors could be found.</Alert>
+          </Grid>
         )}
       </Grid>
     </>

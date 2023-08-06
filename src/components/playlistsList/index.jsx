@@ -12,7 +12,9 @@ const PlaylistList = () => {
     </Grid>
   ));
   if (!playlistCards.length) {
-    playlistCards = <Alert severity="info">No Playlists could be found.</Alert>
+    playlistCards = <Grid item xs={12}>
+    <Alert severity="warning">No Playlists could be found.</Alert>
+    </Grid>
   }
   return playlistCards;
 };

@@ -37,7 +37,7 @@ const FavouriteActorsPage = (props) => {
               {actors.length > 1 && (
                 <>
                 {actors.indexOf(actor) !== 0 && (<><MoveMovie type="actors" el={actor} direction="up"/></>)}
-                {actors.indexOf(actor) !== actors.length && (<><MoveMovie type="actors" el={actor} direction="down" /></>)}
+                {actors.indexOf(actor) + 1 !== actors.length && (<><MoveMovie type="actors" el={actor} direction="down" /></>)}
                   
                 </>
               )}

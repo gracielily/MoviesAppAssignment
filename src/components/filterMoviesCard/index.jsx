@@ -25,8 +25,7 @@ const styles = {
 
   formControl: {
     margin: 1,
-    minWidth: 220,
-    backgroundColor: "rgb(255, 255, 255)",
+    minWidth: 250,
   },
 };
 
@@ -69,8 +68,7 @@ export default function FilterMoviesCard(props) {
     </MenuItem>
   ));
 
-
-  const voteAverageOptions = Array.from(Array(10), (e,i)=>i+1).map((v) => (
+  const voteAverageOptions = Array.from(Array(10), (e, i) => i + 1).map((v) => (
     <MenuItem key={v} value={v}>
       {v}
     </MenuItem>
@@ -97,7 +95,6 @@ export default function FilterMoviesCard(props) {
     handleUserInput(e, "lang", e.target.value);
   };
 
-
   const handleVoteAverageGteChange = (e) => {
     handleUserInput(e, "voteAvgGte", e.target.value);
   };
@@ -114,7 +111,7 @@ export default function FilterMoviesCard(props) {
             <CardContent>
               <Typography variant="h5" component="h1">
                 <FilterAltIcon fontSize="large" />
-                Filter the movies.
+                Filter
               </Typography>
 
               <FormControl sx={styles.formControl}>
@@ -133,15 +130,16 @@ export default function FilterMoviesCard(props) {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
                     views={["year"]}
-                    label="Year"
+                    label="Release Year"
                     value={props.yearFilter ? dayjs(props.yearFilter) : null}
                     maxDate={dayjs()}
                     onChange={(newValue) => handleYearChange(newValue)}
                     slotProps={{
                       actionBar: {
-                        actions: ['clear'],
+                        actions: ["clear"],
                       },
                     }}
+                    sx={{ maxWidth: 250 }}
                   />
                 </LocalizationProvider>
               </FormControl>
@@ -158,7 +156,9 @@ export default function FilterMoviesCard(props) {
               </FormControl>
 
               <FormControl sx={styles.formControl}>
-                <InputLabel id="vote-average-gte-label">Vote Average (Greater Than/Equals)</InputLabel>
+                <InputLabel id="vote-average-gte-label">
+                  Vote Average (Greater Than/Equals)
+                </InputLabel>
                 <Select
                   labelId="vote-average-gte-label"
                   id="vote-average-gte-select"
@@ -170,7 +170,9 @@ export default function FilterMoviesCard(props) {
               </FormControl>
 
               <FormControl sx={styles.formControl}>
-                <InputLabel id="vote-average-lte-label">Vote Average (Less Than/Equals)</InputLabel>
+                <InputLabel id="vote-average-lte-label">
+                  Vote Average (Less Than/Equals)
+                </InputLabel>
                 <Select
                   labelId="vote-average-lte-label"
                   id="vote-average-lte-select"
@@ -180,14 +182,13 @@ export default function FilterMoviesCard(props) {
                   {voteAverageOptions}
                 </Select>
               </FormControl>
-
             </CardContent>
           </Card>
           <Card sx={styles.root} variant="outlined">
             <CardContent>
               <Typography variant="h5" component="h1">
                 <SortIcon fontSize="large" />
-                Sort the movies.
+                Sort
               </Typography>
               <FormControl sx={styles.formControl}>
                 <InputLabel id="sort-label">Sort By</InputLabel>

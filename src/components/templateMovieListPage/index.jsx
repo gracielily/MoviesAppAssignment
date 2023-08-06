@@ -88,8 +88,8 @@ function MovieListPageTemplate({
         ) : null}
 
         {displayFeature && movies?.length ? (
-          <Grid item xs={12} sx={{marginBottom: "20px"}}>
-          <FeaturedCard movie={movies[0]} type={type} />
+          <Grid item xs={12} sx={{ marginBottom: "20px" }}>
+            <FeaturedCard movie={movies[0]} type={type} />
           </Grid>
         ) : null}
 
@@ -103,9 +103,11 @@ function MovieListPageTemplate({
             />
           </Grid>
         ) : (
-          <Alert severity="info">
-            No {type === "tv" ? "Tv Shows" : "Movies"} could be found.
-          </Alert>
+          <Grid item xs={12}>
+            <Alert severity="warning">
+              No {type === "tv" ? "Tv Shows" : "Movies"} could be found.
+            </Alert>
+          </Grid>
         )}
 
         {!hidePagination && (

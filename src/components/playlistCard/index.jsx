@@ -2,12 +2,10 @@ import React from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import CardHeader from "@mui/material/CardHeader";
 import Typography from "@mui/material/Typography";
 import MovieFilterIcon from "@mui/icons-material/MovieFilter";
 import Grid from "@mui/material/Grid";
-import img from "../../images/film-poster-placeholder.png";
 import RemoveFromPlaylistsIcon from "../cardIcons/removeFromPlaylists";
 import { Chip, Button } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -36,7 +34,7 @@ export default function PlaylistCard({ playlist }) {
         <Grid container>
           <Grid item xs={6}>
             <Typography variant="h6" component="p">
-              <Chip label={playlist.theme} color="primary" />
+              <Chip label={playlist.theme} color="secondary" />
             </Typography>
           </Grid>
           <Grid item xs={6}>
