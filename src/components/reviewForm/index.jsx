@@ -6,11 +6,11 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useForm, Controller } from "react-hook-form";
 import { MoviesContext } from "../../contexts/moviesContext";
-import { useNavigate } from "react-router-dom";
 import styles from "./styles";
 import ratings from "./ratingCategories";
 import Alert from "@mui/material/Alert";
-
+import { Snackbar } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const ReviewForm = ({ movie }) => {
   const defaultValues = {
@@ -27,6 +27,8 @@ const ReviewForm = ({ movie }) => {
   } = useForm(defaultValues);
   const context = useContext(MoviesContext);
   const [rating, setRating] = useState(3);
+  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleRatingChange = (event) => {
     setRating(event.target.value);
@@ -36,11 +38,25 @@ const ReviewForm = ({ movie }) => {
     review.movieId = movie.id;
     review.rating = rating;
     context.addReview(movie, review);
+    setOpen(true);
+    setTimeout(()=> {
+      navigate(`/${movie.title ? "movies" : "tvshows"}/${movie.id}`);
+    }, 2000)
   };
 
 
   return (
     <Box component="div" sx={styles.root}>
+      <Snackbar
+        sx={styles.snack}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        open={open}
+      >
+        <Alert severity="success" variant="filled">
+          <Typography variant="h4">Review Submitted</Typography>
+        </Alert>
+      </Snackbar>
+
       <Typography component="h2" variant="h4">
         Write a review
       </Typography>
@@ -142,7 +158,8 @@ const ReviewForm = ({ movie }) => {
             Reset
           </Button>
         </Box>
-      </form> </>)}
+      </form> 
+      </>)}
       
     </Box>
   );

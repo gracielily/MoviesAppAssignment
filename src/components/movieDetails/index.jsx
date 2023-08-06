@@ -5,7 +5,6 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import MonetizationIcon from "@mui/icons-material/MonetizationOn";
 import StarRate from "@mui/icons-material/StarRate";
 import Typography from "@mui/material/Typography";
-import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from "../movieReviews";
@@ -30,7 +29,7 @@ const styles = {
   },
   fab: {
     position: "fixed",
-    top: 50,
+    top: 70,
     right: 2,
   },
 };
@@ -101,7 +100,6 @@ const MovieDetails = ({ movie }) => {
         onClick={() => setDrawerOpen(true)}
         sx={styles.fab}
       >
-        <NavigationIcon />
         Reviews
       </Fab>
       <Drawer

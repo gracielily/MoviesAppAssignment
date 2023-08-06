@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/authContext";
-import { Button } from "@mui/material";
+import { Tooltip } from "@mui/material";
 import RateReviewIcon from '@mui/icons-material/RateReview';
 
 const WriteReviewIcon = ({ movie, type }) => {
@@ -16,7 +16,8 @@ const WriteReviewIcon = ({ movie, type }) => {
           type: type,
         }}
     >
-      <RateReviewIcon color="primary" fontSize="large"/>
+      
+      <Tooltip title="Write a Review"><RateReviewIcon color="primary" fontSize="large"/></Tooltip>
     </Link>
     ) : null}
     </>

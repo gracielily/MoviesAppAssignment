@@ -25,7 +25,7 @@ const WriteReviewPage = () => {
   const movie = data ? data : null
 
   return (
-    <PageTemplate movie={movie}>
+    <PageTemplate movie={movie} isReview={true}>
       <ReviewForm movie={movie} />
     </PageTemplate>
   );

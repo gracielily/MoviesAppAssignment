@@ -7,7 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Link } from "react-router-dom";
-import { Typography, Button, Grid } from "@mui/material";
+import { Typography, Button, Grid, Alert } from "@mui/material";
 import { getMovieReviews } from "../../api/tmdb-api";
 import { excerpt } from "../../util";
 import { MoviesContext } from "../../contexts/moviesContext";
@@ -60,7 +60,7 @@ export default function MovieReviews({ type, movie }) {
           <WriteReviewIcon movie={movie} type={type} />
         </Grid>
       )}
-      <Table sx={styles.table} aria-label="reviews table">
+      {reviews.length ? (<Table sx={styles.table} aria-label="reviews table">
         <TableHead>
           <TableRow>
             <TableCell>Author</TableCell>
@@ -89,7 +89,8 @@ export default function MovieReviews({ type, movie }) {
             </TableRow>
           ))}
         </TableBody>
-      </Table>
+      </Table>) : null}
+      
     </TableContainer>
   );
 }
