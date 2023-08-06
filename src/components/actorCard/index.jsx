@@ -72,7 +72,7 @@ export default function ActorCard({ actor, action, displayMoreInfo }) {
                   </Typography>
                 </Grid>
                 <Grid item xs={6}>
-                  <Typography variant="h6" component="p">
+                  <Typography variant="h6" component="p" color="orange">
                     <StarRateIcon fontSize="small" />
                     {"  "} {actor.popularity}{" "}
                   </Typography>

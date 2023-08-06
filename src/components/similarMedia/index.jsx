@@ -111,7 +111,7 @@ const SimilarMedia = ({ type, elId }) => {
                                 <Link to={`/movies/${row.id}`}>{value}</Link>
                               );
                             } else if (column.id === "vote_average") {
-                              return <Typography variant="h6" component="p">
+                              return <Typography variant="h6" component="p" color="orange">
                               <StarRateIcon fontSize="small" />
                               {"  "} {value}{" "}
                             </Typography>

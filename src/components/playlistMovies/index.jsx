@@ -74,7 +74,7 @@ const PlaylistMovies = ({ movies, removeFromPlaylist }) => {
                             }
                             if (column.id === "vote_average") {
                               return (
-                                <Typography variant="h6" component="p">
+                                <Typography variant="h6" component="p" color="orange">
                                   <StarRateIcon fontSize="small" />
                                   {"  "} {value}{" "}
                                 </Typography>

@@ -45,7 +45,7 @@ export default function MovieReviews({ type, movie }) {
           <TableBody>
             <TableRow>
               <TableCell component="th" scope="row">
-                <Typography variant="h6" component="p">
+                <Typography variant="h6" component="p" color="orange">
                   <StarRateIcon fontSize="small" />
                   {"  "} {myReviews[movie.id].rating}{" "}
                 </Typography>

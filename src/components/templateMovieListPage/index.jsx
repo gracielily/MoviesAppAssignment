@@ -112,13 +112,15 @@ function MovieListPageTemplate({
 
         {!hidePagination && (
           <>
-            <Typography>{totalResults} Results found.</Typography>
+          <Grid container alignContent="center" sx={{mt: 3}}>
+            <Typography variant="h6">{totalResults} Results found.</Typography>
             {/* page number can be no more than 500 according to TMBD API */}
             <Pagination
               count={totalPages <= 500 ? totalPages : 500}
               page={currentPage}
               onChange={handlePaginationChange}
             />
+            </Grid>
           </>
         )}
       </Grid>

@@ -24,12 +24,8 @@ const TemplateActorPage = ({ children }) => {
   return (
     <>
       <Grid container spacing={5} style={{ padding: "15px" }}>
-        <Grid item xs={3}>
-          <div sx={styles.gridListRoot}>
-          </div>
-        </Grid>
 
-        <Grid item xs={9}>
+        <Grid item xs={12}>
           {children}
         </Grid>
       </Grid>

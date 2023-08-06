@@ -34,6 +34,7 @@ const UpcomingMoviesPage = () => {
       setResultsPage={setResultsPage}
       totalResults={totalResults}
       type="movies"
+      displayFeature={true}
     />
   );
 };
