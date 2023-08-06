@@ -12,8 +12,8 @@ const TemplateSearchPage = () => {
 
   const getSearchResults = async (data) => {
     setMediaType(data.media_type === "tv" ? "tvshows" : "movies");
-    if(data.media_type === "tv") {
-      data.first_air_date_year = data.year
+    if (data.media_type === "tv") {
+      data.first_air_date_year = data.year;
     }
     const fetchResults = await searchForMovie(data);
     setSearchResults(fetchResults);
@@ -25,26 +25,37 @@ const TemplateSearchPage = () => {
       <SearchMovieForm formSubmitted={getSearchResults} />
       {searchResults?.results?.length ? (
         <>
-          <Grid container sx={{marginTop: "20px"}}>
+          <Grid container sx={{ marginTop: "20px" }}>
             <Grid item xs={12}>
-            <Typography variant="h4" component="h3" textAlign="center" sx={{marginBottom: "20px"}}>
-                  Search Results
-                </Typography>
-
-              <MovieList
-                movies={searchResults.results}
-                action={(movie) => {
-                  return <AddToFavouritesIcon el={movie} type={mediaType} />;
-                }}
-                type={mediaType}
-              />
-
+              <Typography
+                variant="h4"
+                component="h3"
+                textAlign="center"
+                sx={{ marginBottom: "20px" }}
+              >
+                Search Results
+              </Typography>
+              <Grid container sx={{ marginTop: "20px" }} alignContent="center">
+                <MovieList
+                  movies={searchResults.results}
+                  action={(movie) => {
+                    return <AddToFavouritesIcon el={movie} type={mediaType} />;
+                  }}
+                  type={mediaType}
+                />
+              </Grid>
             </Grid>
-            
-            
           </Grid>
         </>
-      ) : <>{formSubmitted ? (<Alert severity="warning">No Results found for submitted search</Alert>) : null}</>}
+      ) : (
+        <>
+          {formSubmitted ? (
+            <Alert severity="warning">
+              No Results found for submitted search
+            </Alert>
+          ) : null}
+        </>
+      )}
     </>
   );
 };

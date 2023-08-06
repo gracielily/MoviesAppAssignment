@@ -12,7 +12,7 @@ export default function setQueryString(queryParams, query, type) {
   if (type === "tv") {
     queryToSend.first_air_date_year = query.year;
   } else {
-    queryToSend.release_year = query.year
+    queryToSend.primary_release_year = query.year
   }
   if (query.language) queryToSend.language = query.language;
   queryToSend.sort_by = query.sort_by;
