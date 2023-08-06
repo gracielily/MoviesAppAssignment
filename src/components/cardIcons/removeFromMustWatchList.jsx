@@ -13,7 +13,7 @@ const RemoveFromMustWatchIcon = ({ el, type }) => {
 
   return (
     <IconButton aria-label="remove from must watch" onClick={onUserRequest}>
-      <DeleteIcon color="primary" fontSize="large" />
+      <DeleteIcon color="error" fontSize="large" />
     </IconButton>
   );
 };

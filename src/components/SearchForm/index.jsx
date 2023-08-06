@@ -71,6 +71,8 @@ const SearchMovieForm = ({ formSubmitted }) => {
                     id="title"
                     label="Title"
                     autoFocus
+                    error={errors.title}
+                    helperText={errors.title?.message}
                   />
                 )}
               />

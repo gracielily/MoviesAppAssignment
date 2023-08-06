@@ -67,7 +67,7 @@ const AddToPlaylistIcon = ({ movie }) => {
           </Dialog>
 
           <IconButton aria-label="add to playlist" onClick={onUserSelect}>
-            <PlaylistAddIcon color="primary" fontSize="large" />
+            <PlaylistAddIcon color="secondary" fontSize="large" />
           </IconButton>
         </>
       ) : null}

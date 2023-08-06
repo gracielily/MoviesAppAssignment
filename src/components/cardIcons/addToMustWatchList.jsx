@@ -16,7 +16,7 @@ const AddToMustWatchList = ({ movie }) => {
     <>
       {token ? (
         <IconButton aria-label="add to must watch" onClick={onUserSelect}>
-          <VisibilityIcon color="primary" fontSize="large" />
+          <VisibilityIcon color="secondary" fontSize="large" />
         </IconButton>
       ) : null}
     </>

@@ -13,7 +13,7 @@ const RemoveFromFavouritesIcon = ({ el, type }) => {
 
   return (
     <IconButton aria-label="remove from favorites" onClick={onUserRequest}>
-      <DeleteIcon color="primary" fontSize="large" />
+      <DeleteIcon color="error" fontSize="large" />
     </IconButton>
   );
 };

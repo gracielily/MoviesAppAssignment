@@ -19,24 +19,33 @@ export default function LoginPageTemplate() {
     navigate("/movies");
   }
   const onSubmit = async (credentials) => {
-    const error = await onLogin({ username: credentials.username, password: credentials.password });
-    if(error) {
-      setMsg(error.message)
-  }
+    const error = await onLogin({
+      username: credentials.username,
+      password: credentials.password,
+    });
+    if (error) {
+      setMsg(error.message);
+    }
   };
 
   return (
-    <Box component="div" sx={styles.root}>
-      <Typography component="h1" variant="h2">
-        Login
+    <>
+      <Typography variant="h4" textAlign="center" sx={{ mt: 5 }}>
+        Login to TMDB Client
       </Typography>
-      <Typography component="h5" variant="h6">
-        Enter your login details below
+      <Typography variant="h6" textAlign="center" color="textSecondary" sx={{mb: 3}}>
+        Enter your login details below.
       </Typography>
-      {loginError && (
-          <Alert severity="error">{loginError}</Alert>
-        )}
-        <CredentialsForm submitBtnLabel="Login" control={control} errors={errors} onSubmit={handleSubmit(onSubmit)} authMsg={msg} />
-      </Box>
+      {loginError && <Alert severity="error">{loginError}</Alert>}
+      <CredentialsForm
+        submitBtnLabel="Login"
+        control={control}
+        errors={errors}
+        onSubmit={handleSubmit(onSubmit)}
+        authMsg={msg}
+        isLogin={true}
+        hasError={loginError}
+      />
+    </>
   );
 }

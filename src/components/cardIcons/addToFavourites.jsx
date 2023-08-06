@@ -16,7 +16,7 @@ const AddToFavouritesIcon = ({ el, type }) => {
     <>
       {token ? (
         <IconButton aria-label="add to favorites" onClick={onUserSelect}>
-          <FavoriteIcon color="primary" fontSize="large" />
+          <FavoriteIcon color="secondary" fontSize="large" />
         </IconButton>
       ) : null}
     </>

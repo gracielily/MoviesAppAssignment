@@ -13,7 +13,7 @@ const RemoveFromPlaylistsIcon = ({ playlist }) => {
 
   return (
     <IconButton aria-label="remove from playlists" onClick={onUserRequest}>
-      <DeleteIcon color="primary" fontSize="large" />
+      <DeleteIcon color="error" fontSize="large" />
     </IconButton>
   );
 };

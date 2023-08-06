@@ -1,9 +1,8 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../contexts/authContext";
 import { useNavigate } from "react-router-dom";
-import { Typography, Box, Alert } from "@mui/material";
+import { Typography, Alert } from "@mui/material";
 import { useForm } from "react-hook-form";
-import styles from "../reviewForm/styles";
 import CredentialsForm from "../credentialsForm";
 
 export default function SignupPageTemplate() {
@@ -20,24 +19,36 @@ export default function SignupPageTemplate() {
     navigate("/");
   }
   const onSubmit = async (credentials) => {
-    const error = await onSignup({ username: credentials.username, password: credentials.password });
-    if(error) {
-        setMsg(error.message)
+    const error = await onSignup({
+      username: credentials.username,
+      password: credentials.password,
+    });
+    if (error) {
+      setMsg(error.message);
     }
   };
 
   return (
-    <Box component="div" sx={styles.root}>
-      <Typography component="h1" variant="h2">
-        Signup
+    <>
+      <Typography variant="h4" textAlign="center" sx={{ mt: 5 }}>
+        Signup to TMDB Client
       </Typography>
-      <Typography component="h5" variant="h6">
-        Enter your credentials below
+      <Typography
+        variant="h6"
+        textAlign="center"
+        color="textSecondary"
+        sx={{ mb: 3 }}
+      >
+        Enter your credentials below to signup.
       </Typography>
-      {signupError && (
-          <Alert severity="error">{signupError}</Alert>
-        )}
-      <CredentialsForm submitBtnLabel="Signup" control={control} errors={errors} onSubmit={handleSubmit(onSubmit)} authMsg={msg} />
-    </Box>
+      {signupError && <Alert severity="error">{signupError}</Alert>}
+      <CredentialsForm
+        submitBtnLabel="Signup"
+        control={control}
+        errors={errors}
+        onSubmit={handleSubmit(onSubmit)}
+        authMsg={msg}
+      />
+    </>
   );
 }

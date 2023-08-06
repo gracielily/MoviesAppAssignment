@@ -16,7 +16,7 @@ return (
     aria-label="remove from fantasy movies"
     onClick={onUserRequest}
   >
-    <DeleteIcon color="primary" fontSize="large" />
+    <DeleteIcon color="error" fontSize="large" />
   </IconButton>
 );
 };

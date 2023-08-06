@@ -1,8 +1,12 @@
-import { Button, TextField, Typography, Box, Alert } from "@mui/material";
+import { Button, TextField, Typography, Alert, Grid, Paper } from "@mui/material";
 import { Controller } from "react-hook-form";
+import { Link } from "react-router-dom";
 
 export default function CredentialsForm(props) {
     return (
+      <>
+      <Grid container xs={12} justifyContent="center">
+      <Paper sx={{padding: "20px"}}>
         <form autoComplete="off" onSubmit={props.onSubmit}>
         {props.authMsg ? (<Alert severity="error">{props.authMsg}</Alert>) : null}
         <Controller
@@ -18,7 +22,7 @@ export default function CredentialsForm(props) {
               variant="outlined"
               color="secondary"
               type="email"
-              sx={{ mb: 3 }}
+              sx={{ mb: 3, mt: 3 }}
               fullWidth
               value={value}
               autoFocus
@@ -46,7 +50,6 @@ export default function CredentialsForm(props) {
               value={value}
               fullWidth
               sx={{ mb: 3 }}
-              autoFocus
             />
           )}
         />
@@ -55,9 +58,17 @@ export default function CredentialsForm(props) {
             {props.errors.password.message}
           </Typography>
         )}
-        <Button variant="outlined" color="secondary" type="submit">
+        <Button variant="outlined" color="secondary" type="submit" sx={{mb: 3}} fullWidth>
           {props.submitBtnLabel}
         </Button>
       </form>
+      </Paper>
+      <Grid item xs={12}>
+      <Link to={props.isLogin ? "/signup" : "/login"} variant="body2" style={{textDecoration: 'none'}}>
+        <Typography variant="p" component="p" textAlign="center" marginTop="20px" color="secondary">{props.isLogin ? "Don't have an account? Sign Up" : "Already have an account? Login"}</Typography>
+      </Link>
+    </Grid>
+    </Grid>
+    </>
     )
 }
