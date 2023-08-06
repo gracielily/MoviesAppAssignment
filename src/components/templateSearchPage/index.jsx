@@ -27,11 +27,10 @@ const TemplateSearchPage = () => {
         <>
           <Grid container sx={{marginTop: "20px"}}>
             <Grid item xs={12}>
-              <Paper component="div">
-                <Typography variant="h4" component="h3" textAlign="center" sx={{marginBottom: "20px"}}>
+            <Typography variant="h4" component="h3" textAlign="center" sx={{marginBottom: "20px"}}>
                   Search Results
                 </Typography>
-                <Grid item container spacing={5}>
+
               <MovieList
                 movies={searchResults.results}
                 action={(movie) => {
@@ -39,8 +38,7 @@ const TemplateSearchPage = () => {
                 }}
                 type={mediaType}
               />
-            </Grid>
-              </Paper>
+
             </Grid>
             
             

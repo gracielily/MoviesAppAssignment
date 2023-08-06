@@ -8,7 +8,7 @@ function FeaturedCard({ movie, type }) {
     <Box component={Link} to={`/${type}/${movie.id}`} style={{textDecoration: 'none'}}>
       <Card >
         <CardMedia
-        sx={{height: "500px;"}}
+        sx={{height: "500px"}}
           media="picture"
           image={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
         />

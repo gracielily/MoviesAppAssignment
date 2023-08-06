@@ -7,7 +7,7 @@ import Spinner from "../spinner";
 
 const VideosList = ({ elId, type }) => {
   const { data, error, isLoading, isError, refetch } = useQuery("videos", () =>
-    getVideosFor(type, elId), {keepPreviousData: true}
+    getVideosFor(type, elId)
   );
 
   React.useEffect(() => {
