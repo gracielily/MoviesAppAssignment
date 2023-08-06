@@ -29,7 +29,8 @@ export default function ActorCard({ actor, action, displayMoreInfo }) {
   const { favourites } = useContext(MoviesContext);
   const {token} = useContext(AuthContext);
   actor.favourite = favourites.actors.find((id) => id === actor.id);
-  
+  const actorName = <Typography variant="h5" color="textPrimary" align="center"component="p">
+  {actor.name}{" "}</Typography>
 
   return (
     <Card sx={styles.card}>
@@ -37,9 +38,7 @@ export default function ActorCard({ actor, action, displayMoreInfo }) {
         sx={styles.header}
         title={
           <>
-          <Link to={`/actor/${actor.id}`} style={{textDecoration: 'none'}}><Typography variant="h5" color="textPrimary" align="center"component="p">
-              {actor.name}{" "}</Typography></Link>
-            
+          {token ? (<Link to={`/actor/${actor.id}`} style={{textDecoration: 'none'}}>{actorName}</Link>) : actorName}
             <Typography variant="h6" color="textSecondary" align="center" component="p">
               {actor.character}{" "}
             </Typography>
