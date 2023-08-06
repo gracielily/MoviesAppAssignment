@@ -42,7 +42,7 @@ const MovieHeader = (props) => {
   let headerTitle = ""
 
   if(props.isReview) {
-    headerTitle = "Review Details"
+    headerTitle = "Review"
   } else {
     headerTitle = movie.title ? "Movie Details" : "Tv Show Details"
   }

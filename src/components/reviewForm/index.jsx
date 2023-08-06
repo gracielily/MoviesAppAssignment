@@ -41,7 +41,7 @@ const ReviewForm = ({ movie }) => {
 
   return (
     <Box component="div" sx={styles.root}>
-      <Typography component="h2" variant="h3">
+      <Typography component="h2" variant="h4">
         Write a review
       </Typography>
       {movie.id in context.myReviews ? (<><Alert severity="info">Thank you for submitting your review</Alert></>) : (<>
@@ -62,14 +62,12 @@ const ReviewForm = ({ movie }) => {
               id="author"
               label="Author's name"
               autoFocus
+              error={errors.author}
+              helperText={errors.author?.message}
             />
           )}
         />
-        {errors.author && (
-          <Typography variant="h6" component="p">
-            {errors.author.message}
-          </Typography>
-        )}
+        
         <Controller
           name="review"
           control={control}
@@ -90,14 +88,11 @@ const ReviewForm = ({ movie }) => {
               id="review"
               multiline
               minRows={10}
+              error={errors.review}
+              helperText={errors.review?.message}
             />
           )}
         />
-        {errors.review && (
-          <Typography variant="h6" component="p">
-            {errors.review.message}
-          </Typography>
-        )}
 
         <Controller
           control={control}
@@ -111,6 +106,7 @@ const ReviewForm = ({ movie }) => {
               value={rating}
               onChange={handleRatingChange}
               helperText="Don't forget your rating"
+              sx={{mb: 2, mt: 2}}
             >
               {ratings.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
@@ -140,6 +136,7 @@ const ReviewForm = ({ movie }) => {
                 author: "",
                 content: "",
               });
+              setRating(3)
             }}
           >
             Reset
