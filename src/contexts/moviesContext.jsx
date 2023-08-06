@@ -9,11 +9,21 @@ const supabase = createClient(
 export const MoviesContext = React.createContext(null);
 
 const MoviesContextProvider = (props) => {
+  const initialFavourites = {movies: [], tvshows: [], actors: []}
   const [myReviews, setMyReviews] = useState( {} )
-  const [favourites, setFavourites] = useState({movies: [], tvshows: [], actors: []});
+  const [favourites, setFavourites] = useState(initialFavourites);
   const [mustWatch, setMustWatch] = useState([]);
   const [myFantasyMovies, setFantasyMovies] = useState([]);
   const [playlists, setPlaylists] = useState([]);
+
+
+  const resetAll = () => {
+    setMyReviews({});
+    setFavourites(initialFavourites);
+    setMustWatch([]);
+    setFantasyMovies([]);
+    setPlaylists([])
+  }
 
   const addToFavourites = (el, type) => {
     let updatedFavourites = {...favourites};
@@ -144,6 +154,7 @@ const MoviesContextProvider = (props) => {
         removeMovieFromPlaylist,
         myReviews,
         reorderMustWatch,
+        resetAll,
       }}
     >
       {props.children}

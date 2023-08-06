@@ -60,8 +60,8 @@ const App = () => {
       <CssBaseline />
       <BrowserRouter>
       <AuthContextProvider>
+      <MoviesContextProvider>
         <SiteHeader/>
-        <MoviesContextProvider>
           <Routes>
             <Route path="/movies/upcoming" element={<UpcomingMoviesPage />} />
             <Route path="/movies/top" element={<TopMoviesListPage />} />

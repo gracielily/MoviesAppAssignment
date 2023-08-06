@@ -3,11 +3,13 @@ import { AuthContext } from "../../contexts/authContext";
 import { useNavigate } from "react-router-dom";
 import { Typography, Box, Alert } from "@mui/material";
 import { useForm } from "react-hook-form";
-import styles from "../reviewForm/styles";
 import CredentialsForm from "../credentialsForm";
+import { MoviesContext } from "../../contexts/moviesContext";
+
 export default function LoginPageTemplate() {
   const [msg, setMsg] = useState("");
   const { onLogin, token, loginError } = useContext(AuthContext);
+  const {resetAll} = useContext(MoviesContext)
   const {
     control,
     formState: { errors },
@@ -19,6 +21,7 @@ export default function LoginPageTemplate() {
     navigate("/movies");
   }
   const onSubmit = async (credentials) => {
+    resetAll()
     const error = await onLogin({
       username: credentials.username,
       password: credentials.password,

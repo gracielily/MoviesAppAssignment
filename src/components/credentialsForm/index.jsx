@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export default function CredentialsForm(props) {
     return (
       <>
-      <Grid container xs={12} justifyContent="center">
+      <Grid container justifyContent="center">
       <Paper sx={{padding: "20px"}}>
         <form autoComplete="off" onSubmit={props.onSubmit}>
         {props.authMsg ? (<Alert severity="error">{props.authMsg}</Alert>) : null}
