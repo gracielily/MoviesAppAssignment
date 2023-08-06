@@ -17,22 +17,19 @@ import StarRateIcon from "@mui/icons-material/StarRate";
 
 const SimilarMedia = ({ type, elId }) => {
   const columns = [
-    { id: "backdrop_path", label: "", minWidth: 150 },
-    { id: type === "movie" ? "title" : "name", label: "Title", minWidth: 170 },
+    { id: "backdrop_path", label: "" },
+    { id: type === "movie" ? "title" : "name", label: "Title" },
     {
       id: "vote_average",
-      label: "Rating",
-      minWidth: 170,
+      label: "Rating"
     },
     {
       id: "popularity",
-      label: "Popularity",
-      minWidth: 170,
+      label: "Popularity"
     },
     {
       id: type === "movie" ? "release_date" : "first_air_date",
-      label: type === "movie" ? "Release Date" : "Date First Aired",
-      minWidth: 170,
+      label: type === "movie" ? "Release Date" : "Date First Aired"
     },
   ];
 
@@ -40,9 +37,10 @@ const SimilarMedia = ({ type, elId }) => {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const { data, error, isLoading, isError, refetch } = useQuery(
     "similar",
-    () => getSimilarMedia(type, elId), { keepPreviousData : true }
+    () => getSimilarMedia(type, elId),
+    { keepPreviousData: true }
   );
-  
+
   React.useEffect(() => {
     refetch(type, elId);
   }, [elId]);
@@ -63,83 +61,91 @@ const SimilarMedia = ({ type, elId }) => {
     setPage(0);
   };
 
-  const similarMedia = data ? data.results : []
+  const similarMedia = data ? data.results : [];
   return (
     <>
-    {similarMedia.length ? (
-    <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      <Typography variant="h5">Similar {type === "movie" ? "Movies" : "TV Shows"}</Typography>
-      <TableContainer sx={{ maxHeight: 600 }}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.results
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {(() => {
-                            if (column.id === "backdrop_path") {
-                              return (
-                                <img
-                                  src={
-                                    value
-                                      ? `https://image.tmdb.org/t/p/w500/${value}`
-                                      : img
-                                  }
-                                  width="150px"
-                                />
-                              );
-                            } else if (column.id === "title") {
-                              return (
-                                <Link to={`/movies/${row.id}`}>{value}</Link>
-                              );
-                            } else if (column.id === "vote_average") {
-                              return <Typography variant="h6" component="p" color="orange">
-                              <StarRateIcon fontSize="small" />
-                              {"  "} {value}{" "}
-                            </Typography>
-                            }
-                            else {
-                              return value;
-                            }
-                          })()}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={similarMedia.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </Paper>
-    ) : null}
+      {similarMedia.length ? (
+        <Paper sx={{ width: "100%", overflow: "hidden" }}>
+          <TableContainer sx={{ maxHeight: 600 }}>
+            <Table stickyHeader aria-label="sticky table">
+              <TableHead>
+                <TableRow>
+                  {columns.map((column) => (
+                    <TableCell
+                      key={column.id}
+                      align={column.align}
+                      style={{ minWidth: column.minWidth }}
+                    >
+                      {column.label}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {data.results
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row) => {
+                    return (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={row.id}
+                        component={Link}
+                        to={`/movies/${row.id}`}
+                        sx={{ textDecoration: "none" }}
+                      >
+                        {columns.map((column) => {
+                          const value = row[column.id];
+                          return (
+                            <TableCell key={column.id} align={column.align}>
+                              {(() => {
+                                if (column.id === "backdrop_path") {
+                                  return (
+                                    <img
+                                      src={
+                                        value
+                                          ? `https://image.tmdb.org/t/p/w500/${value}`
+                                          : img
+                                      }
+                                      width="150px"
+                                    />
+                                  );
+                                } else if (column.id === "vote_average") {
+                                  return (
+                                    <Typography
+                                      variant="h6"
+                                      component="p"
+                                      color="orange"
+                                    >
+                                      <StarRateIcon fontSize="small" />
+                                      {"  "} {value}{" "}
+                                    </Typography>
+                                  );
+                                } else {
+                                  return value;
+                                }
+                              })()}
+                            </TableCell>
+                          );
+                        })}
+                      </TableRow>
+                    );
+                  })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[10, 25, 100]}
+            component="div"
+            count={similarMedia.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </Paper>
+      ) : <p>No Similar Media could be found</p>}
     </>
   );
 };

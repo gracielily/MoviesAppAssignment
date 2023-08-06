@@ -1,36 +1,31 @@
 import React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CardHeader from "@mui/material/CardHeader";
-import Typography from "@mui/material/Typography";
-import CardMedia from '@mui/material/CardMedia';
-
+import CardMedia from "@mui/material/CardMedia";
+import { Chip, Typography } from "@mui/material";
 const styles = {
-  media: { height: 400, },
+  media: { height: 400 },
 };
 
 export default function VideoViewer({ video }) {
-    const mediaUrlMap = {
-        "YouTube": `https://www.youtube.com/embed/${video.key}`,
-        "Vimeo": ` https://vimeo.com/${video.key}`,
-    }
+  const mediaUrlMap = {
+    YouTube: `https://www.youtube.com/embed/${video.key}`,
+    Vimeo: ` https://vimeo.com/${video.key}`,
+  };
 
   return (
-    <Card sx={styles.card}>
-      <CardHeader
-        sx={styles.header}
-        title={
-          <Typography variant="h5" component="p">
-            {video.name}{" "}
-          </Typography>
-        }
+    <Card>
+      <CardMedia
+        component="iframe"
+        src={mediaUrlMap[video.site]}
+        sx={styles.media}
       />
-      <CardMedia component="iframe" src={mediaUrlMap[video.site]} sx={styles.media}/>
       <CardContent>
-        <p>{video.type}</p>
-        <p>{video.published_at}</p>
-        </CardContent>
-        
+      <Typography variant="p" component="p" sx={{mb: 1}}>
+            {video.name}{" "} 
+          </Typography>
+          <Chip label={video.type}/> {" "}
+      </CardContent>
     </Card>
   );
 }

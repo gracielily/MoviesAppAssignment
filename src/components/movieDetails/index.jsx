@@ -51,13 +51,13 @@ const MovieDetails = ({ movie }) => {
       <Typography variant="h5" gutterBottom style={{ marginTop: "20px" }}>
         Overview
       </Typography>
-      <Typography variant="h6" component="p">
+      <Typography variant="h6" component="p" sx={{mb: 1}}>
         {movie.overview}
       </Typography>
 
       <Paper component="ul" sx={styles.chipSet}>
         <li>
-          <Chip label="Genres" sx={styles.chipLabel} color="primary" />
+          <Chip label="Genres" sx={styles.chipLabel} color="secondary" />
         </li>
         {movie.genres.map((g) => (
           <li key={g.name}>
@@ -77,20 +77,20 @@ const MovieDetails = ({ movie }) => {
         />
        <Chip icon={<InsertInvitationIcon/>} label={`${movie.release_date}`} />
       </Paper>
-      <Paper>
-        <Typography variant="h5" gutterBottom>
+      <Typography variant="h5" gutterBottom textAlign="center" sx={{mt: 2, mb: 2}}>
           Cast Snapshot
         </Typography>
+
         <Grid item container spacing={2}>
           <ActorsList actors={movie.credits.cast.slice(0, 6)} />
         </Grid>
-      </Paper>
-      <Paper>
-      <Typography variant="h5" gutterBottom>
-          Videos
-        </Typography>
+        
+      <Paper sx={{mt: 4}}>
         <VideosList elId={movie.id} type="movie" />
       </Paper>
+      <Typography variant="h5" gutterBottom sx={{mt: 3}} textAlign="center">
+          Similar Movies
+        </Typography>
       <Paper>
         <SimilarMedia type="movie" elId={movie.id} />
       </Paper>

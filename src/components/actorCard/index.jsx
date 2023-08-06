@@ -17,7 +17,8 @@ import { MoviesContext } from "../../contexts/moviesContext";
 import { AuthContext } from "../../contexts/authContext";
 
 const styles = {
-  card: { maxWidth: 345 },
+  card: { maxWidth: 345, height: 580, display: "flex",
+  flexDirection: "column", },
   media: { height: 500 },
   avatar: {
     backgroundColor: "rgb(255, 0, 0)",

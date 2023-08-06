@@ -16,7 +16,7 @@ const VideosList = ({ elId, type }) => {
 
   let videos = data ? data.results : [];
   if (videos.length > 5) {
-    videos = videos.slice(0, 6);
+    videos = videos.slice(0, 4);
   }
 
   if (isLoading) {
@@ -31,19 +31,17 @@ const VideosList = ({ elId, type }) => {
     <>
       {videos.length ? (
         <>
-        <Grid item container spacing={4}>
+        <Grid item container spacing={4} sx={{mt: 4}}>
           {videos.map((v, index) => {
             return (
-            <Grid key={index} item xs={4}>
+            <Grid key={index} item xs={6}>
               <VideoViewer key={index} video={v} />
             </Grid>
             )
           })}
           </Grid>
         </>
-      ) : (
-        <p>No videos available</p>
-      )}
+      ) : null}
     </>
   );
 };
